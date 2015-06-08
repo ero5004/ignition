@@ -1,5 +1,10 @@
 <h1>Create New Account</h1>
 <script>
+	$(document).ready(function() {
+		$('#signup').submit(function () {
+			return checkFields();
+		})
+	})
 	function checkFields()
 	{
 		var email = $('#email').val();
@@ -12,25 +17,25 @@
 		if (!email)
 		{
 			alert("email required");
-			return;
+			return false;
 		}
 		
 		if (!password)
 		{
 			alert("password required");
-			return;
+			return false;
 		}
 		
 		if (!password2)
 		{
 			alert("password confirmation required");
-			return;
+			return false;
 		}
 		
 		if (!name)
 		{
 			alert("name required");
-			return;
+			return false;
 		}
 		
 		//check that passwords match
@@ -42,12 +47,16 @@
 				password: password,
 				name: name,
 				bio: bio
-			});
+			}).done(function(data)
+				{
+					window.location = '/';
+				});
 		}
 		else
 		{
 			//change to modal popup later
 			alert("passwords don't match");
+			return false;
 		}
 	}
 </script>
