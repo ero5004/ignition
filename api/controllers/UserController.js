@@ -46,7 +46,7 @@ module.exports = {
 				console.log(err);
 				return res.negotiate(err);
 			}
-			return created.id;
+			return res.redirect('/');
 		});
 	}
 };

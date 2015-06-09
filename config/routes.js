@@ -51,6 +51,10 @@ module.exports.routes = {
   'POST /createUser' : {
 	  controller: 'UserController',
 	  action: 'signup'
+  },
+  
+  '/dashboard' : {
+	  view: 'dashboard'
   }
 
   /***************************************************************************
