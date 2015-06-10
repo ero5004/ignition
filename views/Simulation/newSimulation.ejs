@@ -1,0 +1,89 @@
+<h1>Create New Simulation</h1>
+
+<form id="newSimulation" method="POST" action="/newSimulation">
+	
+	<label for="name">Simulation Name:</label>
+	<input type="text" id="name"></input>
+	<br/>
+	<label for="startDate">Start Date:</label>
+	<input type="text" id="startDate"></input>
+	<br/>
+	<label for="endDate">End Date:</label>
+	<input type="text" id="endDate"></input>
+	<br/>
+	<label for="description">Simulaton Description:</label>
+	<textarea id="description"></textarea>
+	<br/>
+	<label for="simStartDate">Simulated Start Date:</label>
+	<input type="text" id="simStartDate"></input>
+	<br/>
+	<label for="simEndDate">Simulated End Date:</label>
+	<input type="text" id="simEndDate"></input>
+	<br/>
+	<input type="button" id="submit" value="Create" onclick="checkFields()"></input>
+</form>
+
+<script>
+	function checkFields()
+	{
+		var name = $('#name').val();
+		var startDate = $('#startDate').val();
+		var endDate = $('#endDate').val();
+		var description = $('#description').val();
+		var simStartDate = $('#simStartDate').val();
+		var simEndDate = $('#simEndDate').val();
+		
+		//check for required fields
+		if (!name)
+		{
+			alert("Simulation name required");
+			return false;
+		}
+		
+		if (!startDate)
+		{
+			alert("Simulation start date required");
+			return false;
+		}
+		
+		if (!endDate)
+		{
+			alert("Simulation end date required");
+			return false;
+		}
+		
+		if (!description)
+		{
+			alert("Description of simulation required");
+			return false;
+		}
+		
+		if (!simStartDate)
+		{
+			alert("Simulated start date required");
+			return false;
+		}
+		
+		if (!simEndDate)
+		{
+			alert("Simulated end date required");
+			return false;
+		}
+		
+		//check that passwords match
+		
+
+		$.post('/newSimulation', {
+			name: name,
+			startDate: startDate,
+			endDate: endDate,
+			description: description,
+			simStartDate: simStartDate,
+			simEndDate: simEndDate
+		}).done(function(data)
+			{
+				window.location = '/dashboard';
+			});
+
+	}
+</script>

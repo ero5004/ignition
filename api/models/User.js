@@ -22,6 +22,18 @@ module.exports = {
 		},
 		bio: {
 			type: 'string'
+		},
+		simulations: {
+			collection: 'Simulation',
+			via: 'owner'
+		},
+		receivedInvitations: {
+			collection: 'Invite',
+			via: 'invitee'
+		},
+		sentInvitations: {
+			collection: 'Invite',
+			via: 'inviter'
 		}
 
 	},

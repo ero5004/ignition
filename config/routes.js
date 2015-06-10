@@ -35,6 +35,8 @@ module.exports.routes = {
   '/' : {
     view: 'homepage'
   },
+  
+  /* UserController routes */
   'POST /login' : {
 	  controller: 'UserController',
 	  action: 'login'
@@ -44,7 +46,6 @@ module.exports.routes = {
 	  action: 'logout'
   },
   
-  
   '/signup' : {
 	  view: 'signup'
   },
@@ -53,8 +54,22 @@ module.exports.routes = {
 	  action: 'signup'
   },
   
+  /* SimulationController routes */
+  'GET /newSimulation' : {	  
+	  controller: 'SimulationController',
+	  action: 'newSimulation'
+  },
+  
+  'POST /newSimulation' : {
+	  controller: 'SimulationController',
+	  action: 'processNewSimulation'
+  },
+  
+  /* InviteController routes */
+  
   '/dashboard' : {
-	  view: 'dashboard'
+	  controller: 'InviteController',
+	  action: 'dashboard'
   }
 
   /***************************************************************************
