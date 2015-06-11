@@ -70,6 +70,11 @@ module.exports.routes = {
   '/dashboard' : {
 	  controller: 'InviteController',
 	  action: 'dashboard'
+  },
+  
+  'GET /invite' : {
+	  controller: 'InviteController',
+	  action: 'invite'
   }
 
   /***************************************************************************

@@ -1,2 +1,28 @@
 <h1>Dashboard</h1>
 <a href="/newSimulation">Create New Simulation</a>
+<br/>
+<h2>My Simulations</h2>
+<table>
+<tr>
+	<th>Name</th>
+	<th>Start Time</th>
+	<th>End Time</th>
+	<th>Description</th>
+	<th>Simulated Start Time</th>
+	<th>Simulated End Time</th>
+	<th>Completed</th>
+	<th>Invitations</th>
+</tr>
+<% _.each(simulations, function(simulation) { %>
+<tr>
+	<td><%= simulation.name %></td>
+	<td><%= simulation.startDate %></td> 
+	<td><%= simulation.endDate %></td>
+	<td><%= simulation.description %></td>
+	<td><%= simulation.simulatedStartTime %></td>
+	<td><%= simulation.simulatedEndTime %></td>
+	<td><%= simulation.completed %></td>
+	<td><a href="/invite?simulation=<%= simulation.id %>">Send Invitations</a></td>
+</tr>
+<% }) %>
+</table>

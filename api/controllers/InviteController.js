@@ -8,12 +8,23 @@
 module.exports = {
 	
 	dashboard: function(req, res) {
-		User.findOne({ id: req.user.id }).exec(function(err, user) {
-			console.log(user);
+		User.findOne({ id: req.user.id }).populate('simulations').exec(function(err, user) {
+			//user.simulations contains all simulations owned by that user
+			return res.view('dashboard', {
+				simulations: user.simulations
+			});
 		});
+	},
+	
+	invite: function(req, res) {
+		var params = req.params.all();
+		var simulation = params.simulation;
+		console.log(simulation);
 		
-		return res.view('dashboard', {
-			//data to be transmitted to view to be added here
+		User.find().exec(function(err, users) {
+			return res.view('Invite/invite', {
+				users: users
+			});		
 		});
 	}
 	

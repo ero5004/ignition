@@ -1,0 +1,14 @@
+<h1>Invite individuals to your simulation</h1>
+
+
+<% _.each(users, function (user) { %>
+<input type="checkbox" name="user" value="<%= user.id %>"/><%= user.name %><br/>
+<% }) %>
+
+<input type="button" id="inviteUsers" onclick="sendInvites()">Send Invites</input>
+
+<script>
+	function sendInvites() {
+		//do something
+	}
+</script>

@@ -7,16 +7,20 @@
 
 module.exports = {
 	newSimulation: function(req, res) {
-		console.log('new simulation');
 		return res.view('Simulation/newSimulation');
 	},
 	
 	processNewSimulation: function(req, res) {
+		
 		var params = req.params.all();
-		console.log(params);
-		return res.json({
-			todo: 'process data from new simulation form'
-		})
+		params.owner = req.user.id;
+		Simulation.create(params).exec(function(err, created){
+			if (err) {
+				console.log(err);
+				return res.negotiate(err);
+			}
+			return res.redirect('/dashboard');
+		});
 	}
 };
 
