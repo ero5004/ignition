@@ -22,7 +22,30 @@
 	<td><%= simulation.simulatedStartTime %></td>
 	<td><%= simulation.simulatedEndTime %></td>
 	<td><%= simulation.completed %></td>
-	<td><a href="/invite?simulation=<%= simulation.id %>">Send Invitations</a></td>
+	<td><a href="/sendInvitations?simulation=<%= simulation.id %>">Send Invitations</a></td>
+</tr>
+<% }) %>
+</table>
+
+<br/>
+<br/>
+<br/>
+<h2>My Sent Invitations</h2>
+<table>
+<tr>
+	<th>Invitee Name</th>
+	<th>Simulation Name</th>
+	<th>Simulation Description</th>
+	<th>Completed</th>
+	<th>Invitation Status</th>
+</tr>
+<% _.each(sentInvitations, function(sentInvitation) { %>
+<tr>
+	<td><%= sentInvitation.invitee.name %></td>
+	<td><%= sentInvitation.simulation %></td> 
+	<td><%= sentInvitation.simulation %></td>
+	<td><%= sentInvitation.simulation %></td>
+	<td><%= sentInvitation.inviteStatus %></td>
 </tr>
 <% }) %>
 </table>

@@ -1,14 +1,28 @@
 <h1>Invite individuals to your simulation</h1>
-
-
 <% _.each(users, function (user) { %>
-<input type="checkbox" name="user" value="<%= user.id %>"/><%= user.name %><br/>
-<% }) %>
+<% 	if (invitedUsers.indexOf(user.id) == -1) { %>
+	<input type="checkbox" name="user" class="users" value="<%= user.id %>"/><%= user.name %><br/>
+<%	} else { %>
+	<%= user.name %> (already invited) <br/>
+<% 	}}) %>
 
-<input type="button" id="inviteUsers" onclick="sendInvites()">Send Invites</input>
+<input type="button" id="inviteUsers" onclick="sendInvites()" value="Send Invites" />
 
 <script>
-	function sendInvites() {
-		//do something
+	function sendInvites() 
+	{
+		var usersToInvite = [];
+		$('input:checkbox.users').each(function() {
+			if (this.checked)
+			{
+				usersToInvite.push($(this).val());
+			}
+		});
+		$.post('/processInvitations', {
+			usersToInvite: usersToInvite,
+			simulationId: <%= simulationId %>
+		}).done(function(data) {
+			window.location = '/Dashboard';
+		});
 	}
 </script>

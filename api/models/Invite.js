@@ -19,6 +19,11 @@ module.exports = {
 		},
 		inviteStatus: {
 			type : 'integer'
+			/*
+			 * 0 = pending
+			 * 1 = accepted
+			 * 
+			 */
 		}
 	}
 };

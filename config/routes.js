@@ -72,9 +72,14 @@ module.exports.routes = {
 	  action: 'dashboard'
   },
   
-  'GET /invite' : {
+  'GET /sendInvitations' : {
 	  controller: 'InviteController',
 	  action: 'invite'
+  },
+  
+  'POST /processInvitations' : {
+	  controller: 'InviteController',
+	  action: 'processInvitations'
   }
 
   /***************************************************************************
