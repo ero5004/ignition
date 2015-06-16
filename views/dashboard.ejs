@@ -42,10 +42,37 @@
 <% _.each(sentInvitations, function(sentInvitation) { %>
 <tr>
 	<td><%= sentInvitation.invitee.name %></td>
-	<td><%= sentInvitation.simulation %></td> 
-	<td><%= sentInvitation.simulation %></td>
-	<td><%= sentInvitation.simulation %></td>
+	<td><%= sentInvitation.simulation.name %></td> 
+	<td><%= sentInvitation.simulation.description %></td>
+	<td><%= sentInvitation.simulation.completed %></td>
 	<td><%= sentInvitation.inviteStatus %></td>
+</tr>
+<% }) %>
+</table>
+
+<br/>
+<br/>
+<br/>
+<h2>My Received Invitations</h2>
+<table>
+<tr>
+	<th>Invited By</th>
+	<th>Simulation Name</th>
+	<th>Simulation Description</th>
+	<th>Completed</th>
+	<th>Invitation Status</th>
+	<th>Accept</th>
+	<th>Decline</th>
+</tr>
+<% _.each(receivedInvitations, function(receivedInvitation) { %>
+<tr>
+	<td><%= receivedInvitation.inviter.name %></td>
+	<td><%= receivedInvitation.simulation.name %></td> 
+	<td><%= receivedInvitation.simulation.description %></td>
+	<td><%= receivedInvitation.simulation.completed %></td>
+	<td><%= receivedInvitation.inviteStatus %></td>
+	<td>Accept Link</td>
+	<td>Decline Link</td>
 </tr>
 <% }) %>
 </table>

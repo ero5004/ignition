@@ -14,21 +14,50 @@ module.exports = {
 			.populateAll()
 			.then(function(user) {
 				var invitedUsers = User.find(
-				{
-					id: _.pluck(user.sentInvitations, 'invitee') 
-				}
-			).then(function(invitedUsers) {
-				return invitedUsers;
-			});
-			return [user, invitedUsers]
+				{ id: _.pluck(user.sentInvitations, 'invitee') })
+				.then(function(invitedUsers) {
+					return invitedUsers;
+				});
+				
+				var invitedSimulations = Simulation.find(
+				{ id: _.pluck(user.sentInvitations, 'simulation') })
+				.then(function(invitedSimulations) {
+					return invitedSimulations;
+				});
+				
+				//other users that sent this user an invitation
+				var userInviters = User.find(
+				{ id: _.pluck(user.receivedInvitations, 'inviter') })
+				.then(function(userInviters) {
+					return userInviters;
+				});
+				
+				var simulationsInvited = Simulation.find(
+				{ id: _.pluck(user.receivedInvitations, 'simulation') })
+				.then(function(simulationsInvited) {
+					return simulationsInvited;
+				});
+				
+				return [user, invitedUsers, invitedSimulations, userInviters, simulationsInvited]
 			})
-			.spread(function (user, invitedUsers) {
+			.spread(function (user, invitedUsers, invitedSimulations, userInviters, simulationsInvited) {
 				var iU = _.indexBy(invitedUsers, 'id');
+				var iS = _.indexBy(invitedSimulations, 'id');
+				var uI = _.indexBy(userInviters, 'id');
+				var sI = _.indexBy(simulationsInvited, 'id');
 				
 				user.sentInvitations = _.map(user.sentInvitations, function(invitation) {
 					invitation.invitee = iU[invitation.invitee];
+					invitation.simulation = iS[invitation.simulation];
 					return invitation;
 				});
+				
+				user.receivedInvitations = _.map(user.receivedInvitations, function(invitation) {
+					invitation.inviter = uI[invitation.inviter];
+					invitation.simulation = sI[invitation.simulation];
+					return invitation;
+				});
+				
 				return res.view('dashboard', {
 					simulations: user.simulations,
 					receivedInvitations: user.receivedInvitations,
