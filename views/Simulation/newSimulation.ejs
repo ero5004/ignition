@@ -24,6 +24,7 @@
 </form>
 
 <script>
+
 	function checkFields()
 	{
 		var name = $('#name').val();
@@ -86,4 +87,9 @@
 			});
 
 	}
+
+        $(function() {
+            $('#startDate, #endDate, #simStartDate, #simEndDate').datepicker();
+        });
+
 </script>
