@@ -1,0 +1,22 @@
+<h1>Resource Access Control List</h1>
+Simulation ID: <%= simulationId %>
+
+<table>
+<tr>
+	<th><!--Team--></th>
+	<% _.each(resources, function (resource) { %>
+	<th>Apply <%= resource.name %></th>
+	<th>See <%= resource.name %></th>
+	<% }); %>
+</tr>
+<% _.each(teamsWithRoles, function(teamRole) { %>
+<tr>
+	<td><%= teamRole.team.name %>: <%= teamRole.role.name %></td>
+	<% _.each(resources, function (resource) { %>
+	<td>Apply <input type="checkbox"></input></td>
+	<td>See <input type="checkbox"></input></td>
+	<% }); %>
+
+<% }); %>
+
+</table>

@@ -1,0 +1,74 @@
+<h1>Add Resources to the Simulation's Resource Pool</h1>
+Simulation ID: <%= simulationId %>
+<br/>
+Current Pool:
+<table>
+	<tr>
+		<th>Resource Name</th>
+		<th>Icon</th>
+		<th>Quantity</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(resources, function(resource) { %>
+	<tr>
+		<td><%= resource.name %></td>
+		<td><%= resource.icon %></td> 
+		<td><%= resource.quantity %></td>
+		<td><a href='/Resource/destroy/<%= resource.id %>'>delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<br/>
+
+<form id="addResource" method="POST" action="addResource">
+<label for="name">Resource Name:</label>
+<input type="text" id="name"></input>
+<br/>
+<label for="quantity">Quantity of Resource:</label>
+<input type="text" id="quantity"></input>
+<br/>
+<label for="icon">Icon Placeholder:</label>
+<input type="text" id="icon"></input>
+<br/>
+<input type="button" id="addResource" value="Add Resource" onclick="addResourceFn();"></input>
+</form>
+
+<br/>
+<br/>
+Finished adding resources?
+<input type="button" id="nextStep" value="Next Step" onclick="nextStepClick();"></input>
+
+<script>
+
+	var addResourceFn = function ()
+	{
+		var resourceName = $('#name').val();
+		var resourceIcon = $('#icon').val();
+		var resourceQuantity = $('#quantity').val();
+		
+		if (!resourceName)
+		{
+			alert("Resource name required");
+			return false;
+		}
+		
+		$.post('/addResource', {
+			simulation: <%= simulationId %>,
+			name: resourceName,
+			icon: resourceIcon,
+			quantity: resourceQuantity
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewResources/<%= simulationId %>';
+			});
+		
+		
+	}
+	
+	var nextStepClick = function() {
+		window.location = '/viewResourceACL/<%= simulationId %>';
+	}
+	
+</script>
