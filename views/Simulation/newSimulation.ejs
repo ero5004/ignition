@@ -1,7 +1,6 @@
 <h1>Create New Simulation</h1>
 
-<form id="newSimulation" method="POST" action="/newSimulation">
-	
+<form id="newSimulation" >
 	<label for="name">Simulation Name:</label>
 	<input type="text" id="name"></input>
 	<br/>
@@ -20,7 +19,7 @@
 	<label for="simEndDate">Simulated End Date:</label>
 	<input type="text" id="simEndDate"></input>
 	<br/>
-	<input type="button" id="submit" value="Create" onclick="checkFields()"></input>
+	<input type="button" id="submit" value="Create" onclick="return checkFields();" ></input>
 </form>
 
 <script>
@@ -71,21 +70,20 @@
 			return false;
 		}
 		
-		//check that passwords match
 		
 
-		$.post('/newSimulation', {
+		$.post('/addNewSimulation', {
 			name: name,
 			startDate: startDate,
 			endDate: endDate,
 			description: description,
-			simStartDate: simStartDate,
-			simEndDate: simEndDate
-		}).done(function(data)
+			simulatedStartTime: simStartDate,
+			simulatedEndTime: simEndDate,
+			completed: false
+		}, function(data, status, jqxhr)
 			{
-				window.location = '/dashboard';
+				window.location = '/createTeam/' + data.simulationId;
 			});
-
 	}
 
         $(function() {

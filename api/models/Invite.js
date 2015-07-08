@@ -24,6 +24,12 @@ module.exports = {
 			 * 1 = accepted
 			 * 
 			 */
+		},
+		team: {
+			model: 'Team'
+		},
+		role: {
+			model: 'Role'
 		}
 	}
 };

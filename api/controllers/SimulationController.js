@@ -12,14 +12,16 @@ module.exports = {
 	
 	processNewSimulation: function(req, res) {
 		
-		var params = req.params.all();
-		params.owner = req.user.id;
+		var params = req.allParams();
+		
+		params.owner = req.session.user.id;
 		Simulation.create(params).exec(function(err, created){
 			if (err) {
 				console.log(err);
 				return res.negotiate(err);
 			}
-			return res.redirect('/dashboard');
+			
+			return res.send({simulationId: created.id});
 		});
 	}
 };

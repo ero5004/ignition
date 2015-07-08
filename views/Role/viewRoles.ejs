@@ -1,0 +1,64 @@
+<h1>Add Roles to <%= team.name %></h1>
+Simulation ID: <%= simulationId %>
+<br/>
+Existing Roles:
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Delete</th>
+		<th>Edit</th>
+	</tr>
+	<% _.each(roles, function(role) { %>
+	<tr>
+		<td><%= role.name %></td>
+		<td><a href='/Role/destroy/<%= role.id %>'>delete</a></td>
+		<td><a>edit</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<br/>
+
+<form id="addRole" method="POST" action="addRole">
+<label for="name">Name of Role:</label>
+<input type="text" id="name"></input>
+<br/>
+<input type="button" id="addRole" value="Add Role" onclick="addRolefn();"></input>
+</form>
+
+<br/>
+<br/>
+Finished adding roles to this Team?
+<input type="button" id="nextStep" value="Back to Teams" onclick='nextStepClick();'></input>
+
+<script>
+
+	var addRolefn = function addRole()
+	{
+		var roleName = $('#name').val();
+		
+		if (!roleName)
+		{
+			alert("Role name required");
+			return false;
+		}
+		
+		$.post('/addRole', {
+			simulation: <%= simulationId %>,
+			team: <%= team.id %>,
+			name: roleName,
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewRoles/' + data.simulationId + '/' + data.teamId;
+			});
+		
+		
+	}
+	
+	var nextStepClick = function ()
+	{
+		window.location = '/viewTeams/<%= simulationId %>';
+	}
+	
+</script>

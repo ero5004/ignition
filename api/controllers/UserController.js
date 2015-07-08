@@ -18,6 +18,7 @@ module.exports = {
             }
             req.logIn(user, function(err) {
                 if (err) res.send(err);
+				req.session.user = user;
 				res.redirect('/Dashboard');
                 /*return res.send({
                     message: info.message,
@@ -29,6 +30,7 @@ module.exports = {
     },
 
     logout: function(req, res) {
+		req.session.user = null;
         req.logout();
         res.redirect('/');
     },

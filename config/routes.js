@@ -55,12 +55,12 @@ module.exports.routes = {
   },
   
   /* SimulationController routes */
-  'GET /newSimulation' : {	  
+  '/newSimulation' : {	  
 	  controller: 'SimulationController',
 	  action: 'newSimulation'
   },
   
-  'POST /newSimulation' : {
+  '/addNewSimulation' : {
 	  controller: 'SimulationController',
 	  action: 'processNewSimulation'
   },
@@ -72,15 +72,55 @@ module.exports.routes = {
 	  action: 'dashboard'
   },
   
-  'GET /sendInvitations' : {
+  '/invite/:simulation' : {
 	  controller: 'InviteController',
 	  action: 'invite'
   },
   
-  'POST /processInvitations' : {
+  '/processInvitations' : {
 	  controller: 'InviteController',
 	  action: 'processInvitations'
+  },
+  
+  /* TeamController routes  */
+  
+  '/viewTeams/:simulationId' : {
+	  controller: 'TeamController',
+	  action: 'viewTeams'
+  },
+  
+  '/addTeam' : {
+	  controller: 'TeamController',
+	  action: 'addTeam'
+  },
+  
+  /* RoleController routes */
+  '/viewRoles/:simulationId/:teamId' : {
+	  controller: 'RoleController',
+	  action: 'getRoles'
+  },
+  
+  '/addRole' : {
+	  controller: 'RoleController',
+	  action: 'addRole'
+  },
+  
+  /* ResourceController routes */
+  '/viewResources/:simulationId' : {
+	  controller: 'ResourceController',
+	  action: 'viewResources'
+  },
+  
+  '/addResource' : {
+	  controller: 'ResourceController',
+	  action: 'addResource'
+  },
+  
+  '/viewResourceACL/:simulationId' : {
+	  controller: 'ResourceController',
+	  action: 'viewResourceACL'
   }
+	
 
   /***************************************************************************
   *                                                                          *

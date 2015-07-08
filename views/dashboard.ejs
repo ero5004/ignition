@@ -12,6 +12,8 @@
 	<th>Simulated End Time</th>
 	<th>Completed</th>
 	<th>Invitations</th>
+	<th>Delete</th>
+	<th>Edit</th>
 </tr>
 <% _.each(simulations, function(simulation) { %>
 <tr>
@@ -22,7 +24,9 @@
 	<td><%= simulation.simulatedStartTime %></td>
 	<td><%= simulation.simulatedEndTime %></td>
 	<td><%= simulation.completed %></td>
-	<td><a href="/sendInvitations?simulation=<%= simulation.id %>">Send Invitations</a></td>
+	<td><a href="/invite/<%= simulation.id %>">Send Invitations</a></td>
+	<td><a href="/Simulation/destroy/<%= simulation.id %>">delete</a></td>
+	<td><a href='/viewTeams/<%= simulation.id %>'>edit</a>
 </tr>
 <% }) %>
 </table>

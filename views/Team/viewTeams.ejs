@@ -1,0 +1,81 @@
+<h1>Add Teams to Simulation</h1>
+Simulation ID: <%= simulationId %>
+<br/>
+Existing Teams:
+<table>
+	<tr>
+		<th>Team Name</th>
+		<th>Icon</th>
+		<th>Current Roles</th>
+		<th>Add Roles</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(teams, function(team) { %>
+	<tr>
+		<td><%= team.name %></td>
+		<td><%= team.icon%></td> 
+		<td>
+		<% _.each(team.roles, function(role) { %>
+		<%= role.name %>
+		<% }) %>
+		</td>
+		<td><a href='/viewRoles/<%= simulationId %>/<%=team.id%>'>Add Roles</a></td>
+		<td><a href='/Team/destroy/<%= team.id %>'>delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<br/>
+
+<form id="addTeam" method="POST" action="createTeam">
+<label for="name">Team Name:</label>
+<input type="text" id="name"></input>
+<br/>
+<label for="icon">Icon Placeholder:</label>
+<input type="text" id="icon"></input>
+<br/>
+<input type="button" id="addTeam" value="Add Team" onclick="addTeamFn();"></input>
+</form>
+
+<br/>
+<br/>
+Finished adding teams?
+<input type="button" id="nextStep" value="Next Step" onclick="nextStepClick();"></input>
+
+<script>
+
+	var addTeamFn = function addTeam()
+	{
+		var teamName = $('#name').val();
+		var teamIcon = $('#icon').val();
+		
+		if (!teamName)
+		{
+			alert("Team name required");
+			return false;
+		}
+		
+		$.post('/addTeam', {
+			simulation: <%= simulationId %>,
+			name: teamName,
+			icon: teamIcon
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewTeams/' + data.simulationId;
+			});
+		
+		
+	}
+	
+	var nextStepClick = function() {
+		window.location = '/viewResources/<%= simulationId %>';	
+	}
+	
+</script>
+
+
+
+
+
+

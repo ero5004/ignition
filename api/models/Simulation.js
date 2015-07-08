@@ -36,6 +36,14 @@ module.exports = {
 		invitations: {
 			collection: 'Invite',
 			via: 'simulation'
+		},
+		teams: {
+			collection: 'Team',
+			via: 'simulation'
+		},
+		resources: {
+			collection: 'Resource',
+			via: 'simulation'
 		}
 
 	}
