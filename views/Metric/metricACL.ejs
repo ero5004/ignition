@@ -1,0 +1,88 @@
+<h1>Metric Access Control List</h1>
+
+Simulation ID: <%= simulationId %>
+<table border='1'>
+<tr>
+	<th><!--Team--></th>
+	<% _.each(metrics, function (metric) { %>
+	<th>See <%= metric.name %></th>
+	<% }); %>
+</tr>
+
+
+<% _.each(teamsWithRoles, function(teamRole) { %>
+
+<tr>
+	<td><%= teamRole.team.name %>: <%= teamRole.role.name %></td>
+	<% _.each(metrics, function (metric) { %>
+	
+	<% var metricAccess = _.find(metricAccessList, function (metricAccess){ return (metricAccess.metric == metric.id && metricAccess.role == teamRole.role.id); }) %>
+	<% if (metricAccess){ %>
+		<td><input type="checkbox" class="s-<%= metric.id %> r-<%=teamRole.role.id %>" <%= metricAccess.see ? "checked='checked'" : "" %> /></td>
+	<% }else{ %>
+		<td><input type="checkbox" class="s-<%= metric.id %> r-<%=teamRole.role.id %>"/></td>
+	<% } %>
+	<% }); %>
+	
+</tr>
+<% }); %>
+
+</table>
+
+<input type="button" id="submitMetricACL" onclick="submitMetricACLFn();" value="Submit ACL" />
+
+<br/>
+<br/>
+Finished editing the Metrics Access Control List?
+<input type="button" id="nextStep" value="Next Step" onclick="nextStepClick();"></input>
+
+
+<script>
+
+var getCheckboxesStatefn = function() {
+	//array to hold the list of metricAccess objects
+	var metricAccessList = [];
+	
+	var metricsLocal = [<% _.each(metrics, function(metric) { %> <%=metric.id%>, <% }); %>];
+	var rolesLocal = [<% _.each(teamsWithRoles, function(teamRole) { %> <%=teamRole.role.id%>, <% }); %>];
+	
+
+	rolesLocal.forEach(function (teamRole) {
+		metricsLocal.forEach(function(metric) {
+			//css classes for the checkboxes
+			var seeCheckboxClass = '.s-'+ metric + '.r-' + teamRole;
+			
+			//this variable will hold one record and then be pushed to an array that will be passed to the server
+			var metricAccessTemp = {};
+			metricAccessTemp.metric = metric;
+			metricAccessTemp.role = teamRole;
+			metricAccessTemp.see = $(seeCheckboxClass).is(":checked");
+			metricAccessTemp.simulation = <%= simulationId %>;
+			
+			metricAccessList.push(metricAccessTemp);
+		});		
+	});
+	
+	return metricAccessList;
+};
+
+var submitMetricACLFn = function() {
+	var metricAccessList = getCheckboxesStatefn();
+	
+	$.post('/processMetricACL', {
+			metricAccessList: metricAccessList,
+			simulationId: <%= simulationId %>
+		}).done(function(data) {
+			window.location = '/viewEventACL/<%= simulationId %>';
+		});
+	
+
+};
+
+var nextStepClick = function() {
+	window.location = '/viewEvents/<%= simulationId %>';
+}
+
+
+
+</script>

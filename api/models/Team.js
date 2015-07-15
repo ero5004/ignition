@@ -17,6 +17,9 @@ module.exports = {
 	  simulation: {
 		  model: 'Simulation'
 	  },
+	  description: {
+			type: 'string'
+	  },
 	  roles: {
 		  collection: 'Role',
 		  via: 'team'

@@ -1,0 +1,100 @@
+<h1>Add Events to this Simulation</h1>
+
+Simulation ID: <%= simulationId %>
+<br/>
+Current Events:
+<table border="1">
+	<tr>
+		<th>Event Name</th>
+		<th>Description</th>
+		<th>Lead Team</th>
+		<th>Edit</th>
+		<th>Add Instance</th>
+		<th>Resources Required</th>
+		<th>Event Effects</th>
+		<th>Delete</th>
+	</tr>
+	<% // have to use event_local here since event is a js keyword %>
+	<% _.each(events, function(event_local){ %>
+	<tr>
+		<td><%= event_local.name %></td>
+		<td><%= event_local.description %></td>
+		<td><%= event_local.leadTeam.name %></td>
+		<td><a href='#'>edit</a></td>
+		<td><a href='/viewEventInstances/<%= event_local.id %>'>add</a></td>
+		<td><a href='#'>add</a></td>
+		<td><a href='#'>add</a></td>
+		<td><a href='/Metric/destroy/<%= event_local.id %>'>delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<br/>
+
+<form id="addEventForm" method="POST" action="addEvent">
+<label for="name">Event Name:</label>
+<input type="text" id="name"></input>
+<br/>
+<label for="description">Description:</label>
+<textarea id="description"></textarea>
+<br/>
+<label for="leadTeam">Lead Team:</label>
+<select id="leadTeam">
+	<option></option>
+	<% _.each(teams, function(team){ %>
+	<option value="<%= team.id%>"><%= team.name %></option>
+	<% })%>
+</select>
+<br/>
+<input type="button" id="addEvent" value="Add Event" onclick="addEventFn();"></input>
+</form>
+
+<br/>
+<br/>
+Finished adding events?
+<input type="button" id="nextStep" value="Next Step" onclick="nextStepClick();"></input>
+
+<script>
+
+	var addEventFn = function ()
+	{
+		var eventName = $('#name').val();
+		var eventDescription = $('#description').val();
+		var leadTeam = $('#leadTeam').val();
+		
+		if (!eventName)
+		{
+			alert("Event name required");
+			return false;
+		}
+		if (!eventDescription)
+		{
+			alert("Event description required");
+			return false;
+		}
+		if (!leadTeam)
+		{
+			alert("Lead team for this event required");
+			return false;
+		}
+
+		
+		$.post('/addEvent', {
+			simulation: <%= simulationId %>,
+			name: eventName,
+			description: eventDescription,
+			leadTeam: leadTeam
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewEvents/' + data.simulationId;
+			});
+		
+		
+	}
+	
+	var nextStepClick = function() {
+		window.location = '/viewEventACL/<%= simulationId %>';
+	}
+	
+</script>

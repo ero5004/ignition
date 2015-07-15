@@ -1,0 +1,112 @@
+<h1>Add Metrics to this Simulation</h1>
+
+Simulation ID: <%= simulationId %>
+<br/>
+Current Metrics:
+<table>
+	<tr>
+		<th>Metric Name</th>
+		<th>Starting Value</th>
+		<th>Min Value</th>
+		<th>Max Value</th>
+		<th>Unit</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(metrics, function(metric) { %>
+	<tr>
+		<td><%= metric.name %></td>
+		<td><%= metric.defaultValue %></td>
+		<td><%= metric.minValue %></td>
+		<td><%= metric.maxValue %></td>
+		<td><%= metric.unit %></td>
+		<td><a href='#'>edit</a></td>
+		<td><a href='/Metric/destroy/<%= metric.id %>'>delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<br/>
+
+<form id="addMetricForm" method="POST" action="addMetric">
+<label for="name">Metric Name:</label>
+<input type="text" id="name"></input>
+<br/>
+<label for="defaultValue">Starting Value:</label>
+<input type="text" id="defaultValue"></input>
+<br/>
+<label for="minValue">Min Value:</label>
+<input type="text" id="minValue"></input>
+<br/>
+<label for="maxValue">Max Value:</label>
+<input type="text" id="maxValue"></input>
+<br/>
+<label for="unit">Unit:</label>
+<input type="text" id="unit"></input>
+<br/>
+<input type="button" id="addMetric" value="Add Metric" onclick="addMetricFn();"></input>
+</form>
+
+<br/>
+<br/>
+Finished adding metrics?
+<input type="button" id="nextStep" value="Next Step" onclick="nextStepClick();"></input>
+
+<script>
+
+	var addMetricFn = function ()
+	{
+		var metricName = $('#name').val();
+		var defaultValue = $('#defaultValue').val();
+		var minValue = $('#minValue').val();
+		var maxValue = $('#maxValue').val();
+		var unit = $('#unit').val();
+		
+		if (!metricName)
+		{
+			alert("Metric name required");
+			return false;
+		}
+		if (!defaultValue)
+		{
+			alert("Default value of this metric  required");
+			return false;
+		}
+		if (!minValue)
+		{
+			alert("Minimum value of this metric required");
+			return false;
+		}
+		if (!maxValue)
+		{
+			alert("Maximum value of this metric required");
+			return false;
+		}
+		if (!unit)
+		{
+			alert("Unit of this metric required");
+			return false;
+		}
+
+		
+		$.post('/addMetric', {
+			simulation: <%= simulationId %>,
+			name: metricName,
+			defaultValue: defaultValue,
+			minValue: minValue,
+			maxValue: maxValue,
+			unit: unit
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewMetrics/' + data.simulationId;
+			});
+		
+		
+	}
+	
+	var nextStepClick = function() {
+		window.location = '/viewMetricACL/<%= simulationId %>';
+	}
+	
+</script>

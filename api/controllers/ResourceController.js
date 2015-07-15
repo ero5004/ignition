@@ -37,17 +37,16 @@ module.exports = {
 	viewResourceACL: function(req, res) {
 		var params = req.params.all();
 		var simulationId = params.simulationId;
-		
+		var teams;
 		
 		//get all teams, roles, and resources for this simulation and send them to the page.		
-		
 		Simulation.findOne({id: simulationId})
 		.populateAll()
 		.then(function(simulation) {
 			Role.find({simulation: simulationId})
 			.then(function(roles) {
 				
-				var teams = simulation.teams;
+				teams = simulation.teams;
 				var teamsWithRoles = [];
 				
 				teams.forEach(function(team) {
@@ -62,20 +61,57 @@ module.exports = {
 
 				Resource.find({simulation: simulationId})
 				.then(function(resources){
-					return res.view('\\Resource\\resourceACL', {
-						simulationId: simulationId, 
-						simulation: simulation,
-						teamsWithRoles: teamsWithRoles,
-						resources: resources
-						});
-				});
-				
-				
+					
+					ResourceAccess.find({simulation: simulationId})
+					//.populate('role').populate('resource')
+					.then(function (resourceAccessList) {
+						//not necessary to populate anything in this list since we have the list of resources and roles already
+						/*if (resourceAccessList.length != 0)
+						{
+							var sT = _.indexBy(teams, 'id');
+							
+							resourceAccessList = _.map(resourceAccessList, function(resourceAccess) {
+								resourceAccess.role.team = sT[resourceAccess.role.team];
+								
+								return resourceAccess;
+							});				
+
+						}*/
+						
+						return res.view('\\Resource\\resourceACL', {
+							simulationId: simulationId, 
+							teamsWithRoles: teamsWithRoles,
+							resources: resources,
+							resourceAccessList: resourceAccessList
+							});
+					});
+				});	
 			});
 		});
+	},
+	
+	processResourceACL: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		var resourceAccessList = params.resourceAccessList;
 		
-		
-		
+		if (resourceAccessList.length != 0)
+		{
+			ResourceAccess.destroy({simulation: simulationId}).then(function(err) {
+				ResourceAccess.create(resourceAccessList).exec(function(err, created){
+					if (err) {
+						console.log(err);
+						return res.negotiate(err);
+					}
+					
+					return res.send({simulationId: created[0].simulation});
+				});
+			});
+		}
+		else
+		{
+			return res.send({simulationId: simulationId});
+		}
 		
 	}
 	

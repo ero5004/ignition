@@ -119,6 +119,60 @@ module.exports.routes = {
   '/viewResourceACL/:simulationId' : {
 	  controller: 'ResourceController',
 	  action: 'viewResourceACL'
+  },
+    
+  '/processResourceACL' : {
+	  controller: 'ResourceController',
+	  action: 'processResourceACL'
+  },
+  
+  /* MetricController routes */
+  
+  '/viewMetrics/:simulationId' : {
+	  controller: 'MetricController',
+	  action: 'viewMetrics'
+  },
+  
+  '/addMetric' : {
+	  controller: 'MetricController',
+	  action: 'addMetric'
+  },
+  
+  '/viewMetricACL/:simulationId' : {
+	  controller: 'MetricController',
+	  action: 'viewMetricACL'
+  },
+  
+  '/processMetricACL': {
+	  controller: 'MetricController',
+	  action: 'processMetricACL'
+  },
+  
+  /* EventController routes */
+  
+  '/viewEvents/:simulationId' : {
+	  controller: 'EventController',
+	  action: 'viewEvents'
+  },
+  
+  '/addEvent' : {
+	  controller: 'EventController',
+	  action: 'addEvent'
+  },
+  
+  '/viewEventACL/:simulationId' : {
+	  controller: 'EventController',
+	  action: 'viewEventACL'
+  },
+  
+  '/processEventACL': {
+	  controller: 'EventController',
+	  action: 'processEventACL'
+  },
+  
+  '/viewEventInstances/:eventId': {
+	  controller: 'EventController',
+	  action: 'viewEventInstances'
   }
 	
 

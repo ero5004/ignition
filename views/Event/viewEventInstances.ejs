@@ -1,0 +1,26 @@
+<h1>Add instances of this Event</h1>
+
+Event: <%= event.name %>
+<br/>
+Lead Team: <%= event.leadTeam.name %>
+
+
+
+
+<form id="addEventInstanceForm" method="POST" action="addEvent">
+<label for="name">Instance Name:</label>
+<input type="text" id="name"></input>
+<br/>
+<label for="description">Instance Description:</label>
+<textarea id="description"></textarea>
+<br/>
+Add Event Based On:
+<br/>
+<label for="time">Fixed Time:</label>
+<input type="radio" name="eventSpawnType" id="time" value="t"/>
+<input type="range" id="time"></input>
+<label for="random">Random Time:</label>
+<input type="radio" name="eventSpawnType" id="random" value="r"/>
+<br/>
+<input type="button" id="addEventInstance" value="Add Instance" onclick="addEventInstanceFn();"></input>
+</form>
