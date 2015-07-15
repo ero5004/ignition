@@ -9,7 +9,7 @@ Current Events:
 		<th>Description</th>
 		<th>Lead Team</th>
 		<th>Edit</th>
-		<th>Add Instance</th>
+		<th>Add Instances</th>
 		<th>Resources Required</th>
 		<th>Event Effects</th>
 		<th>Delete</th>
@@ -22,13 +22,15 @@ Current Events:
 		<td><%= event_local.leadTeam.name %></td>
 		<td><a href='#'>edit</a></td>
 		<td><a href='/viewEventInstances/<%= event_local.id %>'>add</a></td>
-		<td><a href='#'>add</a></td>
+		<td><a href='/viewEventResources/<%= simulationId %>/<%= event_local.id %>'>add</a></td>
 		<td><a href='#'>add</a></td>
 		<td><a href='/Metric/destroy/<%= event_local.id %>'>delete</a></td>
 	</tr>
 	<% }) %>
 </table>
 
+<br/>
+Note: To send a notification to a team, create an event that requires no resources and has no probability of recurrence. It is not possible to send a global notification.
 <br/>
 <br/>
 

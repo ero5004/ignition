@@ -173,6 +173,11 @@ module.exports.routes = {
   '/viewEventInstances/:eventId': {
 	  controller: 'EventController',
 	  action: 'viewEventInstances'
+  },
+  
+  '/viewEventResources/:simulationId/:eventId': {
+	  controller: 'EventController',
+	  action: 'viewEventResources'
   }
 	
 

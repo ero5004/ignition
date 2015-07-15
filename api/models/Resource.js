@@ -19,6 +19,10 @@ module.exports = {
 		},
 		simulation: {
 			model: 'Simulation'
+		},
+		accesses: {
+			collection: 'ResourceAccess',
+			via: 'resource'
 		}
 	}
 };

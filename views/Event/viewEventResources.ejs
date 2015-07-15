@@ -1,0 +1,23 @@
+<h1>Add Resources Required For This Event</h1>
+
+<% console.log(resources[0].accesses); %>
+
+Event: <%= event.name %>
+<br/>
+Lead Team: <%= event.leadTeam.name %>
+
+<form id="addEventResourcesForm" method="POST">
+<strong>Resources:</strong>
+<br/>
+<% _.each(resources, function(resource){ %>
+<%= resource.name %>
+<br/>
+Starting Quantity:<%= resource.quantity %>
+<br/>
+Quantity Needed for Event: 
+<input type="text" id="r-<%= resource.id %>"/>
+<br/>
+<br/>
+<% }) %>
+<input type="button" id="addEventResource" value="Add Resource" onclick="addEventResourceFn();"></input>
+</form>

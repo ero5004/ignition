@@ -119,6 +119,30 @@ module.exports = {
 			});
 
 		});
+	},
+	
+	viewEventResources: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		var eventId = params.eventId;
+		
+		Event.findOne({id: eventId})
+		.populateAll()
+		.then(function(event) {
+			Resource.find({simulation: simulationId})
+			.populateAll()
+			.then(function(resources) {
+				ResourceAccess.find({simulation: simulationId})
+				.populateAll()
+				.then(function(resourceAccessList) {
+					return res.view("\\Event\\viewEventResources", {
+						event: event,
+						resources: resources,
+						resourceAccessList: resourceAccessList
+					});
+				});
+			});
+		});
 	}
 };
 
