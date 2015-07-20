@@ -14,7 +14,7 @@ module.exports = {
 		Team.find({simulation: simulationId})
 			.populateAll()
 			.then(function(teams) {
-				return res.view('\\Team\\viewTeams', 
+				return res.view('Team/viewTeams', 
 				{
 					simulationId: simulationId,
 					teams: teams

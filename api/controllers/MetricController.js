@@ -13,7 +13,7 @@ module.exports = {
 		var simulationId = params.simulationId;
 		
 		Metric.find({simulation: simulationId}).then(function(metrics) {
-			return res.view('\\Metric\\viewMetrics', {
+			return res.view('Metric/viewMetrics', {
 				simulationId: simulationId,
 				metrics: metrics
 			});
@@ -66,7 +66,7 @@ module.exports = {
 					MetricAccess.find({simulation: simulationId})
 					.then(function (metricAccessList) {
 						
-						return res.view('\\Metric\\metricACL', {
+						return res.view('Metric/metricACL', {
 							simulationId: simulationId, 
 							teamsWithRoles: teamsWithRoles,
 							metrics: metrics,

@@ -16,7 +16,7 @@ module.exports = {
 		Team.findOne({id: teamId}).then(function(team) {
 			Role.find({team: teamId})
 			.then(function(roles) {
-				return res.view('\\Role\\viewRoles', {
+				return res.view('Role/viewRoles', {
 					simulationId: simulationId,
 					team: team,
 					roles: roles					

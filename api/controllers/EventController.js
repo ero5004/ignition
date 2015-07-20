@@ -15,7 +15,8 @@ module.exports = {
 		.populateAll()
 		.then(function(events){
 			Team.find({simulation: simulationId}).then(function(teams){
-				return res.view('\\Event\\viewEvents', {
+				//var viewPath = "Event" + process.env.DIRCHAR + "viewEvents";
+				return res.view("Event/viewEvents", {
 					simulationId: simulationId,
 					events: events,
 					teams: teams
@@ -69,8 +70,8 @@ module.exports = {
 					
 					EventAccess.find({simulation: simulationId})
 					.then(function (eventAccessList) {
-						
-						return res.view('\\Event\\eventACL', {
+						//var viewPath = "Event" + process.env.DIRCHAR + "eventACL";
+						return res.view("Event/eventACL", {
 							simulationId: simulationId, 
 							teamsWithRoles: teamsWithRoles,
 							events: events,
@@ -114,7 +115,8 @@ module.exports = {
 		Event.findOne({id: eventId})
 		.populateAll()
 		.then(function(event) {
-			return res.view("\\Event\\viewEventInstances", {
+			//var viewPath = "Event" + process.env.DIRCHAR + "viewEventInstances";
+			return res.view("Event/viewEventInstances", {
 				event: event
 			});
 
@@ -135,7 +137,8 @@ module.exports = {
 				ResourceAccess.find({simulation: simulationId})
 				.populateAll()
 				.then(function(resourceAccessList) {
-					return res.view("\\Event\\viewEventResources", {
+					//var viewPath = "Event" + process.env.DIRCHAR + "viewEventResources";
+					return res.view("Event/viewEventResources", {
 						event: event,
 						resources: resources,
 						resourceAccessList: resourceAccessList

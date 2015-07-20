@@ -13,7 +13,7 @@ module.exports = {
 		var simulationId = params.simulationId;
 		
 		Resource.find({simulation: simulationId}).then(function(resources) {
-			return res.view('\\Resource\\viewResources', {
+			return res.view('Resource/viewResources', {
 				simulationId: simulationId,
 				resources: resources
 			});
@@ -78,7 +78,7 @@ module.exports = {
 
 						}*/
 						
-						return res.view('\\Resource\\resourceACL', {
+						return res.view('Resource/resourceACL', {
 							simulationId: simulationId, 
 							teamsWithRoles: teamsWithRoles,
 							resources: resources,
