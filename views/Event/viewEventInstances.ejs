@@ -4,8 +4,28 @@ Event: <%= event.name %>
 <br/>
 Lead Team: <%= event.leadTeam.name %>
 
+Current Event Instances:
+<table border="1">
+	<tr>
+		<th>Instance Name</th>
+		<th>Instance Description</th>
+		<!--<th>Spawn Type</th>-->
+		<th>Spawn Time</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(eventInstances, function(eventInstance){ %>
+	<tr>
+		<td><%= eventInstance.name %></td>
+		<td><%= eventInstance.description %></td>
+		<!--<td><%= eventInstance.spawnType == 'r' ? "random" : "fixed" %></td>-->
+		<td><%= eventInstance.spawnTime %></td>
+		<td><a href='/EventInstance/destroy/<%= eventInstance.id %>'>delete</a></td>
+	</tr>
+	<% }) %>
+</table>
 
-
+<br/>
+<br/>
 
 <form id="addEventInstanceForm" method="POST" action="addEvent">
 <label for="name">Instance Name:</label>
@@ -18,9 +38,75 @@ Add Event Based On:
 <br/>
 <label for="time">Fixed Time:</label>
 <input type="radio" name="eventSpawnType" id="time" value="t"/>
-<input type="range" id="time"></input>
+In future make this slider start after the last instance that has been added
+<input type="range" id="timeSlider" min="0" max="1000" value="50" oninput="outputUpdate(value)"></input>
+<output for="range" id="timeDisplay"></output>
+
+<script>
+
+function outputUpdate(vol) {
+
+document.querySelector('#timeDisplay').value = vol;
+
+}
+
+</script>
 <label for="random">Random Time:</label>
 <input type="radio" name="eventSpawnType" id="random" value="r"/>
 <br/>
 <input type="button" id="addEventInstance" value="Add Instance" onclick="addEventInstanceFn();"></input>
 </form>
+
+<br/>
+<br/>
+Finished adding event instances?
+<input type="button" id="nextStep" value="View Events" onclick="nextStepClick();"></input>
+
+
+
+<script>
+
+	var addEventInstanceFn = function ()
+	{
+		var instanceName = $('#name').val();
+		var instanceDescription = $('#description').val();
+		var spawnType = $('input[name=eventSpawnType]:checked').val();
+		var time = $('#timeSlider').val();
+				
+		if (!instanceName)
+		{
+			alert("Instance name required");
+			return false;
+		}
+		if (!instanceDescription)
+		{
+			alert("Instance description required");
+			return false;
+		}
+		if (!spawnType)
+		{
+			alert("Event spawn type (time or random) required");
+			return false;
+		}
+
+		
+		$.post('/addEventInstance', {
+			simulation: <%= simulationId %>,
+			event: <%= event.id %>,
+			name: instanceName,
+			description: instanceDescription,
+			spawnType: spawnType,
+			spawnTime: time
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewEventInstances/' + data.simulationId + '/' + data.eventId;
+			});
+		
+		
+	}
+	
+	var nextStepClick = function() {
+		window.location = '/viewEvents/<%= simulationId %>';
+	}
+	
+</script>

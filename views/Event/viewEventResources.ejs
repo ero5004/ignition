@@ -4,7 +4,22 @@
 
 Event: <%= event.name %>
 <br/>
+Description: <%= event.description %>
+<br/>
 Lead Team: <%= event.leadTeam.name %>
+<br/>
+
+<table border="1">
+<tr>
+	<th></th>
+
+</tr>
+
+
+
+</table>
+
+
 
 <form id="addEventResourcesForm" method="POST">
 <strong>Resources:</strong>
@@ -19,5 +34,5 @@ Quantity Needed for Event:
 <br/>
 <br/>
 <% }) %>
-<input type="button" id="addEventResource" value="Add Resource" onclick="addEventResourceFn();"></input>
+<input type="button" id="addEventResource" value="Add Requirement" onclick="addEventResourceFn();"></input>
 </form>

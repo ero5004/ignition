@@ -111,15 +111,48 @@ module.exports = {
 	viewEventInstances: function(req, res) {
 		var params = req.params.all();
 		var eventId = params.eventId;
+		var simulationId = params.simulationId;
 		
 		Event.findOne({id: eventId})
 		.populateAll()
 		.then(function(event) {
-			//var viewPath = "Event" + process.env.DIRCHAR + "viewEventInstances";
-			return res.view("Event/viewEventInstances", {
-				event: event
+			EventInstance.find({event: eventId})
+			.then(function(eventInstances) {
+				return res.view("Event/viewEventInstances", {
+					event: event,
+					eventInstances: eventInstances,
+					simulationId: simulationId
+				});
 			});
-
+		});
+	},
+	
+	addEventInstance: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulation;
+		var eventId = params.event;
+		var spawnType = params.spawnType;
+		
+		//if spawnType is set as random, pick a random time for this event to spawn
+		if (spawnType == 'r')
+		{
+			//currently picking a random time between 0 and 1000, this will be changed to the number of ticks per simulation
+			params.spawnTime = Math.random() * 1000;
+		}
+		else 
+		{
+			//slider returns value between 0 and 100 - normalize to number of simulation ticks
+			//params.spawnTime = (params.spawnTime/100) * 1000
+		}
+		
+		
+		EventInstance.create(params).exec(function(err, created){
+			if (err) {
+				console.log(err);
+				return res.negotiate(err);
+			}
+			
+			return res.send({simulationId: created.simulation, eventId: created.event});
 		});
 	},
 	
@@ -137,13 +170,34 @@ module.exports = {
 				ResourceAccess.find({simulation: simulationId})
 				.populateAll()
 				.then(function(resourceAccessList) {
-					//var viewPath = "Event" + process.env.DIRCHAR + "viewEventResources";
-					return res.view("Event/viewEventResources", {
-						event: event,
-						resources: resources,
-						resourceAccessList: resourceAccessList
+					EventResource.findOne({event: event.id})
+					.then(function(eventResource) {
+						//var viewPath = "Event" + process.env.DIRCHAR + "viewEventResources";
+						return res.view("Event/viewEventResources", {
+							event: event,
+							resources: resources,
+							resourceAccessList: resourceAccessList,
+							eventResource: eventResource
+						});
 					});
 				});
+			});
+		});
+	},
+	
+	addEventResources: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulation;
+		var eventId = params.eventId;
+		
+		EventResource.destroy({event: eventId}).then(function(err) {
+			EventResource.create(params).exec(function(err, created){
+				if (err) {
+					console.log(err);
+					return res.negotiate(err);
+				}
+				
+				return res.send({simulationId: created.simulation});
 			});
 		});
 	}

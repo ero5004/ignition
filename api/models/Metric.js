@@ -25,6 +25,14 @@ module.exports = {
 	  },
 	  simulation: {
 		  model: 'Simulation'
+	  },
+	  metricResourceEffects: {
+		  collection: 'MetricResourceEffect',
+		  via: 'metric'
+	  },
+	  metricEventEffects: {
+		  collection: 'MetricEventEffect',
+		  via: 'metric'
 	  }
   }
 };

@@ -1,0 +1,69 @@
+<h1>Define Metric Effects on Resources and Events</h1>
+
+<% _.each(metrics, function(metric){ %>
+<%= metric.name %>
+<br/>
+Minimum Value: <%= metric.minValue %>
+<br/>
+Maximum Value: <%= metric.maxValue %>
+<br/>
+Starting Value: <%= metric.defaultValue %>
+<br/>
+Units: <%= metric.unit %>
+<br/>
+
+<br/>
+<table border="1">
+	<tr>
+		<th><%= metric.name %> threshold</th>
+		<th>Resource</th>
+		<th>Effect</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(metric.metricResourceEffects, function(resourceEffect){%>
+	<tr>
+		<td>goes 
+		<%= resourceEffect.metricThresholdDirection == 1 ? "above " : "below " %><%= resourceEffect.metricThreshold %></td>
+		<td><%= resources[resourceEffect.resource].name %></td>
+		<td><%= resourceEffect.effectAmount < 0 ? "remove " + resourceEffect.effectAmount*-1 : "add " +  resourceEffect.effectAmount %></td>
+		<td><a href="#">edit</a></td>
+		<td><a href="/MetricResourceEffect/destroy/<%= resourceEffect.id %>">delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<br/>
+<a href="/addMetricResourceEffect/<%= simulationId %>/<%= metric.id %>">Add Metric Resource Effect</a>
+
+<br/>
+
+
+<table border="1">
+	<tr>
+		<th><%= metric.name %> threshold</th>
+		<th>Event</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<% _.each(metric.eventEffects, function(eventEffect){%>
+	<tr>
+		<td><%= resourceEffect.metricThreshold %></td>
+		<td><%= resourceEffect.event.name %></td>
+		<td><a href="#">edit</a></td>
+		<td><a href="/MetricEventEffect/destory/<%= eventEffect.id %>">delete</a></td>
+	</tr>
+	<% }) %>
+</table>
+
+<hr/>
+
+
+
+
+
+<% }) %>
+
+
+
+

@@ -170,7 +170,7 @@ module.exports.routes = {
 	  action: 'processEventACL'
   },
   
-  '/viewEventInstances/:eventId': {
+  '/viewEventInstances/:simulationId/:eventId': {
 	  controller: 'EventController',
 	  action: 'viewEventInstances'
   },
@@ -178,8 +178,33 @@ module.exports.routes = {
   '/viewEventResources/:simulationId/:eventId': {
 	  controller: 'EventController',
 	  action: 'viewEventResources'
-  }
+  },
+  
+  '/addEventInstance': {
+	  controller: 'EventController',
+	  action: 'addEventInstance'
+  },
+  
+  '/addEventResources/': {
+	  controller: 'EventController',
+	  action: 'addEventResources'
+  },
+  
+  
+  /* MetricEffectController routes */
+	'/viewMetricEffects/:simulationId': {
+		controller: 'MetricEffectController',
+		action: 'viewMetricEffects'
+	},
 	
+	'/addMetricResourceEffect/:simulationId/:metricId': {
+		controller: 'MetricEffectController',
+		action: 'addMetricResourceEffect'
+	},
+	'/processAddMetricResourceEffect': {
+		controller: 'MetricEffectController',
+		action: 'processAddMetricResourceEffect'
+	}
 
   /***************************************************************************
   *                                                                          *
