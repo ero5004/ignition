@@ -73,7 +73,7 @@ var submitMetricACLFn = function() {
 			metricAccessList: metricAccessList,
 			simulationId: <%= simulationId %>
 		}).done(function(data) {
-			window.location = '/viewEventACL/<%= simulationId %>';
+			window.location = '/viewEvents/<%= simulationId %>';
 		});
 	
 

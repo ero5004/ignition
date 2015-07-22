@@ -1,0 +1,40 @@
+<h1>Add Metric Event Effects</h1>
+
+If <code><%= metric.name %></code> goes 
+<select id="thresholdDirection">
+	<option value="1">above</option>
+	<option value="-1">below</option>
+</select>
+<input type="text" maxlength="10" size="10" id="metricThreshold" />
+(Min = <%= metric.minValue %>, Max = <%= metric.maxValue %>, Starting Value = <%= metric.defaultValue %>)
+<br/>
+then spawn one 
+<select id="event">
+<% _.each(events, function(event_local){ %>
+	<option value="<%= event_local.id %>"><%= event_local.name %></option>
+<% }) %>
+</select>
+<br/>
+<input type="button" onclick="addMetricEventEffectFn()" value="add Effect" />
+
+<script>
+var addMetricEventEffectFn = function()
+{
+	var thresholdDirection = $("#thresholdDirection").val();
+	var metricThreshold = $("#metricThreshold").val();
+	var event = $("#event").val();
+	
+	$.post('/processAddMetricEventEffect', {
+			simulation: <%= simulationId %>,
+			metric: <%= metric.id %>,
+			event: event,
+			metricThreshold: metricThreshold,
+			metricThresholdDirection: thresholdDirection,
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewMetricEffects/' + data.simulationId;
+			});
+	
+}
+
+</script>

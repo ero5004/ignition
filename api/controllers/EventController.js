@@ -15,11 +15,15 @@ module.exports = {
 		.populateAll()
 		.then(function(events){
 			Team.find({simulation: simulationId}).then(function(teams){
-				//var viewPath = "Event" + process.env.DIRCHAR + "viewEvents";
-				return res.view("Event/viewEvents", {
-					simulationId: simulationId,
-					events: events,
-					teams: teams
+				Resource.find({simulation: simulationId})
+				.then(function(resources) {
+					var resourcesSorted = _.indexBy(resources, 'id');
+					return res.view("Event/viewEvents", {
+						simulationId: simulationId,
+						events: events,
+						teams: teams,
+						resources: resourcesSorted
+					});
 				});
 			});
 		});
@@ -174,6 +178,7 @@ module.exports = {
 					.then(function(eventResource) {
 						//var viewPath = "Event" + process.env.DIRCHAR + "viewEventResources";
 						return res.view("Event/viewEventResources", {
+							simulationId: simulationId,
 							event: event,
 							resources: resources,
 							resourceAccessList: resourceAccessList,
@@ -189,15 +194,16 @@ module.exports = {
 		var params = req.params.all();
 		var simulationId = params.simulation;
 		var eventId = params.eventId;
+		var eventResourceList = params.eventResourceList;
 		
 		EventResource.destroy({event: eventId}).then(function(err) {
-			EventResource.create(params).exec(function(err, created){
+			EventResource.create(eventResourceList).exec(function(err, created){
 				if (err) {
 					console.log(err);
 					return res.negotiate(err);
 				}
 				
-				return res.send({simulationId: created.simulation});
+				return res.send({simulationId: created[0].simulation});
 			});
 		});
 	}

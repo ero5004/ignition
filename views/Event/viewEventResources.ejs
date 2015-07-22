@@ -1,25 +1,10 @@
 <h1>Add Resources Required For This Event</h1>
-
-<% console.log(resources[0].accesses); %>
-
 Event: <%= event.name %>
 <br/>
 Description: <%= event.description %>
 <br/>
 Lead Team: <%= event.leadTeam.name %>
 <br/>
-
-<table border="1">
-<tr>
-	<th></th>
-
-</tr>
-
-
-
-</table>
-
-
 
 <form id="addEventResourcesForm" method="POST">
 <strong>Resources:</strong>
@@ -36,3 +21,60 @@ Quantity Needed for Event:
 <% }) %>
 <input type="button" id="addEventResource" value="Add Requirement" onclick="addEventResourceFn();"></input>
 </form>
+
+<a href="/viewResourceACL/<%= simulationId %>">View Resource Access Control List</a>
+
+<script>
+var addEventResourceFn = function() {
+	var resourcesLocal = [<% _.each(resources, function(resource) { %> <%=resource.id%>, <% }); %>];
+	
+	var eventResourceList = [];
+	var resourceQuantity;
+	
+	//make sure they have entered at least one quantity
+	var somethingEntered = false;
+	
+	
+	resourcesLocal.forEach(function(resource) {
+		var resourceInputId = "#r-" + resource;
+		
+		resourceQuantity = $(resourceInputId).val();
+		
+		
+		if (resourceQuantity)
+		{
+			somethingEntered = true;
+		}
+		else 
+		{
+			resourceQuantity = 0;
+		}
+		
+		var eventResourceTemp = {};
+		
+		eventResourceTemp.event = <%= event.id %>;
+		eventResourceTemp.resource = resource;
+		eventResourceTemp.quantity = resourceQuantity;
+		eventResourceTemp.simulation = <%= simulationId %>;
+		
+		eventResourceList.push(eventResourceTemp);
+	});
+	
+	if (somethingEntered)
+	{
+		$.post('/addEventResources', {
+			eventResourceList: eventResourceList,
+			simulationId: <%= simulationId %>,
+			eventId: <%= event.id %>
+		}).done(function(data) {
+			window.location = '/viewEvents/' + data.simulationId;
+		});
+	}
+	else
+	{
+		alert("A quantity for at least one resource must be entered");
+		return false;
+	}
+};
+
+</script>

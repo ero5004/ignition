@@ -185,7 +185,7 @@ module.exports.routes = {
 	  action: 'addEventInstance'
   },
   
-  '/addEventResources/': {
+  '/addEventResources': {
 	  controller: 'EventController',
 	  action: 'addEventResources'
   },
@@ -204,6 +204,15 @@ module.exports.routes = {
 	'/processAddMetricResourceEffect': {
 		controller: 'MetricEffectController',
 		action: 'processAddMetricResourceEffect'
+	},
+	
+	'/addMetricEventEffect/:simulationId/:metricId': {
+		controller: 'MetricEffectController',
+		action: 'addMetricEventEffect'
+	},
+	'/processAddMetricEventEffect': {
+		controller: 'MetricEffectController', 
+		action: 'processAddMetricEventEffect'
 	}
 
   /***************************************************************************

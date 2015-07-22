@@ -1,35 +1,81 @@
+<style>
+	.leftCol {
+		float: left;
+		width: 40%;
+		margin-right: 10px;
+	}
+	
+	.rightCol {
+		float: right;
+		width: 59%;
+	}
+	
+</style>
+
+
 <h1>Add Events to this Simulation</h1>
 
 Simulation ID: <%= simulationId %>
 <br/>
+<div class="leftCol">
 Current Events:
+<% _.each(events, function(event_local){ %>
+<div style="border-style: solid; margin-bottom: 10px;">
+<strong><%= event_local.name %></strong>
+<br/>
+Description: <%= event_local.description %>
+<br/>
+Lead Team: <%= event_local.leadTeam.name %>
+<br/>
+Probability of recurrence if treated: <code><%= event_local.probRecurrenceTreated %></code>
+<br/>
+Probability of recurrence if untreated: <code><%= event_local.probRecurrenceUntreated %></code>
+<br/>
+Exponential growth if untreated: <code><%= event_local.untreatedExpGrowth %></code>
+<br/>
+Time between event checks: <code><%= event_local.untreatedRespawnCheckTime %></code>
+<br/>
+Scheduled instances: 
+<br/>
 <table border="1">
 	<tr>
-		<th>Event Name</th>
-		<th>Description</th>
-		<th>Lead Team</th>
-		<th>Edit</th>
-		<th>Add Instances</th>
-		<th>Resources Required</th>
-		<th>Event Effects</th>
-		<th>Delete</th>
+		<th>Instance Name</th>
+		<th>Instance Description</th>
+		<th>Spawn Time</th>
 	</tr>
-	<% // have to use event_local here since event is a js keyword %>
-	<% _.each(events, function(event_local){ %>
+	<% _.each(event_local.instances, function(eventInstance){ %>
 	<tr>
-		<td><%= event_local.name %></td>
-		<td><%= event_local.description %></td>
-		<td><%= event_local.leadTeam.name %></td>
-		<td><a href='#'>edit</a></td>
-		<td><a href='/viewEventInstances/<%= simulationId %>/<%= event_local.id %>'>add</a></td>
-		<td><a href='/viewEventResources/<%= simulationId %>/<%= event_local.id %>'>add</a></td>
-		<td><a href='#'>add</a></td>
-		<td><a href='/Event/destroy/<%= event_local.id %>'>delete</a></td>
+		<td><%= eventInstance.name %></td>
+		<td><%= eventInstance.description %></td>
+		<td><%= eventInstance.spawnTime %></td>
 	</tr>
 	<% }) %>
 </table>
-
 <br/>
+Resources Required: 
+<br/>
+<table border="1">
+	<tr>
+		<th>Resource</th>
+		<th>Quantity Required</th>
+	</tr>
+	<% _.each(event_local.requiredResources, function(eventResource){ %>
+	<tr>
+		<td><%= resources[eventResource.resource].name %></td>
+		<td><%= eventResource.quantity %></td>
+	</tr>
+	<% }) %>
+</table>
+<br/>
+<a href='/viewEventInstances/<%= simulationId %>/<%= event_local.id %>'>Add Event Instances</a>
+<a href='/viewEventResources/<%= simulationId %>/<%= event_local.id %>'>Set Resources Required</a>
+<br/>
+<a href='#'>edit</a>
+<a href='/Event/destroy/<%= event_local.id %>'>delete</a>
+</div>
+<% }) %>
+</div>
+<div class="rightCol">
 Note: To send a notification to a team, create an event that requires no resources and has no probability of recurrence. It is not possible to send a global notification.
 <br/>
 <br/>
@@ -65,8 +111,8 @@ Event is treated at time 200. At this time the simulator will generate a random 
 <label for="untreatedExpGrowth">Exponential growth if untreated (enter an integer):</label>
 <input type="text" id="untreatedExpGrowth"></input>
 <br/>
-<label for="untreatedRespawnTime">Time between event checks (enter an integer):</label>
-<input type="text" id="untreatedRespawnTime"></input>
+<label for="untreatedRespawnCheckTime">Time between event checks (enter an integer):</label>
+<input type="text" id="untreatedRespawnCheckTime"></input>
 Show number of ticks in simulation here.
 <br/>
 First instance will spawn at time t0. If that event is untreated after (<code>time between event checks</code>) ticks, the simulator will generate (<code>exponential growth if untreated</code>) random numbers between 0 and 100. For each of the random numbers that is less than the (<code>probability of recurrence if untreated</code>), a new child instance of that event will be added to the event instances queue. This will be repeated every (<code>time between event checks</code>) until the event is treated. Each child event will also have the same probabilities of recurrence.
@@ -87,7 +133,7 @@ Every 2 ticks after the first instance spawns, if the instance is untreated, the
 <input type="button" id="addEvent" value="Add Event" onclick="addEventFn();"></input>
 </form>
 
-
+</div>
 
 
 <br/>
@@ -102,6 +148,10 @@ Finished adding events?
 		var eventName = $('#name').val();
 		var eventDescription = $('#description').val();
 		var leadTeam = $('#leadTeam').val();
+		var probRecurrenceTreated = $('#probRecurrenceTreated').val();
+		var probRecurrenceUntreated = $('#probRecurrenceUntreated').val();
+		var untreatedExpGrowth = $('#untreatedExpGrowth').val();
+		var untreatedRespawnCheckTime = $('#untreatedRespawnCheckTime').val();
 		
 		if (!eventName)
 		{
@@ -118,13 +168,37 @@ Finished adding events?
 			alert("Lead team for this event required");
 			return false;
 		}
+		if (!probRecurrenceTreated)
+		{
+			alert("Probability of recurrence if treated required");
+			return false;
+		}
+		if (!probRecurrenceUntreated)
+		{
+			alert("Probability of recurrence if untreated required");
+			return false;
+		}
+		if (!untreatedExpGrowth)
+		{
+			alert("Exponential growth if untreated required");
+			return false;
+		}
+		if (!untreatedRespawnCheckTime)
+		{
+			alert("Time between event checks if untreated required");
+			return false;
+		}
 
 		
 		$.post('/addEvent', {
 			simulation: <%= simulationId %>,
 			name: eventName,
 			description: eventDescription,
-			leadTeam: leadTeam
+			leadTeam: leadTeam,
+			probRecurrenceTreated: probRecurrenceTreated,
+			probRecurrenceUntreated: probRecurrenceUntreated,
+			untreatedExpGrowth: untreatedExpGrowth,
+			untreatedRespawnCheckTime, untreatedRespawnCheckTime
 		}, function(data, status, jqxhr)
 			{
 				window.location = '/viewEvents/' + data.simulationId;

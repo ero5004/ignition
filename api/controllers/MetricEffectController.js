@@ -16,12 +16,17 @@ module.exports = {
 		.then(function(metrics) {
 			Resource.find({where: {simulation: simulationId}, sort: "name ASC"})
 			.then(function(resources) {
-				var resourcesSorted = _.indexBy(resources, 'id');
-				return res.view("Effects/viewMetricEffects", {
-					simulationId: simulationId,
-					metrics: metrics,
-					resources: resourcesSorted
-				});
+				Event.find({where: {simulation: simulationId}, sort: "name ASC"})
+				.then(function(events) {
+					var resourcesSorted = _.indexBy(resources, 'id');
+					var eventsSorted = _.indexBy(events, 'id');
+					return res.view("Effects/viewMetricEffects", {
+						simulationId: simulationId,
+						metrics: metrics,
+						resources: resourcesSorted,
+						events: eventsSorted
+					});
+				})
 			});
 		});
 	},
@@ -60,6 +65,39 @@ module.exports = {
 			
 			return res.send({simulationId: created.simulation});
 		});
-	}	
+	},
+	
+	addMetricEventEffect: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		var metricId = params.metricId;
+		
+		Metric.findOne({id: metricId})
+		.populateAll()
+		.then(function(metric) {
+			Event.find({where: {simulation: simulationId}, sort: "name ASC"})
+			.then(function(events) {
+				return res.view("Effects/addMetricEventEffect", {
+					simulationId: simulationId,
+					metric: metric,
+					events: events
+				});
+			});
+		});
+	},
+	
+	processAddMetricEventEffect: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		
+		MetricEventEffect.create(params).exec(function(err, created){
+			if (err) {
+				console.log(err);
+				return res.negotiate(err);
+			}
+			
+			return res.send({simulationId: created.simulation});
+		});
+	}
 };
 

@@ -1,8 +1,7 @@
 <h1>Define Metric Effects on Resources and Events</h1>
 
 <% _.each(metrics, function(metric){ %>
-<%= metric.name %>
-<br/>
+<h2><%= metric.name %></h2>
 Minimum Value: <%= metric.minValue %>
 <br/>
 Maximum Value: <%= metric.maxValue %>
@@ -12,55 +11,39 @@ Starting Value: <%= metric.defaultValue %>
 Units: <%= metric.unit %>
 <br/>
 
-<br/>
-<table border="1">
-	<tr>
-		<th><%= metric.name %> threshold</th>
-		<th>Resource</th>
-		<th>Effect</th>
-		<th>Edit</th>
-		<th>Delete</th>
-	</tr>
-	<% _.each(metric.metricResourceEffects, function(resourceEffect){%>
-	<tr>
-		<td>goes 
-		<%= resourceEffect.metricThresholdDirection == 1 ? "above " : "below " %><%= resourceEffect.metricThreshold %></td>
-		<td><%= resources[resourceEffect.resource].name %></td>
-		<td><%= resourceEffect.effectAmount < 0 ? "remove " + resourceEffect.effectAmount*-1 : "add " +  resourceEffect.effectAmount %></td>
-		<td><a href="#">edit</a></td>
-		<td><a href="/MetricResourceEffect/destroy/<%= resourceEffect.id %>">delete</a></td>
-	</tr>
-	<% }) %>
-</table>
+<h3>Effects on Resources</h3>
+<ul>
+<% _.each(metric.metricResourceEffects, function(resourceEffect){%>
+	<li>When <code><%= metric.name %></code> goes 
+	<%= resourceEffect.metricThresholdDirection == 1 ? "above " : "below " %>
+	<code><%= resourceEffect.metricThreshold %> </code>
+	<%= resourceEffect.effectAmount < 0 ? "remove " : "add " %> 
+	<code><%= resourceEffect.effectAmount < 0 ? resourceEffect.effectAmount*-1 : resourceEffect.effectAmount %> 
+	<%= resources[resourceEffect.resource].name %> </code>
+	<a href="#">edit</a>
+	<a href="/MetricResourceEffect/destroy/<%= resourceEffect.id %>">delete</a>
+	</li>
+<% })%>
+</ul>
+<a href="/addMetricResourceEffect/<%= simulationId %>/<%= metric.id %>">Add <%= metric.name %> Resource Effect</a>
 
 <br/>
-<a href="/addMetricResourceEffect/<%= simulationId %>/<%= metric.id %>">Add Metric Resource Effect</a>
+<h3>Effects on Events</h3>
+<ul>
+<% _.each(metric.metricEventEffects, function(eventEffect){%>
+	<li>When <code><%= metric.name %></code> goes 
+	<%= eventEffect.metricThresholdDirection == 1 ? "above " : "below " %>
+	<code><%= eventEffect.metricThreshold %></code>
+	spawn one <code><%= events[eventEffect.event].name %></code>
+	<a href="#">edit</a>
+	<a href="/MetricEventEffect/destroy/<%= eventEffect.id %>">delete</a>
+	</li>
+<% }) %>
+</ul>
 
-<br/>
-
-
-<table border="1">
-	<tr>
-		<th><%= metric.name %> threshold</th>
-		<th>Event</th>
-		<th>Edit</th>
-		<th>Delete</th>
-	</tr>
-	<% _.each(metric.eventEffects, function(eventEffect){%>
-	<tr>
-		<td><%= resourceEffect.metricThreshold %></td>
-		<td><%= resourceEffect.event.name %></td>
-		<td><a href="#">edit</a></td>
-		<td><a href="/MetricEventEffect/destory/<%= eventEffect.id %>">delete</a></td>
-	</tr>
-	<% }) %>
-</table>
+<a href="/addMetricEventEffect/<%= simulationId %>/<%= metric.id %>">Add <%= metric.name %> Event Effect</a>
 
 <hr/>
-
-
-
-
 
 <% }) %>
 

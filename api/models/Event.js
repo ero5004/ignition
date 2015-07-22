@@ -19,6 +19,26 @@ module.exports = {
 		},
 		simulation: {
 			model: 'Simulation'
+		},
+		probRecurrenceTreated: {
+			type: 'float'
+		},
+		probRecurrenceUntreated: {
+			type: 'float'
+		},
+		untreatedExpGrowth: {
+			type: 'integer'
+		},
+		untreatedRespawnCheckTime: {
+			type: 'integer'
+		},
+		instances: {
+			collection: 'EventInstance',
+			via: 'event'
+		},
+		requiredResources: {
+			collection: 'EventResource',
+			via: 'event'
 		}
 
 		
