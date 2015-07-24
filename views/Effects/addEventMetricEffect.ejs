@@ -1,0 +1,148 @@
+<h1>Add Event Effects on Metrics</h1>
+
+Event: <%= event.name %>
+<br/>
+<ul>
+<% _.each(eventMetricEffects, function(eventMetricEffect){ %>
+<li>
+When <code><%= event.name %></code>
+<% if (eventMetricEffect.effectType == 1){ %>
+	spawns,
+<% }else if(eventMetricEffect.effectType == 2){ %>
+	is untreated 
+<% }else if(eventMetricEffect.effectType == 3){ %>
+	is treated
+<% } %>
+<% if(eventMetricEffect.effectOperation == 1){ %>
+	add <%= eventMetricEffect.effectAmount %> to <%= metrics[eventMetricEffect.metric].name %>
+<% } %>
+<% if(eventMetricEffect.effectOperation == -1){ %>
+	subtract <%= eventMetricEffect.effectAmount %> from <%= metrics[eventMetricEffect.metric].name %>
+<% } %>
+<% if(eventMetricEffect.effectOperation == 2){ %>
+	multiply <%= metrics[eventMetricEffect.metric].name %> by <%= eventMetricEffect.effectAmount %> 
+<% } %>
+<% if(eventMetricEffect.effectType == 2){ %>
+every <%= eventMetricEffect.untreatedTicks %> ticks
+<% } %>
+</li>
+<%})%>
+</ul>
+
+<hr/>
+When this event spawns, 
+<select id="spawnDirection">
+	<option value="1">add</option>
+	<option value="-1">subtract</option>
+	<option value="2">multiply</option>
+</select>
+<input type="text" id="spawnAmount"/>
+to/by
+<select id="spawnMetric">
+<% _.each(metrics, function(metric){ %>
+	<option value="<%= metric.id %>"><%= metric.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Spawn Effect" onclick="spawnEffectFn();" />
+<hr/>
+Every <input type="text" id="untreatedTicks" /> ticks until treated, 
+<select id="untreatedDirection">
+	<option value="1">add</option>
+	<option value="-1">subtract</option>
+	<option value="2">multiply</option>
+</select>
+<input type="text" id="untreatedAmount"/>
+to/by
+<select id="untreatedMetric">
+<% _.each(metrics, function(metric){ %>
+	<option value="<%= metric.id %>"><%= metric.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Untreated Effect" onclick="untreatedEffectFn();" />
+<hr/>
+At time of treatment, 
+<select id="treatedDirection">
+	<option value="1">add</option>
+	<option value="-1">subtract</option>
+	<option value="2">multiply</option>
+</select>
+<input type="text" id="treatedAmount"/>
+to/by
+<select id="treatedMetric">
+<% _.each(metrics, function(metric){ %>
+	<option value="<%= metric.id %>"><%= metric.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Treated Effect" onclick="treatedEffectFn();" />
+<hr/>
+Finished adding event effects on metrics? 
+<input type="button" value="Go Back" onclick="nextStepFn();" />
+
+<script>
+	
+	var spawnEffectFn = function()
+	{
+		var spawnDirection = $("#spawnDirection").val();
+		var spawnAmount = $("#spawnAmount").val();
+		var spawnMetric = $("#spawnMetric").val();
+		
+		var tempMetricEffect = {};
+		tempMetricEffect.effectOperation = spawnDirection;
+		tempMetricEffect.effectAmount = spawnAmount;
+		tempMetricEffect.metric = spawnMetric;
+		tempMetricEffect.effectType = 1; //1 = spawn effect
+		
+		submitMetricEffect(tempMetricEffect);
+	};
+	
+	var untreatedEffectFn = function()
+	{
+		var untreatedDirection = $("#untreatedDirection").val();
+		var untreatedAmount = $("#untreatedAmount").val();
+		var untreatedMetric = $("#untreatedMetric").val();
+		var untreatedTicks = $("#untreatedTicks").val();
+		
+		var tempMetricEffect = {};
+		tempMetricEffect.effectOperation = untreatedDirection;
+		tempMetricEffect.effectAmount = untreatedAmount;
+		tempMetricEffect.metric = untreatedMetric;
+		tempMetricEffect.effectType = 2; //2 = untreated effect
+		tempMetricEffect.untreatedTicks = untreatedTicks;
+		
+		submitMetricEffect(tempMetricEffect);
+	};
+	
+	var treatedEffectFn = function()
+	{
+		var treatedDirection = $("#treatedDirection").val();
+		var treatedAmount = $("#treatedAmount").val();
+		var treatedMetric = $("#treatedMetric").val();
+		
+		var tempMetricEffect = {};
+		tempMetricEffect.effectOperation = treatedDirection;
+		tempMetricEffect.effectAmount = treatedAmount;
+		tempMetricEffect.metric = treatedMetric;
+		tempMetricEffect.effectType = 3; //3 = treated effect
+		
+		submitMetricEffect(tempMetricEffect);
+	};
+	
+	var submitMetricEffect = function(tempMetricEffect)
+	{
+		tempMetricEffect.simulation = <%= simulationId %>;
+		tempMetricEffect.event = <%= event.id %>
+		
+		$.post('/processAddEventMetricEffect', tempMetricEffect)
+		.done(function(data) {
+			window.location = '/addEventMetricEffect/' + data.simulationId + '/' + data.eventId;
+		});
+		
+	}
+
+
+
+	var nextStepFn = function()
+	{
+		window.location = "/viewEventEffects/<%= simulationId %>";
+	}
+</script>

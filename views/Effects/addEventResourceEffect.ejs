@@ -1,0 +1,140 @@
+<h1>Add Event Effects on Resources</h1>
+
+Event: <%= event.name %>
+<br/>
+<ul>
+<% _.each(eventResourceEffects, function(eventResourceEffect){ %>
+<li>
+When <code><%= event.name %></code>
+<% if (eventResourceEffect.effectType == 1){ %>
+	spawns,
+<% }else if(eventResourceEffect.effectType == 2){ %>
+	is untreated 
+<% }else if(eventResourceEffect.effectType == 3){ %>
+	is treated
+<% } %>
+<% if(eventResourceEffect.effectOperation == 1){ %>
+	add <%= eventResourceEffect.effectAmount %> to <%= resources[eventResourceEffect.resource].name %>
+<% } %>
+<% if(eventResourceEffect.effectOperation == -1){ %>
+	subtract <%= eventResourceEffect.effectAmount %> from <%= resources[eventResourceEffect.resource].name %>
+<% } %>
+<% if(eventResourceEffect.effectOperation == 2){ %>
+	multiply <%= resources[eventResourceEffect.resource].name %> by <%= eventResourceEffect.effectAmount %> 
+<% } %>
+<% if(eventResourceEffect.effectType == 2){ %>
+every <%= eventResourceEffect.untreatedTicks %> ticks
+<% } %>
+</li>
+<%})%>
+</ul>
+
+<hr/>
+When this event spawns, 
+<select id="spawnDirection">
+	<option value="1">add</option>
+	<option value="-1">remove</option>
+</select>
+<input type="text" id="spawnAmount"/>
+<select id="spawnResource">
+<% _.each(resources, function(resource){ %>
+	<option value="<%= resource.id %>"><%= resource.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Spawn Effect" onclick="spawnEffectFn();" />
+<hr/>
+Every <input type="text" id="untreatedTicks" /> ticks until treated, 
+<select id="untreatedDirection">
+	<option value="1">add</option>
+	<option value="-1">remove</option>
+</select>
+<input type="text" id="untreatedAmount"/>
+<select id="untreatedResource">
+<% _.each(resources, function(resource){ %>
+	<option value="<%= resource.id %>"><%= resource.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Untreated Effect" onclick="untreatedEffectFn();" />
+<hr/>
+At time of treatment, 
+<select id="treatedDirection">
+	<option value="1">add</option>
+	<option value="-1">remove</option>
+</select>
+<input type="text" id="treatedAmount"/>
+<select id="treatedResource">
+<% _.each(resources, function(resource){ %>
+	<option value="<%= resource.id %>"><%= resource.name %></option>
+<% }) %>
+</select>
+<input type="button" value="Add Treated Effect" onclick="treatedEffectFn();" />
+<hr/>
+Finished adding event effects on resources? 
+<input type="button" value="Go Back" onclick="nextStepFn();" />
+
+<script>
+	var spawnEffectFn = function()
+	{
+		var spawnDirection = $("#spawnDirection").val();
+		var spawnAmount = $("#spawnAmount").val();
+		var spawnResource = $("#spawnResource").val();
+		
+		var tempResourceEffect = {};
+		tempResourceEffect.effectOperation = spawnDirection;
+		tempResourceEffect.effectAmount = spawnAmount;
+		tempResourceEffect.resource = spawnResource;
+		tempResourceEffect.effectType = 1; //1 = spawn effect
+		
+		submitResourceEffect(tempResourceEffect);
+	};
+	
+	var untreatedEffectFn = function()
+	{
+		var untreatedDirection = $("#untreatedDirection").val();
+		var untreatedAmount = $("#untreatedAmount").val();
+		var untreatedResource = $("#untreatedResource").val();
+		var untreatedTicks = $("#untreatedTicks").val();
+		
+		var tempResourceEffect = {};
+		tempResourceEffect.effectOperation = untreatedDirection;
+		tempResourceEffect.effectAmount = untreatedAmount;
+		tempResourceEffect.resource = untreatedResource;
+		tempResourceEffect.effectType = 2; //2 = untreated effect
+		tempResourceEffect.untreatedTicks = untreatedTicks;
+		
+		submitResourceEffect(tempResourceEffect);
+	};
+	
+	var treatedEffectFn = function()
+	{
+		var treatedDirection = $("#treatedDirection").val();
+		var treatedAmount = $("#treatedAmount").val();
+		var treatedResource = $("#treatedResource").val();
+		
+		var tempResourceEffect = {};
+		tempResourceEffect.effectOperation = treatedDirection;
+		tempResourceEffect.effectAmount = treatedAmount;
+		tempResourceEffect.resource = treatedResource;
+		tempResourceEffect.effectType = 3; //3 = treated effect
+		
+		submitResourceEffect(tempResourceEffect);
+	};
+	
+	var submitResourceEffect = function(tempResourceEffect)
+	{
+		tempResourceEffect.simulation = <%= simulationId %>;
+		tempResourceEffect.event = <%= event.id %>
+		
+		$.post('/processAddEventResourceEffect', tempResourceEffect)
+		.done(function(data) {
+			window.location = '/addEventResourceEffect/' + data.simulationId + '/' + data.eventId;
+		});
+		
+	}
+
+
+	var nextStepFn = function()
+	{
+		window.location = "/viewEventEffects/<%= simulationId %>";
+	}
+</script>

@@ -46,7 +46,12 @@ Units: <%= metric.unit %>
 <hr/>
 
 <% }) %>
+Finished adding Metric Effects?
+<input type="button" value="Next Step" onclick="nextStepFn();" />
 
-
-
-
+<script>
+	var nextStepFn = function()
+	{
+		window.location = "/viewEventEffects/<%= simulationId %>";
+	}
+</script>
