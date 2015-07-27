@@ -23,6 +23,14 @@ module.exports = {
 		accesses: {
 			collection: 'ResourceAccess',
 			via: 'resource'
+		},
+		resourceEventEffects: {
+			collection: 'ResourceEventEffect',
+			via: 'resource'
+		},
+		resourceMetricEffects: {
+			collection: 'ResourceMetricEffect',
+			via: 'resource'
 		}
 	}
 };

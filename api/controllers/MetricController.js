@@ -15,7 +15,8 @@ module.exports = {
 		Metric.find({simulation: simulationId}).then(function(metrics) {
 			return res.view('Metric/viewMetrics', {
 				simulationId: simulationId,
-				metrics: metrics
+				metrics: metrics,
+				page: '5'
 			});
 		});
 	},
@@ -70,7 +71,8 @@ module.exports = {
 							simulationId: simulationId, 
 							teamsWithRoles: teamsWithRoles,
 							metrics: metrics,
-							metricAccessList: metricAccessList
+							metricAccessList: metricAccessList,
+							page: '6'
 							});
 					});
 				});	

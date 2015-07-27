@@ -15,7 +15,8 @@ module.exports = {
 		Resource.find({simulation: simulationId}).then(function(resources) {
 			return res.view('Resource/viewResources', {
 				simulationId: simulationId,
-				resources: resources
+				resources: resources,
+				page: '3'
 			});
 		});
 	},
@@ -82,7 +83,8 @@ module.exports = {
 							simulationId: simulationId, 
 							teamsWithRoles: teamsWithRoles,
 							resources: resources,
-							resourceAccessList: resourceAccessList
+							resourceAccessList: resourceAccessList,
+							page: '4'
 							});
 					});
 				});	

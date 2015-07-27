@@ -30,6 +30,9 @@ module.exports = {
 		simulatedEndTime: {
 			type: 'datetime'
 		},
+		numberOfTicks: {
+			type: 'integer'
+		},
 		completed: {
 			type: 'boolean'
 		},

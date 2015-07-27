@@ -24,7 +24,8 @@ module.exports = {
 						simulationId: simulationId,
 						metrics: metrics,
 						resources: resourcesSorted,
-						events: eventsSorted
+						events: eventsSorted,
+						page: '9a'
 					});
 				})
 			});
@@ -44,7 +45,8 @@ module.exports = {
 				return res.view("Effects/addMetricResourceEffect", {
 					simulationId: simulationId,
 					metric: metric,
-					resources: resources
+					resources: resources,
+					page: '9ai'
 				});
 			});
 		});
@@ -80,7 +82,8 @@ module.exports = {
 				return res.view("Effects/addMetricEventEffect", {
 					simulationId: simulationId,
 					metric: metric,
-					events: events
+					events: events,
+					page: '9aii'
 				});
 			});
 		});

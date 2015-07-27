@@ -7,7 +7,10 @@
 
 module.exports = {
 	newSimulation: function(req, res) {
-		return res.view('Simulation/newSimulation');
+		return res.view('Simulation/newSimulation',
+		{
+			page: '1'
+		});
 	},
 	
 	processNewSimulation: function(req, res) {

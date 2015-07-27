@@ -130,7 +130,7 @@ Finished adding event effects on metrics?
 	var submitMetricEffect = function(tempMetricEffect)
 	{
 		tempMetricEffect.simulation = <%= simulationId %>;
-		tempMetricEffect.event = <%= event.id %>
+		tempMetricEffect.event = <%= event.id %>;
 		
 		$.post('/processAddEventMetricEffect', tempMetricEffect)
 		.done(function(data) {

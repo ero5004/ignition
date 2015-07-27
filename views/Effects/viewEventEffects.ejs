@@ -3,10 +3,24 @@
 <% _.each(events, function(event_local){ %>
 <h2><%= event_local.name %></h2>
 <%= event_local.description %>
-<br/>
+
 <a href="/addEventResourceEffect/<%= simulationId %>/<%= event_local.id %>">Add <%= event_local.name %> Resource Effect</a>
 <br/>
 <a href="/addEventMetricEffect/<%= simulationId %>/<%= event_local.id %>">Add <%= event_local.name %> Metric Effect</a>
 
 
 <% }) %>
+
+<br/>
+<br/>
+
+Finished adding event effects on metrics and resources? 
+<input type="button" value="Next Step" onclick="nextStepFn();" />
+
+<script>
+	var nextStepFn = function()
+	{
+		window.location = "/viewResourceEffects/<%= simulationId %>";
+	}
+	
+</script>

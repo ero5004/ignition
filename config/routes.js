@@ -33,7 +33,10 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/' : {
-    view: 'homepage'
+    view: 'homepage', 
+	locals: {
+		page: '0'
+	}
   },
   
   /* UserController routes */
@@ -237,6 +240,30 @@ module.exports.routes = {
 	'/processAddEventMetricEffect': {
 		controller: 'EventEffectController',
 		action: 'processAddEventMetricEffect'
+	},
+	
+	/* ResourceEffectController routes */
+	
+	'/viewResourceEffects/:simulationId': {
+		controller: 'ResourceEffectController',
+		action: 'viewResourceEffects'
+	},
+	
+	'/addResourceEventEffect/:simulationId/:resourceId': {
+		controller: 'ResourceEffectController',
+		action: 'addResourceEventEffect'
+	},
+	'/processAddResourceEventEffect': {
+		controller: 'ResourceEffectController',
+		action: 'processAddResourceEventEffect'
+	},
+	'/addResourceMetricEffect/:simulationId/:resourceId': {
+		controller: 'ResourceEffectController',
+		action: 'addResourceMetricEffect'
+	},
+	'/processAddResourceMetricEffect': {
+		controller: 'ResourceEffectController',
+		action: 'processAddResourceMetricEffect'
 	},
 	
 

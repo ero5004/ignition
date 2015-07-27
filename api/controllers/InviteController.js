@@ -61,7 +61,8 @@ module.exports = {
 				return res.view('dashboard', {
 					simulations: user.simulations,
 					receivedInvitations: user.receivedInvitations,
-					sentInvitations: user.sentInvitations
+					sentInvitations: user.sentInvitations,
+					page: '0'
 				});
 			})
 			.catch (function (err)
@@ -89,7 +90,8 @@ module.exports = {
 				return res.view('Invite/invite', {
 					users: users,
 					invitedUsers: invitedUsers,
-					simulationId: simulation.id
+					simulationId: simulation.id,
+					page: '0'
 				});		
 			});
 		});

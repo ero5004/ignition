@@ -22,7 +22,8 @@ module.exports = {
 						simulationId: simulationId,
 						events: events,
 						teams: teams,
-						resources: resourcesSorted
+						resources: resourcesSorted,
+						page: '7'
 					});
 				});
 			});
@@ -80,7 +81,8 @@ module.exports = {
 							teamsWithRoles: teamsWithRoles,
 							events: events,
 							teams: teams,
-							eventAccessList: eventAccessList
+							eventAccessList: eventAccessList,
+							page: '8'
 							});
 					});
 				});	
@@ -125,7 +127,8 @@ module.exports = {
 				return res.view("Event/viewEventInstances", {
 					event: event,
 					eventInstances: eventInstances,
-					simulationId: simulationId
+					simulationId: simulationId,
+					page: '7a'
 				});
 			});
 		});
@@ -182,7 +185,8 @@ module.exports = {
 							event: event,
 							resources: resources,
 							resourceAccessList: resourceAccessList,
-							eventResource: eventResource
+							eventResource: eventResource,
+							page: '7b'
 						});
 					});
 				});

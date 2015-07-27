@@ -17,7 +17,8 @@ module.exports = {
 				return res.view('Team/viewTeams', 
 				{
 					simulationId: simulationId,
-					teams: teams
+					teams: teams,
+					page: '2'
 				});
 			});
 	},

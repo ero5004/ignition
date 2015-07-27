@@ -19,7 +19,8 @@ module.exports = {
 				return res.view('Role/viewRoles', {
 					simulationId: simulationId,
 					team: team,
-					roles: roles					
+					roles: roles,
+					page: '2a'
 				});
 			});
 		});

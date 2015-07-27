@@ -1,0 +1,47 @@
+<h1>Define Resource Effects on Metrics and Events</h1>
+
+<% _.each(resources, function(resource){ %>
+<h2><%= resource.name %></h2>
+<h3>Effects on Metrics</h3>
+<ul>
+<% _.each(resource.resourceMetricEffects, function(metricEffect){%>
+	<li>When <code><%= resource.name %></code> goes 
+	<%= metricEffect.resourceThresholdDirection == 1 ? "above " : "below " %>
+	<code><%= metricEffect.resourceThreshold %> </code>
+	<% if(metricEffect.effectOperation == 1){ %>
+	add <%= metricEffect.effectAmount %> to <%= metrics[metricEffect.metric].name %>
+<% } %>
+<% if(metricEffect.effectOperation == -1){ %>
+	subtract <%= metricEffect.effectAmount %> from <%= metrics[metricEffect.metric].name %>
+<% } %>
+<% if(metricEffect.effectOperation == 2){ %>
+	multiply <%= metrics[metricEffect.metric].name %> by <%= metricEffect.effectAmount %> 
+<% } %>
+	<a href="#">edit</a>
+	<a href="/ResourceMetricEffect/destroy/<%= metricEffect.id %>">delete</a>
+	</li>
+<% })%>
+</ul>
+<br/>
+<h3>Effects on Events</h3>
+<ul>
+<% _.each(resource.resourceEventEffects, function(eventEffect){%>
+	<li>When <code><%= resource.name %></code> goes 
+	<%= eventEffect.resourceThresholdDirection == 1 ? "above " : "below " %>
+	<code><%= eventEffect.resourceThreshold %> </code>
+	spawn one <code><%= events[eventEffect.event].name %></code> event
+	<a href="#">edit</a>
+	<a href="/ResourceMetricEffect/destroy/<%= eventEffect.id %>">delete</a>
+	</li>
+<% })%>
+</ul>
+<br/>
+
+
+
+<a href="/addResourceEventEffect/<%= simulationId %>/<%= resource.id %>">Add <%= resource.name %> Event Effect</a>
+<br/>
+<a href="/addResourceMetricEffect/<%= simulationId %>/<%= resource.id %>">Add <%= resource.name %> Metric Effect</a>
+
+
+<% }) %>

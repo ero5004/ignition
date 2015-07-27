@@ -24,7 +24,8 @@ module.exports = {
 						simulationId: simulationId,
 						events: events,
 						resources: resourcesSorted,
-						metrics: metricsSorted
+						metrics: metricsSorted,
+						page: '9b'
 					});
 				})
 			});
@@ -47,9 +48,9 @@ module.exports = {
 						simulationId: simulationId,
 						event: event,
 						resources: resourcesSorted,
-						eventResourceEffects: eventResourceEffects
+						eventResourceEffects: eventResourceEffects,
+						page: '9bi'
 					});
-					
 				});
 			});
 		});
@@ -86,7 +87,8 @@ module.exports = {
 						simulationId: simulationId,
 						event: event,
 						metrics: metricsSorted,
-						eventMetricEffects: eventMetricEffects
+						eventMetricEffects: eventMetricEffects,
+						page: '9bii'
 					});
 					
 				});

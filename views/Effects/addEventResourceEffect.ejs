@@ -123,7 +123,7 @@ Finished adding event effects on resources?
 	var submitResourceEffect = function(tempResourceEffect)
 	{
 		tempResourceEffect.simulation = <%= simulationId %>;
-		tempResourceEffect.event = <%= event.id %>
+		tempResourceEffect.event = <%= event.id %>;
 		
 		$.post('/processAddEventResourceEffect', tempResourceEffect)
 		.done(function(data) {
