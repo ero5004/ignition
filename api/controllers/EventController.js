@@ -95,12 +95,18 @@ module.exports = {
 		var simulationId = params.simulationId;
 		var eventAccessList = params.eventAccessList;
 		
-		console.log(eventAccessList);
+		var accessList = [];
 		
-		if (eventAccessList.length != 0)
+		//large arrays end up getting passed as objects, this is to convert them back to arrays which is what sails models are looking for
+		for (var index in eventAccessList)
+		{
+			accessList.push(eventAccessList[index]);
+		}
+		
+		if (accessList.length != 0)
 		{
 			EventAccess.destroy({simulation: simulationId}).then(function(err) {
-				EventAccess.create(eventAccessList).exec(function(err, created){
+				EventAccess.create(accessList).exec(function(err, created){
 					if (err) {
 						console.log(err);
 						return res.negotiate(err);

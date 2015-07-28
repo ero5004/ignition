@@ -98,17 +98,21 @@ module.exports = {
 		var simulationId = params.simulationId;
 		var resourceAccessList = params.resourceAccessList;
 		
-		//console.log(resourceAccessList);
-		//console.log(simulationId);
+		var resourceAccess = resourceAccessList[0];
 		
-		//var resourceAccess = resourceAccessList[0];
-		//console.log(resourceAccess);
+		var accessList = [];
+		
+		//large arrays end up getting passed as objects, this is to convert them back to arrays which is what sails models are looking for
+		for (var index in resourceAccessList)
+		{
+			accessList.push(resourceAccessList[index]);
+		}
 		
 		
-		if (resourceAccessList.length != 0)
+		if (accessList.length != 0)
 		{
 			ResourceAccess.destroy({simulation: simulationId}).then(function(err) {
-				ResourceAccess.create(resourceAccessList)
+				ResourceAccess.create(accessList)
 				.exec(function(err, created){
 					if (err) {
 						console.log(err);

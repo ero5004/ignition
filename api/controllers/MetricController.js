@@ -86,16 +86,24 @@ module.exports = {
 		var simulationId = params.simulationId;
 		var metricAccessList = params.metricAccessList;
 		
-		if (metricAccessList.length != 0)
+		var accessList = [];
+		
+		//large arrays end up getting passed as objects, this is to convert them back to arrays which is what sails models are looking for
+		for (var index in metricAccessList)
+		{
+			accessList.push(metricAccessList[index]);
+		}
+		
+		if (accessList.length != 0)
 		{
 			MetricAccess.destroy({simulation: simulationId}).then(function(err) {
-				MetricAccess.create(metricAccessList).exec(function(err, created){
+				MetricAccess.create(accessList).exec(function(err, created){
 					if (err) {
 						console.log(err);
 						return res.negotiate(err);
 					}
 					
-					return res.send({simulationId: created[0].simulation});
+					return res.send({simulationId: simulationId});
 				});
 			});
 		}
