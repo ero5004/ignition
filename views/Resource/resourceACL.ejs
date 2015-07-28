@@ -49,7 +49,8 @@ var getCheckboxesStatefn = function() {
 	
 	var resourcesLocal = [<% _.each(resources, function(resource) { %> <%=resource.id%>, <% }); %>];
 	var rolesLocal = [<% _.each(teamsWithRoles, function(teamRole) { %> <%=teamRole.role.id%>, <% }); %>];
-	
+	console.log(resourcesLocal);
+	console.log(rolesLocal);
 
 	rolesLocal.forEach(function (teamRole) {
 		resourcesLocal.forEach(function(resource) {

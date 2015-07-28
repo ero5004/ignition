@@ -17,6 +17,9 @@ module.exports = {
 		icon: {
 			type: 'string'
 		},
+		applicationTime: {
+			type: 'integer'
+		},
 		simulation: {
 			model: 'Simulation'
 		},

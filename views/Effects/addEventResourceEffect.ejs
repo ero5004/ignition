@@ -38,7 +38,7 @@ When this event spawns,
 <input type="text" id="spawnAmount"/>
 <select id="spawnResource">
 <% _.each(resources, function(resource){ %>
-	<option value="<%= resource.id %>"><%= resource.name %></option>
+	<option value="<%= resource.id %>"><%= resource.name %> (quantity = <%= resource.quantity %>)</option>
 <% }) %>
 </select>
 <input type="button" value="Add Spawn Effect" onclick="spawnEffectFn();" />
@@ -51,7 +51,7 @@ Every <input type="text" id="untreatedTicks" /> ticks until treated,
 <input type="text" id="untreatedAmount"/>
 <select id="untreatedResource">
 <% _.each(resources, function(resource){ %>
-	<option value="<%= resource.id %>"><%= resource.name %></option>
+	<option value="<%= resource.id %>"><%= resource.name %> (quantity = <%= resource.quantity %>)</option>
 <% }) %>
 </select>
 <input type="button" value="Add Untreated Effect" onclick="untreatedEffectFn();" />
@@ -64,7 +64,7 @@ At time of treatment,
 <input type="text" id="treatedAmount"/>
 <select id="treatedResource">
 <% _.each(resources, function(resource){ %>
-	<option value="<%= resource.id %>"><%= resource.name %></option>
+	<option value="<%= resource.id %>"><%= resource.name %> (quantity = <%= resource.quantity %>)</option>
 <% }) %>
 </select>
 <input type="button" value="Add Treated Effect" onclick="treatedEffectFn();" />

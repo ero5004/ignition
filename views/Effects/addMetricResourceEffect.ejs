@@ -16,7 +16,7 @@ then
 <input type="text" maxlength="10" size="10" id="metricEffectAmount" />
 <select id="resource">
 <% _.each(resources, function(resource){ %>
-	<option value="<%= resource.id %>"><%= resource.name %></option>
+	<option value="<%= resource.id %>"><%= resource.name %> (quantity = <%= resource.quantity %>)</option>
 <% }) %>
 </select>
 <br/>

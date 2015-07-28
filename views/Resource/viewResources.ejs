@@ -7,6 +7,7 @@ Current Pool:
 		<th>Resource Name</th>
 		<th>Icon</th>
 		<th>Quantity</th>
+		<th>Application Time</th>
 		<th>Delete</th>
 	</tr>
 	<% _.each(resources, function(resource) { %>
@@ -14,6 +15,7 @@ Current Pool:
 		<td><%= resource.name %></td>
 		<td><%= resource.icon %></td> 
 		<td><%= resource.quantity %></td>
+		<td><%= resource.applicationTime %></td>
 		<td><a href='/Resource/destroy/<%= resource.id %>'>delete</a></td>
 	</tr>
 	<% }) %>
@@ -32,9 +34,10 @@ Current Pool:
 <label for="icon">Icon Placeholder:</label>
 <input type="text" id="icon"></input>
 <br/>
-<label for="lag">Time Taken to Apply Resource (Placeholder):</label>
+<label for="applicationTime">Time Taken to Apply Resource:</label>
+<input type="text" id="applicationTime"></input>
+<br/>
 example: if resource is being applied to event across town, it could take 45 minutes to apply it
-<input type="text" id="lag"></input>
 <br/>
 <input type="button" id="addResource" value="Add Resource" onclick="addResourceFn();"></input>
 </form>
@@ -51,6 +54,7 @@ Finished adding resources?
 		var resourceName = $('#name').val();
 		var resourceIcon = $('#icon').val();
 		var resourceQuantity = $('#quantity').val();
+		var applicationTime = $('#applicationTime').val();
 		
 		if (!resourceName)
 		{
@@ -62,7 +66,8 @@ Finished adding resources?
 			simulation: <%= simulationId %>,
 			name: resourceName,
 			icon: resourceIcon,
-			quantity: resourceQuantity
+			quantity: resourceQuantity,
+			applicationTime: applicationTime
 		}, function(data, status, jqxhr)
 			{
 				window.location = '/viewResources/<%= simulationId %>';

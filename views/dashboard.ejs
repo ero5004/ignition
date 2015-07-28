@@ -10,6 +10,7 @@
 	<th>Description</th>
 	<th>Simulated Start Time</th>
 	<th>Simulated End Time</th>
+	<th>Number of Ticks</th>
 	<th>Completed</th>
 	<th>Invitations</th>
 	<th>Delete</th>
@@ -23,6 +24,7 @@
 	<td><%= simulation.description %></td>
 	<td><%= simulation.simulatedStartTime %></td>
 	<td><%= simulation.simulatedEndTime %></td>
+	<td><%= simulation.numTicks %></td>
 	<td><%= simulation.completed %></td>
 	<td><a href="/invite/<%= simulation.id %>">Send Invitations</a></td>
 	<td><a href="/Simulation/destroy/<%= simulation.id %>">delete</a></td>

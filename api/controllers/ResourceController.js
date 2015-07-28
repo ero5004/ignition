@@ -16,7 +16,8 @@ module.exports = {
 			return res.view('Resource/viewResources', {
 				simulationId: simulationId,
 				resources: resources,
-				page: '3'
+				page: '3',
+				title: "View Resource Pool"
 			});
 		});
 	},
@@ -85,7 +86,7 @@ module.exports = {
 							resources: resources,
 							resourceAccessList: resourceAccessList,
 							page: '4'
-							});
+						});
 					});
 				});	
 			});
@@ -97,16 +98,23 @@ module.exports = {
 		var simulationId = params.simulationId;
 		var resourceAccessList = params.resourceAccessList;
 		
+		//console.log(resourceAccessList);
+		//console.log(simulationId);
+		
+		//var resourceAccess = resourceAccessList[0];
+		//console.log(resourceAccess);
+		
+		
 		if (resourceAccessList.length != 0)
 		{
 			ResourceAccess.destroy({simulation: simulationId}).then(function(err) {
-				ResourceAccess.create(resourceAccessList).exec(function(err, created){
+				ResourceAccess.create(resourceAccessList)
+				.exec(function(err, created){
 					if (err) {
 						console.log(err);
 						return res.negotiate(err);
 					}
-					
-					return res.send({simulationId: created[0].simulation});
+					return res.send({simulationId: simulationId});
 				});
 			});
 		}

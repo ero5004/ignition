@@ -95,6 +95,8 @@ module.exports = {
 		var simulationId = params.simulationId;
 		var eventAccessList = params.eventAccessList;
 		
+		console.log(eventAccessList);
+		
 		if (eventAccessList.length != 0)
 		{
 			EventAccess.destroy({simulation: simulationId}).then(function(err) {
