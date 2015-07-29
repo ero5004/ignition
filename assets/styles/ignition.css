@@ -3,3 +3,62 @@ body {
 	padding-left: 20px;
 	padding-top: 20px;
 }
+
+.acl-table {
+	border: solid 1px #DDEEEE;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font: normal 13px Arial, sans-serif;
+}
+
+.acl-table th {
+	background-color: #87CEEB;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+}
+
+.acl-table td {
+	border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.acl-table tr:nth-child(odd) {
+    background-color: #E0FFFF;
+}
+.acl-table tr:nth-child(even) {
+    background-color: #B0E0E6;
+}
+
+
+.data-table {
+	border: solid 1px #DDEEEE;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font: normal 13px Arial, sans-serif;
+}
+
+.data-table th {
+	background-color: #87CEEB;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+}
+
+.data-table td {
+	border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.data-table tr:nth-child(odd) {
+    background-color: #E0FFFF;
+}
+.data-table tr:nth-child(even) {
+    background-color: #B0E0E6;
+}
