@@ -156,26 +156,63 @@ module.exports = {
 		var spawnType = params.spawnType;
 		
 		//if spawnType is set as random, pick a random time for this event to spawn
-		if (spawnType == 'r')
-		{
+		if (spawnType == 'r') {
 			//currently picking a random time between 0 and 1000, this will be changed to the number of ticks per simulation
 			params.spawnTime = Math.random() * 1000;
-		}
-		else 
-		{
-			//slider returns value between 0 and 100 - normalize to number of simulation ticks
-			//params.spawnTime = (params.spawnTime/100) * 1000
-		}
-		
-		
-		EventInstance.create(params).exec(function(err, created){
-			if (err) {
-				console.log(err);
-				return res.negotiate(err);
-			}
 			
-			return res.send({simulationId: created.simulation, eventId: created.event});
-		});
+			EventInstance.create(params).exec(function(err, created){
+				if (err) {
+					console.log(err);
+					return res.negotiate(err);
+				}
+				
+				return res.send({simulationId: created.simulation, eventId: created.event});
+			});
+		}
+		else if (spawnType == "rl") {
+			//find the time of the last instance of this event and pick a random time between then and the end of the simulation
+			console.log(spawnType);
+			EventInstance.find({event: eventId})
+			.then(function(instances) {
+				var latest = 0;
+				if (instances.length > 0) {
+					instances.forEach(function(instance) {
+						if (instance.spawnTime > latest) {
+							latest = instance.spawnTime;
+						}
+					});
+				}
+				Simulation.findOne({id: simulationId})
+				.then(function(simulation) {
+					console.log(latest);
+					console.log(simulation);
+					var randMax = simulation.numTicks - latest;
+					params.spawnTime = (Math.random() * randMax) + latest;
+					console.log(params.spawnTime);
+					
+					EventInstance.create(params).exec(function(err, created){
+						if (err) {
+							console.log(err);
+							return res.negotiate(err);
+						}
+						
+						return res.send({simulationId: created.simulation, eventId: created.event});
+					});
+				});
+			});
+		}
+		else {
+			//don't have to do anything here, slider on page returns value between 0 and simulation.numTicks
+			
+			EventInstance.create(params).exec(function(err, created){
+				if (err) {
+					console.log(err);
+					return res.negotiate(err);
+				}
+				
+				return res.send({simulationId: created.simulation, eventId: created.event});
+			});
+		}		
 	},
 	
 	viewEventResources: function(req, res) {

@@ -5,7 +5,7 @@ Event: <%= event.name %>
 Lead Team: <%= event.leadTeam.name %>
 
 Current Event Instances:
-<table border="1">
+<table>
 	<tr>
 		<th>Instance Name</th>
 		<th>Instance Description</th>
@@ -37,7 +37,7 @@ Add Event Based On:
 <br/>
 <label for="time">Fixed Time:</label>
 <input type="radio" name="eventSpawnType" id="time" value="t"/>
-In future make this slider start after the last instance that has been added
+<!-- In future make this slider start after the last instance that has been added -->
 <input type="range" id="timeSlider" min="0" max="<%= simulation.numTicks %>" value="50" oninput="outputUpdate(value)"></input>
 <output for="range" id="timeDisplay"></output>
 
@@ -50,9 +50,14 @@ document.querySelector('#timeDisplay').value = vol;
 }
 
 </script>
+<br/>
 <label for="random">Random Time:</label>
 <input type="radio" name="eventSpawnType" id="random" value="r"/>
 <br/>
+<label for="random">Random Time After (current) Last Instance:</label>
+<input type="radio" name="eventSpawnType" id="random" value="rl"/>
+<br/>
+
 <input type="button" id="addEventInstance" value="Add Instance" onclick="addEventInstanceFn();"></input>
 </form>
 
