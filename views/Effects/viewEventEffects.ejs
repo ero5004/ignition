@@ -2,7 +2,66 @@
 
 <% _.each(events, function(event_local){ %>
 <h2><%= event_local.name %></h2>
-<%= event_local.description %>
+Description: <%= event_local.description %>
+
+<h3>Effects on Resources</h3>
+<ul>
+	<% _.each(event_local.eventResourceEffects, function(eventResourceEffect){%>
+		<li>When <code><%= event_local.name %></code>
+	<% if (eventResourceEffect.effectType == 1){ %>
+		spawns,
+	<% }else if(eventResourceEffect.effectType == 2){ %>
+		is untreated 
+	<% }else if(eventResourceEffect.effectType == 3){ %>
+		is treated
+	<% } %>
+	<% if(eventResourceEffect.effectOperation == 1){ %>
+		add <%= eventResourceEffect.effectAmount %> to <code><%= resources[eventResourceEffect.resource].name %></code>
+	<% } %>
+	<% if(eventResourceEffect.effectOperation == -1){ %>
+		subtract <%= eventResourceEffect.effectAmount %> from <code><%= resources[eventResourceEffect.resource].name %></code>
+	<% } %>
+	<% if(eventResourceEffect.effectOperation == 2){ %>
+		multiply <code><%= resources[eventResourceEffect.resource].name %></code> by <%= eventResourceEffect.effectAmount %> 
+	<% } %>
+	<% if(eventResourceEffect.effectType == 2){ %>
+	every <%= eventResourceEffect.untreatedTicks %> ticks
+	<% } %>
+	<a href="#">edit</a>
+	<a href="/EventResourceEffect/destroy/<%= eventResourceEffect.id %>">delete</a>
+	<%})%>
+	</li>
+</ul>
+
+<h3>Effects on Metrics</h3>
+<ul>
+	<% _.each(event_local.eventMetricEffects, function(eventMetricEffect){%>
+		<li>
+			When <code><%= event_local.name %></code>
+			<% if (eventMetricEffect.effectType == 1){ %>
+				spawns,
+			<% }else if(eventMetricEffect.effectType == 2){ %>
+				is untreated 
+			<% }else if(eventMetricEffect.effectType == 3){ %>
+				is treated
+			<% } %>
+			<% if(eventMetricEffect.effectOperation == 1){ %>
+				add <%= eventMetricEffect.effectAmount %> to <code><%= metrics[eventMetricEffect.metric].name %></code>
+			<% } %>
+			<% if(eventMetricEffect.effectOperation == -1){ %>
+				subtract <%= eventMetricEffect.effectAmount %> from <code><%= metrics[eventMetricEffect.metric].name %></code>
+			<% } %>
+			<% if(eventMetricEffect.effectOperation == 2){ %>
+				multiply <code><%= metrics[eventMetricEffect.metric].name %></code> by <%= eventMetricEffect.effectAmount %> 
+			<% } %>
+			<% if(eventMetricEffect.effectType == 2){ %>
+			every <%= eventMetricEffect.untreatedTicks %> ticks
+			<% } %>
+			<a href="#">edit</a>
+			<a href="/EventMetricEffect/destroy/<%= eventMetricEffect.id %>">delete</a>
+		</li>
+	<%})%>
+</ul>
 
 <a href="/addEventResourceEffect/<%= simulationId %>/<%= event_local.id %>">Add <%= event_local.name %> Resource Effect</a>
 <br/>

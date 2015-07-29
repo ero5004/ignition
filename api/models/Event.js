@@ -39,6 +39,14 @@ module.exports = {
 		requiredResources: {
 			collection: 'EventResource',
 			via: 'event'
+		},
+		eventResourceEffects: {
+			collection: 'EventResourceEffect',
+			via: 'event'
+		},
+		eventMetricEffects: {
+			collection: 'EventMetricEffect',
+			via: 'event'
 		}
 
 		

@@ -14,13 +14,13 @@ When <code><%= event.name %></code>
 	is treated
 <% } %>
 <% if(eventMetricEffect.effectOperation == 1){ %>
-	add <%= eventMetricEffect.effectAmount %> to <%= metrics[eventMetricEffect.metric].name %>
+	add <%= eventMetricEffect.effectAmount %> to <code><%= metrics[eventMetricEffect.metric].name %></code>
 <% } %>
 <% if(eventMetricEffect.effectOperation == -1){ %>
-	subtract <%= eventMetricEffect.effectAmount %> from <%= metrics[eventMetricEffect.metric].name %>
+	subtract <%= eventMetricEffect.effectAmount %> from <code><%= metrics[eventMetricEffect.metric].name %></code>
 <% } %>
 <% if(eventMetricEffect.effectOperation == 2){ %>
-	multiply <%= metrics[eventMetricEffect.metric].name %> by <%= eventMetricEffect.effectAmount %> 
+	multiply <code><%= metrics[eventMetricEffect.metric].name %></code> by <%= eventMetricEffect.effectAmount %> 
 <% } %>
 <% if(eventMetricEffect.effectType == 2){ %>
 every <%= eventMetricEffect.untreatedTicks %> ticks
