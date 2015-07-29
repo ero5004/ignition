@@ -38,7 +38,7 @@ Add Event Based On:
 <label for="time">Fixed Time:</label>
 <input type="radio" name="eventSpawnType" id="time" value="t"/>
 In future make this slider start after the last instance that has been added
-<input type="range" id="timeSlider" min="0" max="1000" value="50" oninput="outputUpdate(value)"></input>
+<input type="range" id="timeSlider" min="0" max="<%= simulation.numTicks %>" value="50" oninput="outputUpdate(value)"></input>
 <output for="range" id="timeDisplay"></output>
 
 <script>
