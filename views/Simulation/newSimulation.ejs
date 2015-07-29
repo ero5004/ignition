@@ -101,7 +101,11 @@ Note: Simulations will be run using ticks instead of real time. This allows you 
 	}
 
         $(function() {
-            $('#startDate, #endDate, #simStartDate, #simEndDate').datepicker();
+            $('#startDate, #endDate, #simStartDate, #simEndDate').datetimepicker({
+				controlType: 'select',
+				oneLine: true,
+				timeFormat: 'hh:mm tt'
+			});
         });
 
 </script>
