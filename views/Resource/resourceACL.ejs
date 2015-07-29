@@ -2,29 +2,38 @@
 Simulation ID: <%= simulationId %>
 
 <!-- each checkbox in this table has two css classes, one for the role id and one that is either apply resource (a-resource.id) or see resource -->
-<table border='1'>
+<table>
 <tr>
 	<th><!--Team--></th>
+	<th><!--Check All--></th>
 	<% _.each(resources, function (resource){ %>
 	<th>Apply <%= resource.name %></th>
 	<th>See <%= resource.name %></th>
 	<% }); %>
 </tr>
-
+<tr>
+	<td><!--Team--></td>
+	<td><!--Check All--></td>
+	<% _.each(resources, function (resource){ %>
+	<td><input type="checkbox" class="colCheckAll" value="a-<%= resource.id %>"/></td>
+	<td><input type="checkbox" class="colCheckAll" value="s-<%= resource.id %>"/></td>
+	<% }); %>
+</tr>
 
 <% _.each(teamsWithRoles, function(teamRole){ %>
 
 <tr>
 	<td><%= teamRole.team.name %>: <%= teamRole.role.name %></td>
+	<td><input type="checkbox" class="rowCheckAll" value="r-<%= teamRole.role.id %>" /></td>
 	<% _.each(resources, function (resource){ %>
 
 	<% var resourceAccess = _.find(resourceAccessList, function (resourceAccess){ return (resourceAccess.resource == resource.id && resourceAccess.role == teamRole.role.id); }) %>
 	<% if (resourceAccess){ %>
-		<td>Apply <input type="checkbox" class="a-<%= resource.id %> r-<%=teamRole.role.id %>" <%= resourceAccess.apply ? "checked='checked'" : "" %> /></td>
-		<td>See <input type="checkbox" class="s-<%= resource.id %> r-<%=teamRole.role.id %>" <%= resourceAccess.see ? "checked='checked'" : "" %> /></td>
+		<td><input type="checkbox" class="a-<%= resource.id %> r-<%=teamRole.role.id %>" <%= resourceAccess.apply ? "checked='checked'" : "" %> /></td>
+		<td><input type="checkbox" class="s-<%= resource.id %> r-<%=teamRole.role.id %>" <%= resourceAccess.see ? "checked='checked'" : "" %> /></td>
 	<% }else{ %>
-		<td>Apply <input type="checkbox" class="a-<%= resource.id %> r-<%=teamRole.role.id %>"/></td>
-		<td>See <input type="checkbox" class="s-<%= resource.id %> r-<%=teamRole.role.id %>"/></td>
+		<td><input type="checkbox" class="a-<%= resource.id %> r-<%=teamRole.role.id %>"/></td>
+		<td><input type="checkbox" class="s-<%= resource.id %> r-<%=teamRole.role.id %>"/></td>
 	<% } %>
 	<% }); %>
 	
@@ -57,7 +66,6 @@ var getCheckboxesStatefn = function() {
 			//css classes for the two types of checkboxes
 			var applyCheckboxClass = '.a-' + resource + '.r-' + teamRole;
 			var seeCheckboxClass = '.s-'+ resource + '.r-' + teamRole;
-			console.log(applyCheckboxClass);
 			
 			//this variable will hold one record and then be pushed to an array that will be passed to the server
 			var resourceAccessTemp = {};
@@ -66,8 +74,6 @@ var getCheckboxesStatefn = function() {
 			resourceAccessTemp.apply =  $(applyCheckboxClass).is(":checked");
 			resourceAccessTemp.see = $(seeCheckboxClass).is(":checked");
 			resourceAccessTemp.simulation = <%= simulationId %>;
-			
-			console.log(resourceAccessTemp);
 			
 			resourceAccessList.push(resourceAccessTemp);
 		});		
@@ -92,6 +98,16 @@ var submitResourceACLfn = function() {
 var nextStepClick = function() {
 	window.location = '/viewMetrics/<%= simulationId %>';
 }
+
+$(".colCheckAll, .rowCheckAll").change(function() {
+	
+	if(this.checked) {
+		$("." + $(this).val()).prop('checked', true);
+	}
+	else {
+		$("." + $(this).val()).prop('checked', false);
+	}
+});
 
 
 

@@ -1,19 +1,27 @@
 <h1>Metric Access Control List</h1>
 
 Simulation ID: <%= simulationId %>
-<table border='1'>
+<table>
 <tr>
 	<th><!--Team--></th>
+	<th><!--Check All--></th>
 	<% _.each(metrics, function (metric) { %>
 	<th>See <%= metric.name %></th>
 	<% }); %>
 </tr>
-
+<tr>
+	<td><!--Team--></td>
+	<td><!--Check All--></td>
+	<% _.each(metrics, function (metric){ %>
+	<td><input type="checkbox" class="colCheckAll" value="s-<%= metric.id %>"/></td>
+	<% }); %>
+</tr>
 
 <% _.each(teamsWithRoles, function(teamRole) { %>
 
 <tr>
 	<td><%= teamRole.team.name %>: <%= teamRole.role.name %></td>
+	<td><input type="checkbox" class="rowCheckAll" value="r-<%= teamRole.role.id %>" /></td>
 	<% _.each(metrics, function (metric) { %>
 	
 	<% var metricAccess = _.find(metricAccessList, function (metricAccess){ return (metricAccess.metric == metric.id && metricAccess.role == teamRole.role.id); }) %>
@@ -81,8 +89,17 @@ var submitMetricACLFn = function() {
 
 var nextStepClick = function() {
 	window.location = '/viewEvents/<%= simulationId %>';
-}
+};
 
+$(".colCheckAll, .rowCheckAll").change(function() {
+	
+	if(this.checked) {
+		$("." + $(this).val()).prop('checked', true);
+	}
+	else {
+		$("." + $(this).val()).prop('checked', false);
+	}
+});
 
 
 </script>

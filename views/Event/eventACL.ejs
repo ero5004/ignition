@@ -1,20 +1,29 @@
 <h1>Event Access Control List</h1>
 
 Simulation ID: <%= simulationId %>
-<table border='1'>
+<table>
 <tr>
 	<th><!--Team--></th>
+	<th><!--Check All--></th>
 	<% _.each(teams, function (team) { %>
 	<th>See <%= team.name %> Events</th>
 	<th>Forward <%= team.name %> Events</th>
 	<% }); %>
 </tr>
-
+<tr>
+	<td><!--Team--></td>
+	<td><!--Check All--></td>
+	<% _.each(teams, function (team){ %>
+	<td><input type="checkbox" class="colCheckAll" value="s-<%= team.id %>"/></td>
+	<td><input type="checkbox" class="colCheckAll" value="f-<%= team.id %>"/></td>
+	<% }); %>
+</tr>
 
 <% _.each(teamsWithRoles, function(teamRole) { %>
 
 <tr>
 	<td><%= teamRole.team.name %>: <%= teamRole.role.name %></td>
+	<td><input type="checkbox" class="rowCheckAll" value="r-<%= teamRole.role.id %>" /></td>
 	<% _.each(teams, function (owningTeam) { %>
 	<% var eventAccess = _.find(eventAccessList, function (eventAccess){ return (eventAccess.owningTeam == owningTeam.id && eventAccess.role == teamRole.role.id); }) %>
 	<% if (eventAccess){ %>
@@ -87,6 +96,15 @@ var nextStepClick = function() {
 	window.location = '/viewMetricEffects/<%= simulationId %>';
 }
 
+$(".colCheckAll, .rowCheckAll").change(function() {
+	
+	if(this.checked) {
+		$("." + $(this).val()).prop('checked', true);
+	}
+	else {
+		$("." + $(this).val()).prop('checked', false);
+	}
+});
 
 
 </script>
