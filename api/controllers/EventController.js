@@ -23,7 +23,8 @@ module.exports = {
 						events: events,
 						teams: teams,
 						resources: resourcesSorted,
-						page: '7'
+						page: '7',
+						title: "Add Events to Simulation"
 					});
 				});
 			});
@@ -82,7 +83,8 @@ module.exports = {
 							events: events,
 							teams: teams,
 							eventAccessList: eventAccessList,
-							page: '8'
+							page: '8',
+							title: "Event Access Control List"
 							});
 					});
 				});	
@@ -127,16 +129,21 @@ module.exports = {
 		var eventId = params.eventId;
 		var simulationId = params.simulationId;
 		
-		Event.findOne({id: eventId})
-		.populateAll()
-		.then(function(event) {
-			EventInstance.find({event: eventId})
-			.then(function(eventInstances) {
-				return res.view("Event/viewEventInstances", {
-					event: event,
-					eventInstances: eventInstances,
-					simulationId: simulationId,
-					page: '7a'
+		Simulation.findOne({id: simulationId})
+		.then(function(simulation){
+			Event.findOne({id: eventId})
+			.populateAll()
+			.then(function(event) {
+				EventInstance.find({event: eventId})
+				.then(function(eventInstances) {
+					return res.view("Event/viewEventInstances", {
+						event: event,
+						eventInstances: eventInstances,
+						simulationId: simulationId,
+						simulation: simulation,
+						page: '7a',
+						title: "Add Event Instances"
+					});
 				});
 			});
 		});
@@ -194,7 +201,8 @@ module.exports = {
 							resources: resources,
 							resourceAccessList: resourceAccessList,
 							eventResource: eventResource,
-							page: '7b'
+							page: '7b',
+							title: "Set Resources Needed"
 						});
 					});
 				});

@@ -85,7 +85,8 @@ module.exports = {
 							teamsWithRoles: teamsWithRoles,
 							resources: resources,
 							resourceAccessList: resourceAccessList,
-							page: '4'
+							page: '4',
+							title: "Resource Access Control List"
 						});
 					});
 				});	

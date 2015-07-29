@@ -25,7 +25,8 @@ module.exports = {
 						events: events,
 						resources: resourcesSorted,
 						metrics: metricsSorted,
-						page: '9b'
+						page: '9b',
+						title: "View Event Effects"
 					});
 				})
 			});
@@ -49,7 +50,8 @@ module.exports = {
 						event: event,
 						resources: resourcesSorted,
 						eventResourceEffects: eventResourceEffects,
-						page: '9bi'
+						page: '9bi',
+						title: "Add Event Resource Effects"
 					});
 				});
 			});
@@ -88,7 +90,8 @@ module.exports = {
 						event: event,
 						metrics: metricsSorted,
 						eventMetricEffects: eventMetricEffects,
-						page: '9bii'
+						page: '9bii',
+						title: "Add Event Metric Effects"
 					});
 					
 				});

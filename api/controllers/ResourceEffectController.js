@@ -24,7 +24,8 @@ module.exports = {
 						metrics: metricsSorted,
 						events: eventsSorted,
 						simulationId: simulationId,
-						page: '9c'
+						page: '9c',
+						title: "View Resource Effects"
 					});
 				});
 			});
@@ -49,7 +50,8 @@ module.exports = {
 						resource: resource,
 						events: eventsSorted,
 						resourceEventEffects: resourceEventEffects,
-						page: '9ci'
+						page: '9ci',
+						title: "Add Resource Event Effects"
 					});
 				});
 			});
@@ -88,7 +90,8 @@ module.exports = {
 						resource: resource,
 						metrics: metricsSorted,
 						resourceMetricEffects: resourceMetricEffects,
-						page: '9cii'
+						page: '9cii',
+						page: "Add Resource Metric Effects"
 					});
 				});
 			});

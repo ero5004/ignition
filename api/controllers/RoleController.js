@@ -20,7 +20,8 @@ module.exports = {
 					simulationId: simulationId,
 					team: team,
 					roles: roles,
-					page: '2a'
+					page: '2a',
+					title: "Add Roles to Team"
 				});
 			});
 		});

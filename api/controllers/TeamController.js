@@ -18,7 +18,8 @@ module.exports = {
 				{
 					simulationId: simulationId,
 					teams: teams,
-					page: '2'
+					page: '2',
+					title: "Add Teams to Simulation"
 				});
 			});
 	},

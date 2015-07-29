@@ -9,7 +9,8 @@ module.exports = {
 	newSimulation: function(req, res) {
 		return res.view('Simulation/newSimulation',
 		{
-			page: '1'
+			page: '1',
+			title: "Create New Simulation"
 		});
 	},
 	

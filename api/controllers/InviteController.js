@@ -62,7 +62,8 @@ module.exports = {
 					simulations: user.simulations,
 					receivedInvitations: user.receivedInvitations,
 					sentInvitations: user.sentInvitations,
-					page: '0'
+					page: '0',
+					title: "Dashboard"
 				});
 			})
 			.catch (function (err)
@@ -91,7 +92,8 @@ module.exports = {
 					users: users,
 					invitedUsers: invitedUsers,
 					simulationId: simulation.id,
-					page: '0'
+					page: '0',
+					title: "Invite Users to Simulation"
 				});		
 			});
 		});

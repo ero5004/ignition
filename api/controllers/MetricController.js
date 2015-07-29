@@ -16,7 +16,8 @@ module.exports = {
 			return res.view('Metric/viewMetrics', {
 				simulationId: simulationId,
 				metrics: metrics,
-				page: '5'
+				page: '5',
+				title: "Add Metrics to Simulation"
 			});
 		});
 	},
@@ -72,7 +73,8 @@ module.exports = {
 							teamsWithRoles: teamsWithRoles,
 							metrics: metrics,
 							metricAccessList: metricAccessList,
-							page: '6'
+							page: '6',
+							title: "Metric Access Control List"
 							});
 					});
 				});	
