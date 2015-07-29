@@ -3,14 +3,44 @@
 <br/>
 <div>
 <span class="c-1">Create New Simulation</span> | 
+<% if(page == "2a"){ %>
+<span class="c-2a">Add Roles</span> | 
+<% }else{ %>
 <span class="c-2">Add Teams</span> | 
+<% } %>
 <span class="c-3">Add Resources</span> |
 <span class="c-4">Resource ACL</span> |
 <span class="c-5">Add Metrics</span> |
 <span class="c-6">Metric ACL</span> |
+<% if(page == "7a"){ %>
+<span class="c-7a">Add Event Instances</span> | 
+<% }else if(page == "7b"){ %>
+<span class="c-7b">Add Event Resources</span> | 
+<% }else{ %>
 <span class="c-7">Add Events</span> |
+<% } %>
 <span class="c-8">Event ACL</span> |
+<% if(page == "9a"){ %>
+<span class="c-9a">View Metric Effects</span> | 
+<% }else if(page == "9a1"){ %>
+<span class="c-9a1">Add Metric Resource Effects</span> | 
+<% }else if(page == "9a2"){ %>
+<span class="c-9a2">Add Metric Event Effects</span> | 
+<% }else if(page == "9b"){ %>
+<span class="c-9b">View Event Effects</span> | 
+<% }else if(page == "9b1"){ %>
+<span class="c-9b1">Add Event Resource Effects</span> | 
+<% }else if(page == "9b2"){ %>
+<span class="c-9b2">Add Event Metric Effects</span> | 
+<% }else if(page == "9c"){ %>
+<span class="c-9c">View Resource Effects</span> | 
+<% }else if(page == "9c1"){ %>
+<span class="c-9c1">Add Resource Event Effects</span> | 
+<% }else if(page == "9c2"){ %>
+<span class="c-9c2">Add Resource Metric Effects</span> | 
+<% }else{ %>
 <span class="c-9">Add Effects</span> |
+<% } %>
 </div>
 
 <style>

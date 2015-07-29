@@ -50,7 +50,7 @@ module.exports = {
 						event: event,
 						resources: resourcesSorted,
 						eventResourceEffects: eventResourceEffects,
-						page: '9bi',
+						page: '9b1',
 						title: "Add Event Resource Effects"
 					});
 				});
@@ -90,7 +90,7 @@ module.exports = {
 						event: event,
 						metrics: metricsSorted,
 						eventMetricEffects: eventMetricEffects,
-						page: '9bii',
+						page: '9b2',
 						title: "Add Event Metric Effects"
 					});
 					

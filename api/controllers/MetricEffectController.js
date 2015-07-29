@@ -47,7 +47,7 @@ module.exports = {
 					simulationId: simulationId,
 					metric: metric,
 					resources: resources,
-					page: '9ai',
+					page: '9a1',
 					title: "Add Metric Resource Effect"
 				});
 			});
@@ -85,7 +85,7 @@ module.exports = {
 					simulationId: simulationId,
 					metric: metric,
 					events: events,
-					page: '9aii',
+					page: '9a2',
 					title: "Add Metric Event Effects"
 				});
 			});
