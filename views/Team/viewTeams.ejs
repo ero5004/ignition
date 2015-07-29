@@ -1,5 +1,4 @@
 <h1>Add Teams to Simulation</h1>
-Simulation ID: <%= simulationId %>
 <br/>
 Existing Teams:
 <table>
@@ -17,6 +16,7 @@ Existing Teams:
 		<td>
 		<% _.each(team.roles, function(role) { %>
 		<%= role.name %>
+		<%= role.name == team.roles[team.roles.length - 1].name ? "" : "," %>
 		<% }) %>
 		</td>
 		<td><a href='/viewRoles/<%= simulationId %>/<%=team.id%>'>Add Roles</a></td>
