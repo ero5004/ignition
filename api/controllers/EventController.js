@@ -184,12 +184,8 @@ module.exports = {
 				}
 				Simulation.findOne({id: simulationId})
 				.then(function(simulation) {
-					console.log(latest);
-					console.log(simulation);
 					var randMax = simulation.numTicks - latest;
-					params.spawnTime = (Math.random() * randMax) + latest;
-					console.log(params.spawnTime);
-					
+					params.spawnTime = (Math.random() * randMax) + latest;					
 					EventInstance.create(params).exec(function(err, created){
 						if (err) {
 							console.log(err);
