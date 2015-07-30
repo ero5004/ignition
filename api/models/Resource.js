@@ -20,6 +20,9 @@ module.exports = {
 		applicationTime: {
 			type: 'integer'
 		},
+		reusable: {
+			type: 'boolean'
+		},
 		simulation: {
 			model: 'Simulation'
 		},

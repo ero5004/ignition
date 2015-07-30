@@ -78,13 +78,16 @@ Note: To send a notification to a team, create an event that requires no resourc
 <br/>
 <br/>
 
-<form id="addEventForm" method="POST" action="addEvent">
+<form id="addEventForm" method="POST" action="addEvent" class="builderInput">
+<p>
 <label for="name">Event Name:</label>
 <input type="text" id="name"></input>
-<br/>
+</p>
+<p>
 <label for="description">Description:</label>
 <textarea id="description"></textarea>
-<br/>
+</p>
+<p>
 <label for="leadTeam">Lead Team:</label>
 <select id="leadTeam">
 	<option></option>
@@ -92,26 +95,31 @@ Note: To send a notification to a team, create an event that requires no resourc
 	<option value="<%= team.id%>"><%= team.name %></option>
 	<% })%>
 </select>
-<br/>
+</p>
 <hr/>
+<p>
 <label for="probRecurrenceTreated">Probability of recurrence if treated (0 - 100):</label>
 <input type="text" id="probRecurrenceTreated" size="4" maxlength="4"/>%
-<br/>
+</p>
 When the event is treated (the necessary resources have been applied and have all finished application), a one-time probability check will be done to determine if this event will spawn one child at a random time in the future.
 <br/>
 Example: probability = 30%
 <br/>
 Event is treated at time 200. At this time the simulator will generate a random number between 0 and 100. If this number is less than the probability (30%), a new event instance will be added to the event queue at a random time.
 <hr/>
+<p>
 <label for="probRecurrenceUntreated">Probability of recurrence if untreated (0 - 100):</label>
 <input type="text" id="probRecurrenceUntreated" size="4" maxlength="4"/>%
-<br/>
+</p>
+<p>
 <label for="untreatedExpGrowth">Exponential growth if untreated (enter an integer):</label>
 <input type="text" id="untreatedExpGrowth"></input>
-<br/>
+</p>
+<p>
 <label for="untreatedRespawnCheckTime">Time between event checks (enter an integer):</label>
 <input type="text" id="untreatedRespawnCheckTime"></input>
-Show number of ticks in simulation here.
+</p>
+<!-- Show number of ticks in simulation here. -->
 <br/>
 First instance will spawn at time t0. If that event is untreated after (<code>time between event checks</code>) ticks, the simulator will generate (<code>exponential growth if untreated</code>) random numbers between 0 and 100. For each of the random numbers that is less than the (<code>probability of recurrence if untreated</code>), a new child instance of that event will be added to the event instances queue. This will be repeated every (<code>time between event checks</code>) until the event is treated. Each child event will also have the same probabilities of recurrence.
 <br/>

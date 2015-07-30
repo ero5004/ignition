@@ -4,6 +4,23 @@ body {
 	padding-top: 20px;
 }
 
+.builderInput form  { display: table;      }
+.builderInput p     { display: table-row;  }
+.builderInput label { 
+	display: table-cell;
+	text-align: right;
+	padding-right: 10px;
+}
+.builderInput input { 
+	display: table-cell;
+}
+.builderInput {
+	display: table-cell;
+}
+
+.builderInput textarea{display: table-cell;
+width: 136px;}
+
 .acl-table {
 	border: solid 1px #DDEEEE;
 	border-collapse: collapse;
@@ -31,6 +48,12 @@ body {
 }
 .acl-table tr:nth-child(even) {
     background-color: #B0E0E6;
+}
+.acl-table td:nth-child(even) {
+    border-right: solid 2px #BBBBBB;
+}
+.acl-table th:nth-child(even) {
+    border-right: solid 2px #BBBBBB;
 }
 
 

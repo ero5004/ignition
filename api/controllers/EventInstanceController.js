@@ -39,16 +39,19 @@ module.exports = {
 		
 		//if spawnType is set as random, pick a random time for this event to spawn
 		if (spawnType == 'r') {
-			//currently picking a random time between 0 and 1000, this will be changed to the number of ticks per simulation
-			params.spawnTime = Math.random() * 1000;
 			
-			EventInstance.create(params).exec(function(err, created){
-				if (err) {
-					console.log(err);
-					return res.negotiate(err);
-				}
+			Simulation.findOne({id: simulationId})
+			.then(function(simulation) {
+				params.spawnTime = Math.random() * simulation.numTicks;
 				
-				return res.send({simulationId: created.simulation, eventId: created.event});
+				EventInstance.create(params).exec(function(err, created){
+					if (err) {
+						console.log(err);
+						return res.negotiate(err);
+					}
+					
+					return res.send({simulationId: created.simulation, eventId: created.event});
+				});
 			});
 		}
 		else if (spawnType == "rl") {

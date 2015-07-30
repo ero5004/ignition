@@ -29,24 +29,25 @@ Current Metrics:
 <br/>
 <br/>
 
-<form id="addMetricForm" method="POST" action="addMetric">
+<form id="addMetricForm" method="POST" action="addMetric" class="builderInput">
+<p>
 <label for="name">Metric Name:</label>
 <input type="text" id="name"></input>
-<br/>
+</p><p>
 <label for="defaultValue">Starting Value:</label>
 <input type="text" id="defaultValue"></input>
-<br/>
+</p><p>
 <label for="minValue">Min Value:</label>
 <input type="text" id="minValue"></input>
-<br/>
+</p><p>
 <label for="maxValue">Max Value:</label>
 <input type="text" id="maxValue"></input>
-<br/>
+</p><p>
 <label for="unit">Unit:</label>
 <input type="text" id="unit"></input>
-<br/>
-<input type="button" id="addMetric" value="Add Metric" onclick="addMetricFn();"></input>
+</p>
 </form>
+<input type="button" id="addMetric" value="Add Metric" onclick="addMetricFn();"></input>
 
 <br/>
 <br/>

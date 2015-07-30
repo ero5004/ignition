@@ -1,27 +1,28 @@
 <h1>Create New Simulation</h1>
 
 <form id="newSimulation" >
+	<p>
 	<label for="name">Simulation Name:</label>
 	<input type="text" id="name" title="The name of the simulation. This is used everywhere."></input>
-	<br/>
+	</p><p>
 	<label for="startDate">Start Date and Time:</label>
 	<input type="text" id="startDate" title="The real-life start time of your simulation."></input>
-	<br/>
+	</p><p>
 	<label for="endDate">End Date and Time:</label>
 	<input type="text" id="endDate" title="The real-life end time of your simulation."></input>
-	<br/>
+	</p><p>
 	<label for="description">Simulation Description:</label>
-	<textarea id="description" title="A description of your simulation."></textarea>
-	<br/>
+	<textarea id="description" title="A description of your simulation." size="10"></textarea>
+	</p><p>
 	<label for="simStartDate">Simulated Start Date and Time:</label>
 	<input type="text" id="simStartDate" title="The start of the date and time that will be simulated."></input>
-	<br/>
+	</p><p>
 	<label for="simEndDate">Simulated End Date and Time:</label>
 	<input type="text" id="simEndDate" title="The end of the date and time that will be simulated."></input>
-	<br/>
+	</p><p>
 	<label for="numTicks">Number of Ticks in Simulation:</label>
 	<input type="text" id="numTicks" title="The number of checks the simulation engine will conduct during the simulated time."></input>
-	<br/>
+	</p>
 	<input type="button" id="submit" value="Create" onclick="return checkFields();" ></input>
 </form>
 

@@ -8,6 +8,7 @@ Current Pool:
 		<th>Icon</th>
 		<th>Quantity</th>
 		<th>Application Time</th>
+		<th>Reusable</th>
 		<th>Delete</th>
 	</tr>
 	<% _.each(resources, function(resource) { %>
@@ -16,6 +17,7 @@ Current Pool:
 		<td><%= resource.icon %></td> 
 		<td><%= resource.quantity %></td>
 		<td><%= resource.applicationTime %></td>
+		<td><%= resource.reusable ? "Yes" : "No" %></td>
 		<td><a href='/Resource/destroy/<%= resource.id %>'>delete</a></td>
 	</tr>
 	<% }) %>
@@ -24,23 +26,31 @@ Current Pool:
 <br/>
 <br/>
 
-<form id="addResource" method="POST" action="addResource">
+<form id="addResource" method="POST" action="addResource" class="builderInput">
+<p>
 <label for="name">Resource Name:</label>
 <input type="text" id="name"></input>
-<br/>
+</p><p>
 <label for="quantity">Quantity of Resource:</label>
 <input type="text" id="quantity"></input>
-<br/>
+</p><p>
 <label for="icon">Icon Placeholder:</label>
-<input type="text" id="icon"></input>
-<br/>
+<input type="text" id="icon" disabled="disabled" value="coming soon"/>
+</p><p>
 <label for="applicationTime">Time Taken to Apply Resource:</label>
 <input type="text" id="applicationTime"></input>
-<br/>
-example: if resource is being applied to event across town, it could take 45 minutes to apply it
+</p><p>
+<label for="reusable">Resource is reusable:</label>
+<select id="reusable">
+	<option value="true">Yes</option>
+	<option value="false">No</option>
+</select>
+</p>
+</form>
+Example: if resource is being applied to event across town, it could take 45 minutes to apply it
 <br/>
 <input type="button" id="addResource" value="Add Resource" onclick="addResourceFn();"></input>
-</form>
+
 
 <br/>
 <br/>
@@ -55,6 +65,7 @@ Finished adding resources?
 		var resourceIcon = $('#icon').val();
 		var resourceQuantity = $('#quantity').val();
 		var applicationTime = $('#applicationTime').val();
+		var reusable = $('#reusable').val();
 		
 		if (!resourceName)
 		{
@@ -67,7 +78,8 @@ Finished adding resources?
 			name: resourceName,
 			icon: resourceIcon,
 			quantity: resourceQuantity,
-			applicationTime: applicationTime
+			applicationTime: applicationTime,
+			reusable: reusable
 		}, function(data, status, jqxhr)
 			{
 				window.location = '/viewResources/<%= simulationId %>';

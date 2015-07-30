@@ -40,11 +40,9 @@ module.exports = {
 	deleteTeam: function(req, res) {
 		var params = req.params.all();
 		var teamId = params.teamId;
-		
-		if (DeleteService.deleteTeam(teamId)) {
-			return res.send({successful: true});
-		}
-		
+		DeleteService.deleteTeam(teamId, function(status){
+			return res.send({successful: status});
+		});
 	},
 	
 	checkTeamEvents: function(req, res) {
@@ -53,8 +51,7 @@ module.exports = {
 		
 		Event.find({leadTeam: teamId})
 		.then(function(events){
-			console.log(events);
-			if (events){
+			if (events.length > 0){
 				return res.send({associatedEvents: true});
 			}
 			else {

@@ -27,13 +27,15 @@ Existing Teams:
 <br/>
 <br/>
 
-<form id="addTeam" method="POST" action="createTeam">
-<label for="name">Team Name:</label>
-<input type="text" id="name" title="Put the name of the team here."></input>
-<br/>
-<label for="icon">Icon Placeholder:</label>
-<input type="text" id="icon"></input>
-<br/>
+<form id="addTeam" method="POST" action="createTeam" class="builderInput">
+<p>
+	<label for="name">Team Name:</label>
+	<input type="text" id="name" title="Put the name of the team here."></input>
+</p>
+<p>
+	<label for="icon">Icon:</label>
+	<input type="text" id="icon" disabled="disabled" value="coming soon"/>
+</p>
 <input type="button" id="addTeam" value="Add Team" onclick="addTeamFn();"></input>
 </form>
 
@@ -75,12 +77,15 @@ Finished adding teams?
 		//ajax call to check if any events are associated with this team
 		$.ajax("/checkTeamEvents/" + teamId)
 		.done(function(data){
+			console.log(data);
 			if (data.associatedEvents){
 				alert("There are events associated with this team, please delete them before deleting this team");
 				return false;
 			}
 			else {
-				$.post("/deleteTeam/" + teamId, function(data, status, jqxhr) {
+				$.ajax("/deleteTeam/" + teamId)
+				.done(function(data) {
+					console.log(data);
 					if(data.successful) {
 						window.location = '/viewTeams/<%= simulationId %>';
 					}

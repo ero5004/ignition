@@ -17,44 +17,50 @@ module.exports = {
 		});
 	},
 	
-	cleanupDeleteRole: function(roleId) {
-		ResourceAccess.destroy({role: roleId}).then(function(err){
+	cleanupDeleteRole: function(roleId, cb) {
+		ResourceAccess.destroy({role: roleId}).exec(function(err, resourceAccesses){
 			if (err) {
 				console.log(err);
-				return false;
+				return cb(false);
 			}
-			MetricAccess.destroy({role: roleId}).then(function(err){
+			MetricAccess.destroy({role: roleId}).exec(function(err, metricAccesses){
 				if (err) {
 					console.log(err);
-					return false;
-				}	
-				EventAccess.destroy({role: roleId}).then(function(err){
+					return cb(false);
+				}
+				EventAccess.destroy({role: roleId}).exec(function(err, eventAccesses){
 					if (err) {
 						console.log(err);
-						return false;
+						return cb(false);
 					}
-					return true;
+					return cb(true);
 				});
 			});
 		});
 	},
 	
-	deleteTeam: function(teamId) { 
+	deleteTeam: function(teamId, cb) { 
 		Team.destroy({id: teamId}).exec(function(err){
 			if (err) {
 				console.log(err);
-				return false;
+				return cb(false);
 			}
 			
 			Role.destroy({team: teamId}).exec(function(err, roles){
 				if (err) {
 					console.log(err);
-					return false;
+					return cb(false);
 				}
+				
+				//create list of all role ids that were associated with that team
+				var rolesArray = [];
 				roles.forEach(function(role){
-					if (!DeleteService.cleanupDeleteRole(role.id)){
-						return false;
-					}
+					rolesArray.push(role.id);
+					
+				});
+				
+				DeleteService.cleanupDeleteRole(rolesArray, function(status){
+					return cb(status);
 				});
 			});
 		});

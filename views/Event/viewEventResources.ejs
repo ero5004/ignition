@@ -6,17 +6,18 @@ Description: <%= event.description %>
 Lead Team: <%= event.leadTeam.name %>
 <br/>
 
-<form id="addEventResourcesForm" method="POST">
+<form id="addEventResourcesForm" method="POST" class="builderInput">
 <strong>Resources:</strong>
 <br/>
 <% _.each(resources, function(resource){ %>
 <%= resource.name %>
-<br/>
+<p>
 Starting Quantity:<%= resource.quantity %>
-<br/>
-Quantity Needed for Event: 
+</p>
+<p>
+<label for="r-<%= resource.id %>">Quantity Needed for Event:</label>
 <input type="text" id="r-<%= resource.id %>"/>
-<br/>
+</p>
 <br/>
 <% }) %>
 <input type="button" id="addEventResource" value="Add Requirement" onclick="addEventResourceFn();"></input>

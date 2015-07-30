@@ -26,20 +26,25 @@ Current Event Instances:
 <br/>
 <br/>
 
-<form id="addEventInstanceForm" method="POST" action="addEvent">
+<form id="addEventInstanceForm" method="POST" action="addEvent" class="builderInput">
+<p>
 <label for="name">Instance Name:</label>
 <input type="text" id="name"></input>
-<br/>
+</p>
+<p>
 <label for="description">Instance Description:</label>
 <textarea id="description"></textarea>
-<br/>
+</p>
+<p>
 Add Event Based On:
-<br/>
+</p>
+<p>
 <label for="time">Fixed Time:</label>
 <input type="radio" name="eventSpawnType" id="time" value="t"/>
 <!-- In future make this slider start after the last instance that has been added -->
 <input type="range" id="timeSlider" min="0" max="<%= simulation.numTicks %>" value="50" oninput="outputUpdate(value)"></input>
 <output for="range" id="timeDisplay"></output>
+</p>
 
 <script>
 
@@ -50,13 +55,14 @@ document.querySelector('#timeDisplay').value = vol;
 }
 
 </script>
-<br/>
+<p>
 <label for="random">Random Time:</label>
 <input type="radio" name="eventSpawnType" id="random" value="r"/>
-<br/>
+</p>
+<p>
 <label for="random">Random Time After (current) Last Instance:</label>
 <input type="radio" name="eventSpawnType" id="random" value="rl"/>
-<br/>
+</p>
 
 <input type="button" id="addEventInstance" value="Add Instance" onclick="addEventInstanceFn();"></input>
 </form>
