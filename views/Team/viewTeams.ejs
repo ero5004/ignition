@@ -12,7 +12,7 @@ Existing Teams:
 	<% _.each(teams, function(team) { %>
 	<tr>
 		<td><%= team.name %></td>
-		<td><%= team.icon%></td> 
+		<td><%= team.icon%></td>
 		<td>
 		<% _.each(team.roles, function(role) { %>
 		<%= role.name %>
@@ -30,7 +30,7 @@ Existing Teams:
 
 <form id="addTeam" method="POST" action="createTeam">
 <label for="name">Team Name:</label>
-<input type="text" id="name"></input>
+<input type="text" id="name" title="Put the name of the team here."></input>
 <br/>
 <label for="icon">Icon Placeholder:</label>
 <input type="text" id="icon"></input>
@@ -49,13 +49,13 @@ Finished adding teams?
 	{
 		var teamName = $('#name').val();
 		var teamIcon = $('#icon').val();
-		
+
 		if (!teamName)
 		{
 			alert("Team name required");
 			return false;
 		}
-		
+
 		$.post('/addTeam', {
 			simulation: <%= simulationId %>,
 			name: teamName,
@@ -64,15 +64,21 @@ Finished adding teams?
 			{
 				window.location = '/viewTeams/' + data.simulationId;
 			});
-		
-		
+
+
 	}
-	
+
 	var nextStepClick = function() {
-		window.location = '/viewResources/<%= simulationId %>';	
+		window.location = '/viewResources/<%= simulationId %>';
 	}
-	
+
+$(function() {
+  $(document).tooltip();
+  }
+
 </script>
+
+
 
 
 
