@@ -2,25 +2,25 @@
 
 <form id="newSimulation" >
 	<label for="name">Simulation Name:</label>
-	<input type="text" id="name"></input>
+	<input type="text" id="name" title="The name of the simulation. This is used everywhere."></input>
 	<br/>
-	<label for="startDate">Start Date:</label>
-	<input type="text" id="startDate"></input>
+	<label for="startDate">Start Date and Time:</label>
+	<input type="text" id="startDate" title="The real-life start time of your simulation."></input>
 	<br/>
-	<label for="endDate">End Date:</label>
-	<input type="text" id="endDate"></input>
+	<label for="endDate">End Date and Time:</label>
+	<input type="text" id="endDate" title="The real-life end time of your simulation."></input>
 	<br/>
-	<label for="description">Simulaton Description:</label>
-	<textarea id="description"></textarea>
+	<label for="description">Simulation Description:</label>
+	<textarea id="description" title="A description of your simulation."></textarea>
 	<br/>
-	<label for="simStartDate">Simulated Start Date:</label>
-	<input type="text" id="simStartDate"></input>
+	<label for="simStartDate">Simulated Start Date and Time:</label>
+	<input type="text" id="simStartDate" title="The start of the date and time that will be simulated."></input>
 	<br/>
-	<label for="simEndDate">Simulated End Date:</label>
-	<input type="text" id="simEndDate"></input>
+	<label for="simEndDate">Simulated End Date and Time:</label>
+	<input type="text" id="simEndDate" title="The end of the date and time that will be simulated."></input>
 	<br/>
 	<label for="numTicks">Number of Ticks in Simulation:</label>
-	<input type="text" id="numTicks"></input>
+	<input type="text" id="numTicks" title="The number of checks the simulation engine will conduct during the simulated time."></input>
 	<br/>
 	<input type="button" id="submit" value="Create" onclick="return checkFields();" ></input>
 </form>
@@ -106,6 +106,7 @@ Note: Simulations will be run using ticks instead of real time. This allows you 
 				oneLine: true,
 				timeFormat: 'hh:mm tt'
 			});
+			$( document ).tooltip();
         });
 
 </script>

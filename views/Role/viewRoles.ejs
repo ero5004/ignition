@@ -9,7 +9,7 @@ Existing Roles:
 	<% _.each(roles, function(role) { %>
 	<tr>
 		<td><%= role.name %></td>
-		<td><a href='/Role/destroy/<%= role.id %>'>delete</a></td>
+		<td><input type="button" value="delete" onclick="deleteRoleFn(<%= role.id %>);" /></td>
 		<td><a>edit</a></td>
 	</tr>
 	<% }) %>
@@ -57,6 +57,19 @@ Finished adding roles to this Team?
 	var nextStepClick = function ()
 	{
 		window.location = '/viewTeams/<%= simulationId %>';
+	}
+	
+	var deleteRoleFn = function(roleId)
+	{
+		$.post('/deleteRole/' + roleId, 
+			function(data, status, jqxhr){
+				if (data.successful) {
+					window.location = "/viewRoles/<%= simulationId %>/<%= team.id %>";
+				}
+				else {
+					alert("Error deleting Role");
+				}
+			});
 	}
 	
 </script>

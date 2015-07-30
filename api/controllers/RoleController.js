@@ -7,11 +7,10 @@
 
 module.exports = {
 	
-	getRoles: function(req,res) {
+	viewRoles: function(req,res) {
 		var params = req.params.all();
 		var simulationId = params.simulationId;
 		var teamId = params.teamId;
-		var team = 22;
 		
 		Team.findOne({id: teamId}).then(function(team) {
 			Role.find({team: teamId})
@@ -40,6 +39,15 @@ module.exports = {
 			
 			return res.send({simulationId: simulationId, teamId: teamId});
 		});
+	},
+	
+	deleteRole: function(req, res) {
+		var params = req.params.all();
+		var roleId = params.roleId;
+		
+		if (DeleteService.deleteRole(roleId)){
+			return res.send({successful: true});
+		}
 	}
 };
 

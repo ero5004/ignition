@@ -32,169 +32,194 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/' : {
-    view: 'homepage', 
-	locals: {
-		page: '0'
-	}
-  },
+	'/' : {
+		view: 'homepage', 
+		locals: {
+			page: '0'
+		}
+	},
+
+	/* UserController routes */
+	'POST /login' : {
+		controller: 'UserController',
+		action: 'login'
+	},
+	'/logout' : {
+		controller: 'UserController',
+		action: 'logout'
+	},
+
+	'/signup' : {
+		view: 'signup',
+		locals: {
+			page: '0'
+		}
+	},
+	'POST /createUser' : {
+		controller: 'UserController',
+		action: 'signup'
+	},
+
+	/* SimulationController routes */
+	'/newSimulation' : {	  
+		controller: 'SimulationController',
+		action: 'newSimulation'
+	},
+
+	'/addNewSimulation' : {
+		controller: 'SimulationController',
+		action: 'processNewSimulation'
+	},
+
+	/* InviteController routes */
+
+	'/dashboard' : {
+		controller: 'InviteController',
+		action: 'dashboard'
+	},
+
+	'/invite/:simulation' : {
+		controller: 'InviteController',
+		action: 'invite'
+	},
+
+	'/processInvitations' : {
+		controller: 'InviteController',
+		action: 'processInvitations'
+	},
+
+	/* TeamController routes  */
+
+	'/viewTeams/:simulationId' : {
+		controller: 'TeamController',
+		action: 'viewTeams'
+	},
+
+	'/addTeam' : {
+		controller: 'TeamController',
+		action: 'addTeam'
+	},
+	
+	'/deleteTeam/:teamId' : {
+		controller: 'TeamController',
+		action: 'deleteTeam'
+	},
+	
+	'/checkTeamEvents/:teamId': {
+		controller: 'TeamController',
+		action: 'checkTeamEvents'
+	},
+
+	/* RoleController routes */
+	'/viewRoles/:simulationId/:teamId' : {
+		controller: 'RoleController',
+		action: 'viewRoles'
+	},
+
+	'/addRole' : {
+		controller: 'RoleController',
+		action: 'addRole'
+	},
+	
+	'/deleteRole/:roleId' : {
+		controller: 'RoleController',
+		action: 'deleteRole'
+	},
+
+	/* ResourceController routes */
+	'/viewResources/:simulationId' : {
+		controller: 'ResourceController',
+		action: 'viewResources'
+	},
+
+	'/addResource' : {
+		controller: 'ResourceController',
+		action: 'addResource'
+	},
+
+	'/viewResourceACL/:simulationId' : {
+		controller: 'ResourceController',
+		action: 'viewResourceACL'
+	},
+
+	'/processResourceACL' : {
+		controller: 'ResourceController',
+		action: 'processResourceACL'
+	},
+
+	/* MetricController routes */
+
+	'/viewMetrics/:simulationId' : {
+		controller: 'MetricController',
+		action: 'viewMetrics'
+	},
+
+	'/addMetric' : {
+		controller: 'MetricController',
+		action: 'addMetric'
+	},
+
+	'/viewMetricACL/:simulationId' : {
+		controller: 'MetricController',
+		action: 'viewMetricACL'
+	},
+
+	'/processMetricACL': {
+		controller: 'MetricController',
+		action: 'processMetricACL'
+	},
+
+	/* EventController routes */
+
+	'/viewEvents/:simulationId' : {
+		controller: 'EventController',
+		action: 'viewEvents'
+	},
+
+	'/addEvent' : {
+		controller: 'EventController',
+		action: 'addEvent'
+	},
+
+	'/viewEventACL/:simulationId' : {
+		controller: 'EventController',
+		action: 'viewEventACL'
+	},
+
+	'/processEventACL': {
+		controller: 'EventController',
+		action: 'processEventACL'
+	},
+
+	'/viewEventResources/:simulationId/:eventId': {
+		controller: 'EventController',
+		action: 'viewEventResources'
+	},
+
+	'/addEventResources': {
+		controller: 'EventController',
+		action: 'addEventResources'
+	},
+	
+	/* EventInstanceController routes */
+	
+	'/viewEventInstances/:simulationId/:eventId': {
+		controller: 'EventInstanceController',
+		action: 'viewEventInstances'
+	},
+	
+	'/addEventInstance': {
+		controller: 'EventInstanceController',
+		action: 'addEventInstance'
+	},
+	
+	'/deleteEventInstance/:eventInstanceId': {
+		controller: 'EventInstanceController',
+		action: 'deleteEventInstance'
+	},
   
-  /* UserController routes */
-  'POST /login' : {
-	  controller: 'UserController',
-	  action: 'login'
-  },
-  '/logout' : {
-	  controller: 'UserController',
-	  action: 'logout'
-  },
   
-  '/signup' : {
-	  view: 'signup'
-  },
-  'POST /createUser' : {
-	  controller: 'UserController',
-	  action: 'signup'
-  },
-  
-  /* SimulationController routes */
-  '/newSimulation' : {	  
-	  controller: 'SimulationController',
-	  action: 'newSimulation'
-  },
-  
-  '/addNewSimulation' : {
-	  controller: 'SimulationController',
-	  action: 'processNewSimulation'
-  },
-  
-  /* InviteController routes */
-  
-  '/dashboard' : {
-	  controller: 'InviteController',
-	  action: 'dashboard'
-  },
-  
-  '/invite/:simulation' : {
-	  controller: 'InviteController',
-	  action: 'invite'
-  },
-  
-  '/processInvitations' : {
-	  controller: 'InviteController',
-	  action: 'processInvitations'
-  },
-  
-  /* TeamController routes  */
-  
-  '/viewTeams/:simulationId' : {
-	  controller: 'TeamController',
-	  action: 'viewTeams'
-  },
-  
-  '/addTeam' : {
-	  controller: 'TeamController',
-	  action: 'addTeam'
-  },
-  
-  /* RoleController routes */
-  '/viewRoles/:simulationId/:teamId' : {
-	  controller: 'RoleController',
-	  action: 'getRoles'
-  },
-  
-  '/addRole' : {
-	  controller: 'RoleController',
-	  action: 'addRole'
-  },
-  
-  /* ResourceController routes */
-  '/viewResources/:simulationId' : {
-	  controller: 'ResourceController',
-	  action: 'viewResources'
-  },
-  
-  '/addResource' : {
-	  controller: 'ResourceController',
-	  action: 'addResource'
-  },
-  
-  '/viewResourceACL/:simulationId' : {
-	  controller: 'ResourceController',
-	  action: 'viewResourceACL'
-  },
-    
-  '/processResourceACL' : {
-	  controller: 'ResourceController',
-	  action: 'processResourceACL'
-  },
-  
-  /* MetricController routes */
-  
-  '/viewMetrics/:simulationId' : {
-	  controller: 'MetricController',
-	  action: 'viewMetrics'
-  },
-  
-  '/addMetric' : {
-	  controller: 'MetricController',
-	  action: 'addMetric'
-  },
-  
-  '/viewMetricACL/:simulationId' : {
-	  controller: 'MetricController',
-	  action: 'viewMetricACL'
-  },
-  
-  '/processMetricACL': {
-	  controller: 'MetricController',
-	  action: 'processMetricACL'
-  },
-  
-  /* EventController routes */
-  
-  '/viewEvents/:simulationId' : {
-	  controller: 'EventController',
-	  action: 'viewEvents'
-  },
-  
-  '/addEvent' : {
-	  controller: 'EventController',
-	  action: 'addEvent'
-  },
-  
-  '/viewEventACL/:simulationId' : {
-	  controller: 'EventController',
-	  action: 'viewEventACL'
-  },
-  
-  '/processEventACL': {
-	  controller: 'EventController',
-	  action: 'processEventACL'
-  },
-  
-  '/viewEventInstances/:simulationId/:eventId': {
-	  controller: 'EventController',
-	  action: 'viewEventInstances'
-  },
-  
-  '/viewEventResources/:simulationId/:eventId': {
-	  controller: 'EventController',
-	  action: 'viewEventResources'
-  },
-  
-  '/addEventInstance': {
-	  controller: 'EventController',
-	  action: 'addEventInstance'
-  },
-  
-  '/addEventResources': {
-	  controller: 'EventController',
-	  action: 'addEventResources'
-  },
-  
-  
-  /* MetricEffectController routes */
+	/* MetricEffectController routes */
 	'/viewMetricEffects/:simulationId': {
 		controller: 'MetricEffectController',
 		action: 'viewMetricEffects'

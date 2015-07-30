@@ -18,7 +18,7 @@ Current Event Instances:
 		<td><%= eventInstance.name %></td>
 		<td><%= eventInstance.description %></td>
 		<td><%= eventInstance.spawnTime %></td>
-		<td><a href='/EventInstance/destroy/<%= eventInstance.id %>'>delete</a></td>
+		<td><input type="button" value="delete" onclick="deleteEventInstanceFn(<%= eventInstance.id %>)" /></td>
 	</tr>
 	<% }) %>
 </table>
@@ -111,6 +111,18 @@ Finished adding event instances?
 	
 	var nextStepClick = function() {
 		window.location = '/viewEvents/<%= simulationId %>';
+	}
+	
+	var deleteEventInstanceFn = function(eventInstanceId) {
+		$.post("/deleteEventInstance/" + eventInstanceId, function(data, status, jqxhr){
+			if(data.successful) {
+				window.location = '/viewEventInstances/<%= simulationId %>/<%= event.id %>';
+			}
+			else {
+				alert("Error deleting Event Instance");
+			}
+			
+		});
 	}
 	
 </script>

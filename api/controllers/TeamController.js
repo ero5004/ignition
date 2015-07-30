@@ -37,5 +37,33 @@ module.exports = {
 		});
 	},
 	
+	deleteTeam: function(req, res) {
+		var params = req.params.all();
+		var teamId = params.teamId;
+		
+		if (DeleteService.deleteTeam(teamId)) {
+			return res.send({successful: true});
+		}
+		
+	},
+	
+	checkTeamEvents: function(req, res) {
+		var params = req.params.all();
+		var teamId = params.teamId;
+		
+		Event.find({leadTeam: teamId})
+		.then(function(events){
+			console.log(events);
+			if (events){
+				return res.send({associatedEvents: true});
+			}
+			else {
+				return res.send({associatedEvent: false});
+			}
+		});
+		
+		
+	}
+	
 };
 

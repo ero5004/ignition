@@ -15,12 +15,11 @@ Existing Teams:
 		<td><%= team.icon%></td> 
 		<td>
 		<% _.each(team.roles, function(role) { %>
-		<%= role.name %>
-		<%= role.name == team.roles[team.roles.length - 1].name ? "" : "," %>
+		<%= role.name %><%= role.name == team.roles[team.roles.length - 1].name ? "" : "," %>
 		<% }) %>
 		</td>
 		<td><a href='/viewRoles/<%= simulationId %>/<%=team.id%>'>Add Roles</a></td>
-		<td><a href='/Team/destroy/<%= team.id %>'>delete</a></td>
+		<td><input type="button" value="delete" onclick="deleteTeamFn(<%= team.id%>);" /></td>
 	</tr>
 	<% }) %>
 </table>
@@ -70,6 +69,27 @@ Finished adding teams?
 	
 	var nextStepClick = function() {
 		window.location = '/viewResources/<%= simulationId %>';	
+	}
+	
+	var deleteTeamFn = function(teamId) {
+		//ajax call to check if any events are associated with this team
+		$.ajax("/checkTeamEvents/" + teamId)
+		.done(function(data){
+			if (data.associatedEvents){
+				alert("There are events associated with this team, please delete them before deleting this team");
+				return false;
+			}
+			else {
+				$.post("/deleteTeam/" + teamId, function(data, status, jqxhr) {
+					if(data.successful) {
+						window.location = '/viewTeams/<%= simulationId %>'; 
+					}
+					else {
+						alert("Error deleting team");
+					}
+				});
+			}
+		});
 	}
 	
 </script>
