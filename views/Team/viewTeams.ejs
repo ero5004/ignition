@@ -70,7 +70,7 @@ Finished adding teams?
 	var nextStepClick = function() {
 		window.location = '/viewResources/<%= simulationId %>';
 	}
-	
+
 	var deleteTeamFn = function(teamId) {
 		//ajax call to check if any events are associated with this team
 		$.ajax("/checkTeamEvents/" + teamId)
@@ -82,7 +82,7 @@ Finished adding teams?
 			else {
 				$.post("/deleteTeam/" + teamId, function(data, status, jqxhr) {
 					if(data.successful) {
-						window.location = '/viewTeams/<%= simulationId %>'; 
+						window.location = '/viewTeams/<%= simulationId %>';
 					}
 					else {
 						alert("Error deleting team");
@@ -91,8 +91,9 @@ Finished adding teams?
 			}
 		});
 	}
-	
 
+
+//remember to include this for every page where you want a tooltip to work
 $(function() {
   $(document).tooltip();
   });
