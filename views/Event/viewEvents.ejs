@@ -18,7 +18,7 @@
 <div class="leftCol">
 Current Events:
 <% _.each(events, function(event_local){ %>
-<div style="border-style: solid; margin-bottom: 10px;">
+<div style="border-style: solid; margin-bottom: 10px; padding: 5px;">
 <strong><%= event_local.name %></strong>
 <br/>
 Description: <%= event_local.description %>
@@ -58,10 +58,12 @@ Resources Required:
 		<th>Quantity Required</th>
 	</tr>
 	<% _.each(event_local.requiredResources, function(eventResource){ %>
+	<% if(eventResource.quantity > 0){ %>
 	<tr>
 		<td><%= resources[eventResource.resource].name %></td>
 		<td><%= eventResource.quantity %></td>
 	</tr>
+	<% } %>
 	<% }) %>
 </table>
 <br/>
