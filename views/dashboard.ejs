@@ -25,7 +25,7 @@
 	<td><%= simulation.simulatedStartTime %></td>
 	<td><%= simulation.simulatedEndTime %></td>
 	<td><%= simulation.numTicks %></td>
-	<td><%= simulation.completed %></td>
+	<td><%= simulation.completed ? "Yes" : "No" %></td>
 	<td><a href="/invite/<%= simulation.id %>">Send Invitations</a></td>
 	<td><a href="/Simulation/destroy/<%= simulation.id %>">delete</a></td>
 	<td><a href='/viewTeams/<%= simulation.id %>'>edit</a>

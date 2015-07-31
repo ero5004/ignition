@@ -2,11 +2,11 @@
 
 <table class="acl-table">
 <tr>
-	<th><!--Team--></th>
-	<th><!--Check All--></th>
+	<th style="background-color: #87CEFA;"><!--Team--></th>
+	<th style="background-color: #87CEFA;"><!--Check All--></th>
 	<% _.each(teams, function (team) { %>
-	<th>See <%= team.name %> Events</th>
-	<th>Forward <%= team.name %> Events</th>
+	<th class="rotate"><div><span>See <%= team.name %> Events</span></div></th>
+	<th class="rotate"><div><span>Forward <%= team.name %> Events</span></div></th>
 	<% }); %>
 </tr>
 <tr>

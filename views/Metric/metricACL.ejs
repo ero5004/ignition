@@ -2,10 +2,10 @@
 
 <table class="acl-table">
 <tr>
-	<th><!--Team--></th>
-	<th><!--Check All--></th>
+	<th style="background-color: #87CEFA;"><!--Team--></th>
+	<th style="background-color: #87CEFA;"><!--Check All--></th>
 	<% _.each(metrics, function (metric) { %>
-	<th>See <%= metric.name %></th>
+	<th class="rotate"><div><span>See <%= metric.name %></span></div></th>
 	<% }); %>
 </tr>
 <tr>

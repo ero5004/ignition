@@ -22,19 +22,19 @@ body {
 width: 136px;}
 
 .acl-table {
-	border: solid 1px #DDEEEE;
+	/*border: solid 1px #DDEEEE;*/
 	border-collapse: collapse;
 	border-spacing: 0;
 	font: normal 13px Arial, sans-serif;
 }
 
-.acl-table th {
+/*.acl-table th {
 	background-color: #87CEEB;
     border: solid 1px #DDEEEE;
     color: #336B6B;
     padding: 10px;
     text-align: left;
-}
+}*/
 
 .acl-table td {
 	border: solid 1px #DDEEEE;
@@ -53,7 +53,31 @@ width: 136px;}
     border-right: solid 2px #BBBBBB;
 }
 .acl-table th:nth-child(even) {
-    border-right: solid 2px #BBBBBB;
+    /*border-right: solid 2px #BBBBBB;*/
+}
+
+.acl-table th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+  background-color: #87CEFA;
+}
+
+.acl-table th.rotate > div {
+  transform: 
+    /* Magic Numbers */
+    translate(25px, 51px)
+    /* 45 is really 360 - 45 */
+    rotate(315deg);
+  width: 30px;
+}
+.acl-table th.rotate > div > span {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 10px;
+}
+.acl-table th.rotate:nth-child(even) > div > span {
+  border-bottom: solid 2px #BBBBBB;
+  padding: 5px 10px;
 }
 
 

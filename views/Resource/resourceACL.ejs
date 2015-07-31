@@ -3,11 +3,11 @@
 <!-- each checkbox in this table has two css classes, one for the role id and one that is either apply resource (a-resource.id) or see resource -->
 <table class="acl-table">
 <tr>
-	<th><!--Team--></th>
-	<th><!--Check All--></th>
+	<th style="background-color: #87CEFA;"><div><span><!--Team--></span></div></th>
+	<th style="background-color: #87CEFA;"><div><span><!--Check All--></span></div></th>
 	<% _.each(resources, function (resource){ %>
-	<th>Apply <%= resource.name %></th>
-	<th>See <%= resource.name %></th>
+	<th class="rotate"><div><span>Apply <%= resource.name %></span></div></th>
+	<th class="rotate"><div><span>See <%= resource.name %></span></div></th>
 	<% }); %>
 </tr>
 <tr>
