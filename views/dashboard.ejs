@@ -18,7 +18,7 @@
 </tr>
 <% _.each(simulations, function(simulation) { %>
 <tr>
-	<td><%= simulation.name %></td>
+	<td><a href="/simPreview/<%= simulation.id %>"><%= simulation.name %></a></td>
 	<td><%= simulation.startDate %></td> 
 	<td><%= simulation.endDate %></td>
 	<td><%= simulation.description %></td>
@@ -28,7 +28,7 @@
 	<td><%= simulation.completed ? "Yes" : "No" %></td>
 	<td><a href="/invite/<%= simulation.id %>">Send Invitations</a></td>
 	<td><a href="/Simulation/destroy/<%= simulation.id %>">delete</a></td>
-	<td><a href='/viewTeams/<%= simulation.id %>'>edit</a>
+	<td><a href='/editSimulation/<%= simulation.id %>'>edit</a>
 </tr>
 <% }) %>
 </table>

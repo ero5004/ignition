@@ -76,25 +76,48 @@ module.exports = {
 	
 	invite: function(req, res) {
 		var params = req.params.all();
-		var simulation = params.simulation;
+		var simulationId = params.simulation;
 		
-		Simulation.findOne({ id: simulation }).populate('invitations').exec(function(err, simulation) {
+		Simulation.findOne({ id: simulationId })
+		.populate('invitations')
+		.populate('teams')
+		.exec(function(err, simulation) {
 			//change query to get all users except currently logged in one
 			User.find( {id: {'!': req.user.id } } ).exec(function(err, users) {
 				var invitedUsers = [];
 				var userIds = [];
 				simulation.invitations.forEach(function(invite) {
 					//could also include inviter to show who sent each invite
-					invitedUsers.push(invite.invitee);
+					invitedUsers.push({invitee: invite.invitee, role: invite.role});
 				});
 				
-				return res.view('Invite/invite', {
-					users: users,
-					invitedUsers: invitedUsers,
-					simulationId: simulation.id,
-					page: '0',
-					title: "Invite Users to Simulation"
-				});		
+				var iU = _.indexBy(invitedUsers, 'invitee');
+				
+				Role.find({simulation: simulationId})
+				.then(function(roles) {
+					
+					teams = simulation.teams;
+					
+					teams.forEach(function(team) {
+						roles.forEach(function (role) {
+							if (role.team == team.id)
+							{
+								role.team = team;
+							}
+						});
+					});
+					
+					var rolesSorted = _.indexBy(roles, 'id');
+					
+					return res.view('Invite/invite', {
+						users: users,
+						invitedUsers: iU,
+						simulationId: simulation.id,
+						roles: rolesSorted,
+						page: '0',
+						title: "Invite Users to Simulation"
+					});
+				});
 			});
 		});
 	},
@@ -104,18 +127,34 @@ module.exports = {
 		var usersToInvite = params.usersToInvite;
 		var simulationId = params.simulationId;
 		var user = req.user;
-
+		
 		usersToInvite.forEach(function (userToInvite) {
-			Invite.create({
-				inviter: user.id,
-				invitee: userToInvite,
-				simulation: simulationId,
-				inviteStatus: 0 //invite is pending
-			}).exec(function (err, created) {
-					if (err) {
-						console.log(err);
-						return res.negotiate(err);
-					}
+			
+			Invite.findOrCreate({
+					inviter: user.id,
+					invitee: userToInvite.invitee,
+					simulation: simulationId,
+				},{
+					inviter: user.id,
+					invitee: userToInvite.invitee,
+					simulation: simulationId,
+				}
+				).then(function (record) {
+					console.log(record);
+					Invite.update({id: record.id}, {
+						inviteStatus: 0, //invite is pending
+						role: userToInvite.role
+						})
+						.exec(function(err, updated){
+							if (err) {
+								console.log(err);
+								return res.negotiate(err);
+							}
+						});
+					
+				
+					
+					
 				});
 		});
 	}

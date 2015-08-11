@@ -106,7 +106,8 @@ Finished adding event instances?
 			name: instanceName,
 			description: instanceDescription,
 			spawnType: spawnType,
-			spawnTime: time
+			spawnTime: time,
+			state: 0
 		}, function(data, status, jqxhr)
 			{
 				window.location = '/viewEventInstances/' + data.simulationId + '/' + data.eventId;

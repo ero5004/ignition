@@ -1,8 +1,7 @@
 /**
 * EventInstance.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: 
 */
 
 module.exports = {
@@ -32,6 +31,10 @@ module.exports = {
 		},
 		simulation: {
 			model: 'Simulation'
+		},
+		state: {
+			// 0 = created in builder, 1 = spawned, 2 = handled
+			type: 'integer'
 		}
 	}
 };

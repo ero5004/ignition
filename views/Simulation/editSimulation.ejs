@@ -1,0 +1,113 @@
+<h1>Edit Existing Simulation</h1>
+
+<form id="editSimulation" class="builderInput">
+	<p>
+	<label for="name">Simulation Name:</label>
+	<input type="text" id="name" title="The name of the simulation. This is used everywhere." value="<%= simulation.name %>"/>
+	</p><p>
+	<label for="startDate">Start Date and Time:</label>
+	<input type="text" id="startDate" title="The real-life start time of your simulation." value="<%=simulation.startDate %>"/>
+	</p><p>
+	<label for="endDate">End Date and Time:</label>
+	<input type="text" id="endDate" title="The real-life end time of your simulation." value="<%= simulation.endDate%>"/>
+	</p><p>
+	<label for="description">Simulation Description:</label>
+	<textarea id="description" title="A description of your simulation."><%= simulation.description %></textarea>
+	</p><p>
+	<label for="simStartDate">Simulated Start Date and Time:</label>
+	<input type="text" id="simStartDate" title="The start of the date and time that will be simulated." value="<%=simulation.simulatedStartTime %>"/>
+	</p><p>
+	<label for="simEndDate">Simulated End Date and Time:</label>
+	<input type="text" id="simEndDate" title="The end of the date and time that will be simulated." value="<%=simulation.simulatedEndTime %>" />
+	</p><p>
+	<label for="numTicks">Number of Ticks in Simulation:</label>
+	<input type="text" id="numTicks" title="The number of checks the simulation engine will conduct during the simulated time." value="<%= simulation.numTicks %>"/>
+	</p>
+	<input type="button" id="submit" value="Update" onclick="return checkFields();" ></input>
+</form>
+
+Note: Simulations will be run using ticks instead of real time. This allows you to select how many ticks your simulation is broken up into it. Each of these ticks is an opportunity for the simulation engine to spawn events, check effects, etc. 
+
+<script>
+
+	function checkFields()
+	{
+		var name = $('#name').val();
+		var startDate = $('#startDate').val();
+		var endDate = $('#endDate').val();
+		var description = $('#description').val();
+		var simStartDate = $('#simStartDate').val();
+		var simEndDate = $('#simEndDate').val();
+		var numTicks = $('#numTicks').val();
+		
+		//check for required fields
+		if (!name)
+		{
+			alert("Simulation name required");
+			return false;
+		}
+		
+		if (!startDate)
+		{
+			alert("Simulation start date required");
+			return false;
+		}
+		
+		if (!endDate)
+		{
+			alert("Simulation end date required");
+			return false;
+		}
+		
+		if (!description)
+		{
+			alert("Description of simulation required");
+			return false;
+		}
+		
+		if (!simStartDate)
+		{
+			alert("Simulated start date required");
+			return false;
+		}
+		
+		if (!simEndDate)
+		{
+			alert("Simulated end date required");
+			return false;
+		}
+		
+		if (!numTicks)
+		{
+			alert("Number of ticks for simulation required");
+			return false;
+		}
+		
+		
+
+		$.post('/processEditSimulation', {
+			simulationId: <%= simulation.id %>,
+			name: name,
+			startDate: startDate,
+			endDate: endDate,
+			description: description,
+			simulatedStartTime: simStartDate,
+			simulatedEndTime: simEndDate,
+			numTicks: numTicks,
+			completed: false
+		}, function(data, status, jqxhr)
+			{
+				window.location = '/viewTeams/' + data.simulationId;
+			});
+	}
+
+        $(function() {
+            $('#startDate, #endDate, #simStartDate, #simEndDate').datetimepicker({
+				controlType: 'select',
+				oneLine: true,
+				timeFormat: 'hh:mm tt'
+			});
+			$( document ).tooltip();
+        });
+
+</script>

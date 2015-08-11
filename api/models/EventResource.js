@@ -1,8 +1,7 @@
 /**
 * EventResources.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: Stores the resources that are needed to handle an event. An event that requires multiple resources to handle would have multiple rows in this table.
 */
 
 module.exports = {

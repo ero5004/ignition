@@ -70,6 +70,16 @@ module.exports.routes = {
 		controller: 'SimulationController',
 		action: 'processNewSimulation'
 	},
+	
+	'/editSimulation/:simulationId' : {
+		controller: 'SimulationController',
+		action: 'editSimulation'
+	},
+	
+	'/processEditSimulation' : {
+		controller: 'SimulationController',
+		action: 'processEditSimulation'
+	},
 
 	/* InviteController routes */
 
@@ -290,6 +300,33 @@ module.exports.routes = {
 		controller: 'ResourceEffectController',
 		action: 'processAddResourceMetricEffect'
 	},
+	
+	/* EngineController routes */
+	
+	'/simPreview/:simulationId': {
+		controller: 'EngineController',
+		action: 'simPreview'
+	},
+	
+	'/simulationSnapshot/:simulationId/:tick': {
+		controller: 'EngineController',
+		action: 'simulationSnapshot'
+	},
+	
+	'/initializeSimulation': {
+		controller: 'EngineController',
+		action: 'initializeSimulation'
+	},
+	
+	'/accessPreview/:simulationId': {
+		controller: 'EngineController',
+		action: 'accessPreview'
+	},
+	
+	'/viewAccessRights/:simulationId/:roleId': {
+		controller: 'EngineController',
+		action: 'viewAccessRights'
+	}
 	
 
   /***************************************************************************

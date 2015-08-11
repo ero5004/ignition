@@ -1,0 +1,16 @@
+Select a role to see the metrics, resources, and events it has access to.
+<br/>
+<select id="role">
+	<% _.each(roles, function(role){ %>
+	<option value="<%= role.id %>"><%= role.team.name %>:<%= role.name %></option>
+	<% }) %>
+</select>
+<br/>
+<input type="button" value="View Access Rights" onclick="viewAccessRights();"/>
+
+<script>
+var viewAccessRights = function() {
+	var role = $("#role").val();
+	window.location = '/viewAccessRights/<%= simulationId %>/' + role;
+}
+</script>

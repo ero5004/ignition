@@ -109,3 +109,18 @@ width: 136px;}
 .data-table tr:nth-child(even) {
     background-color: #B0E0E6;
 }
+
+.tabs .ui-tabs-nav { 
+    padding-left: 0px; 
+    background: transparent; 
+    border-width: 0px 0px 1px 0px; 
+    -moz-border-radius: 0px; 
+    -webkit-border-radius: 0px; 
+    border-radius: 0px; 
+} 
+
+.tabs .ui-tabs-panel { 
+    background: #f5f3e5; 
+    border-width: 0px 1px 1px 1px; 
+}
+

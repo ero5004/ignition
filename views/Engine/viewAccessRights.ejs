@@ -1,0 +1,51 @@
+Access rights for <strong><%= role.team.name %>: <%= role.name %></strong>
+<br/>
+<br/>
+Resources:
+<table class="data-table">
+	<tr>
+		<th>Resource</th>
+		<th>Apply</th>
+		<th>See</th>
+	</tr>
+	<% _.each(resourceAccesses, function(resourceAccess){ %> 
+	<% if(resourceAccess.see == true || resourceAccess.apply == true){ %>
+	<tr>
+		<td><%= resourceAccess.resource.name %></td>
+		<td><%= resourceAccess.apply ? "Can Apply" : "" %></td>
+		<td><%= resourceAccess.see ? "Can See" : "" %></td>
+	</tr>
+	<% }}) %>
+</table>
+<br/>
+Metrics:
+<table class="data-table">
+	<tr>
+		<th>Metric</th>
+		<th>See</th>
+	</tr>
+	<% _.each(metricAccesses, function(metricAccess){ %> 
+	<% if(metricAccess.see == true){ %>
+	<tr>
+		<td><%= metricAccess.metric.name %></td>
+		<td>Can View</td>
+	</tr>
+	<% }}) %>
+</table>
+<br/>
+Events:
+<table class="data-table">
+	<tr>
+		<th>Lead Team</th>
+		<th>See</th>
+		<th>Forward</th>
+	</tr>
+	<% _.each(eventAccesses, function(eventAccess){ %> 
+	<% if(eventAccess.see == true || eventAccess.forward == true){ %>
+	<tr>
+		<td><%= eventAccess.owningTeam.name %></td>
+		<td><%= eventAccess.see ? "Can See" : "" %></td>
+		<td><%= eventAccess.forward ? "Can Forward" : "" %></td>
+	</tr>
+	<% }}) %>
+</table>

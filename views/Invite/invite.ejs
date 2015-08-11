@@ -1,10 +1,44 @@
 <h1>Invite individuals to your simulation</h1>
+
+<table class="builderInput" border="1">
+	<tr>
+		<th>User</th>
+		<th>Team/Role</th>
+		<th>Status</th>
+		<th>Invite</th>
+	</tr>
 <% _.each(users, function (user) { %>
-<% 	if (invitedUsers.indexOf(user.id) == -1) { %>
-	<input type="checkbox" name="user" class="users" value="<%= user.id %>"/><%= user.name %><br/>
-<%	} else { %>
-	<%= user.name %> (already invited) <br/>
-<% 	}}) %>
+	<tr>
+		<td><%= user.name %></td>
+		<% 	if (!_.has(invitedUsers, user.id)) { %>
+		<td>
+			<select id="r-<%= user.id %>">
+			<option value="-1"></option>
+			<% _.each(roles, function(teamRole){ %>
+				<option value="<%= teamRole.id%>"><%= teamRole.team.name %>: <%= teamRole.name %></option>
+			<% }) %>
+			</select>
+		</td>
+		<td>No Invitation Sent</td>
+		<td><input type="checkbox" value="<%= user.id %>" class="users"/>Invite</td>
+		<%	} else { %>
+		<td>
+			<select id="r-<%= user.id %>">
+				<option value="-1"></option>
+			<% _.each(roles, function(teamRole){ %>
+			<% if(teamRole.id == invitedUsers[user.id].role.id) { %>
+				<option value="<%= teamRole.id%>"><%= teamRole.team.name %>: <%= teamRole.name %></option>
+			<% } %>
+			<% }) %>
+			</select>
+		</td>
+		<td>Invited(<%= roles[invitedUsers[user.id].role].team.name + ": " + roles[invitedUsers[user.id].role].name %>)</td>
+		<td><input type="checkbox" value="<%= user.id %>" class="users"/>Re-invite</td>
+		<% 	} %>
+	</tr>
+<% }) %>
+
+</table>
 
 <input type="button" id="inviteUsers" onclick="sendInvites()" value="Send Invites" />
 
@@ -15,7 +49,17 @@
 		$('input:checkbox.users').each(function() {
 			if (this.checked)
 			{
-				usersToInvite.push($(this).val());
+				var tempInvite = {};
+				var userId = $(this).val();
+				tempInvite.invitee = userId;
+				tempInvite.role = $('#r-' + userId).val();
+				
+				if(tempInvite.role == 0)
+				{
+					alert("You must select a team and role for all users you would like to invite.")
+				}
+				
+				usersToInvite.push(tempInvite);
 			}
 		});
 		$.post('/processInvitations', {

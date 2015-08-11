@@ -27,6 +27,35 @@ module.exports = {
 			
 			return res.send({simulationId: created.id});
 		});
+	},
+	
+	editSimulation: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		
+		Simulation.findOne({id: simulationId})
+		.then(function(simulation){
+			return res.view('Simulation/editSimulation',
+			{
+				page: '1',
+				title: 'Edit Existing Simulation',
+				simulation: simulation
+			});
+		});
+	},
+	
+	processEditSimulation: function(req, res) {
+		var params = req.params.all();
+		var simulationId = params.simulationId;
+		
+		Simulation.update({id: simulationId}, params)
+		.exec(function(err, updated){
+			if (err) {
+				console.log(err);
+				return res.negotiate(err);
+			}
+			return res.send({simulationId: updated[0].id});
+		});
 	}
 };
 

@@ -1,0 +1,77 @@
+
+<h2>Event Instances for this simulation</h2>
+<table border="1">
+	<tr>
+		<th>Instance Name</th>
+		<th>Event</th>
+		<th>Instance Description</th>
+		<th>Spawn Time</th>
+		<th>Lead Team</th>
+	</tr>
+<% _.each(eventInstances, function(eventInstance){ %>
+	<tr>
+		<td><%= eventInstance.name %></td>
+		<td><%= eventInstance.event.name %></td>
+		<td><%= eventInstance.description %></td>
+		<td><%= eventInstance.spawnTime %></td>
+		<td><%= eventInstance.event.leadTeam %></td>
+	</tr>
+<% }) %>
+</table>
+
+
+<h2>Simulation Resource Pool</h2>
+<table border="1">
+	<tr>
+		<th>Resource Name</th>
+		<th>Starting Quantity</th>
+		<th>Application Time</th>
+		<th>Is Resuable</th>
+	</tr>
+<% _.each(resources, function(resource){ %>
+	<tr>
+		<td><%= resource.name %></td>
+		<td><%= resource.quantity %></td>
+		<td><%= resource.applicationTime %></td>
+		<td><%= resource.reusable ? "Yes" : "No" %></td>
+	</tr>
+<% }) %>
+</table>
+
+<h2>Simulation Metrics</h2>
+<table border="1">
+	<tr>
+		<th>Metric Name</th>
+		<th>Starting Value</th>
+		<th>Minimum</th>
+		<th>Maximum</th>
+		<th>Units</th>
+	</tr>
+<% _.each(metrics, function(metric){ %>
+	<tr>
+		<td><%= metric.name %></td>
+		<td><%= metric.defaultValue %></td>
+		<td><%= metric.minValue %></td>
+		<td><%= metric.maxValue %></td>
+		<td><%= metric.unit %></td>
+	</tr>
+<% }) %>
+</table>
+
+<br/>
+<br/>
+<br/>
+
+<input type="button" id="nextStep" value="Initialize Simulation" onclick="initializeSimulation();"></input>
+ 
+<script>
+
+var initializeSimulation = function(){
+	$.post('/initializeSimulation', {
+		simulationId: <%= simulation.id %>
+		}, function(data){
+			window.location = '/simulationSnapshot/' + data.simulationId + '/1';
+		});
+}
+
+</script>

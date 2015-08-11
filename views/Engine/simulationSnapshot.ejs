@@ -1,0 +1,171 @@
+<style>
+	.leftCol {
+		float: left;
+		width: 50%;
+		margin-right: 10px;
+	}
+	
+	.rightCol {
+		float: right;
+		width: 49%;
+	}
+	
+</style>
+
+<h1>Simulation Snapshot</h1>
+Tick: <%= tick %>
+<br/>
+<div id="informationPanel" class="leftCol">
+	<div id="resourceTabs" class="tabs">
+		<ul>
+			<li><a href="#rTabs-1">Resource Pool</a></li>
+			<li><a href="#rTabs-2">In Use</a></li>
+			<li><a href="#rTabs-3">Already Used</a></li>
+		</ul>
+		<div id="rTabs-1">
+			<table class="data-table">
+				<tr>
+					<th>Resource</th>
+					<th># Available</th>
+					<th>Application Time</th>
+					<th>Reusable</th>
+				</tr>
+				<% _.each(resourceStates, function(resourceState){ %>
+				<tr>
+					<td><%= resourceState.resource.name %></td>
+					<td><%= resourceState.currentUsableQuantity %></td>
+					<td><%= resourceState.resource.applicationTime %></td>
+					<td><%= resourceState.resource.reusable ? "Yes" : "No" %></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+		<div id="rTabs-2">
+			<table class="data-table">
+				<tr>
+					<th>Resource</th>
+					<th>Quantity</th>
+					<th>Event</th>
+					<th>Applied By</th>
+					<th>Status</th>
+					<th>Reusable</th>
+					<th>Time since dispatch</th>
+					<th>Recall</th>
+				</tr>
+				<% _.each(resourceStates, function(resourceState){ %>
+				<tr>
+					<td><%= resourceState.resource.name %></td>
+					<td><%= resourceState.currentPendingQuantity %></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><%= resourceState.resource.reusable %></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+		<div id="rTabs-3">
+			<table class="data-table">
+				<tr>
+					<th>Resource</th>
+					<th>Quantity</th>
+					<th>Event</th>
+					<th>Result</th>
+				</tr>
+				<% _.each(resourceStates, function(resourceState){ %>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+	</div>
+	<br/>
+	<div id="metricTabs">
+		<table class="data-table">
+			<tr>
+				<th>Metric</th>
+				<th>Current Value</th>
+			</tr>
+			<% _.each(metricStates, function(metricState){ %>
+			<tr>
+				<td><%= metricState.metric.name %></td>
+				<td><%= metricState.currentValue %> <%= metricState.metric.unit %></td>
+			</tr>
+			<% }) %>
+		</table>
+	</div>
+	<br/>
+	<div id="eventTabs" class="tabs">
+		<ul>
+			<li><a href="#tabs-1">Spawned Events</a></li>
+			<li><a href="#tabs-2">Handled Events</a></li>
+			<li><a href="#tabs-3">Upcoming Events</a></li>
+		</ul>
+		<div id="tabs-1">
+			<table class="data-table">
+				<tr>
+					<th>Instance Name</th>
+					<th>Instance Description</th>
+					<th>Spawn Time</th>
+				</tr>
+				<% _.each(spawnedEvents, function(spawnedEvent){ %>
+				<tr>
+					<td><%= spawnedEvent.name %></td>
+					<td><%= spawnedEvent.description %></td>
+					<td><%= spawnedEvent.spawnTime %></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+		<div id="tabs-2">
+			<table class="data-table">
+				<tr>
+					<th>Instance Name</th>
+					<th>Instance Description</th>
+					<th>Spawn Time</th>
+				</tr>
+				<% _.each(handledEvents, function(handledEvent){ %>
+				<tr>
+					<td><%= handledEvent.name %></td>
+					<td><%= handledEvent.description %></td>
+					<td><%= handledEvent.spawnTime %></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+		<div id="tabs-3">
+			<table class="data-table">
+				<tr>
+					<th>Instance Name</th>
+					<th>Instance Description</th>
+					<th>Spawn Time</th>
+				</tr>
+				<% _.each(upcomingEvents, function(upcomingEvent){ %>
+				<tr>
+					<td><%= upcomingEvent.name %></td>
+					<td><%= upcomingEvent.description %></td>
+					<td><%= upcomingEvent.spawnTime %></td>
+				</tr>
+				<% }) %>
+			</table>
+		</div>
+
+
+	</div>
+</div>
+
+<div id="chatPanel" class="rightCol">
+
+</div>
+
+<script>
+	$(function() {
+		$("#resourceTabs, #eventTabs").tabs();
+	});
+</script>

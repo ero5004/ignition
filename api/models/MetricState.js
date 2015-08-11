@@ -1,5 +1,5 @@
 /**
-* Invites.js
+* MetricState.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,25 +8,14 @@
 module.exports = {
 
 	attributes: {
-		inviter: {
-			model : 'User'
+		metric: {
+			model: 'Metric'
 		},
-		invitee: {
-			model : 'User'
+		currentValue: {
+			type: 'float'
 		},
 		simulation: {
-			model : 'Simulation'
-		},
-		inviteStatus: {
-			type : 'integer'
-			/*
-			 * 0 = pending
-			 * 1 = accepted
-			 * 
-			 */
-		},
-		role: {
-			model: 'Role'
+			model: 'Simulation'
 		}
 	}
 };
