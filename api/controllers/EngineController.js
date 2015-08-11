@@ -20,7 +20,7 @@ module.exports = {
 					.then(function(resources){
 						
 						return res.view('Engine/simPreview', {
-							simulation: simulation,
+							simulationId: simulationId,
 							eventInstances: eventInstances,
 							metrics: metrics,
 							resources: resources, 

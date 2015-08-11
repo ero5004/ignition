@@ -68,7 +68,7 @@
 
 var initializeSimulation = function(){
 	$.post('/initializeSimulation', {
-		simulationId: <%= simulation.id %>
+		simulationId: <%= simulationId %>
 		}, function(data){
 			window.location = '/simulationSnapshot/' + data.simulationId + '/1';
 		});
