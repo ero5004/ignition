@@ -14,6 +14,7 @@
 
 <h1>Simulation Snapshot</h1>
 Tick: <%= tick %>
+<a href="/resetSimulationSnapshot/<%= simulationId %>">Reset Simulation</a>
 <br/>
 <div id="informationPanel" class="leftCol">
 	<div id="resourceTabs" class="tabs">
@@ -113,12 +114,14 @@ Tick: <%= tick %>
 					<th>Instance Name</th>
 					<th>Instance Description</th>
 					<th>Spawn Time</th>
+					<th>Apply Resources</th>
 				</tr>
 				<% _.each(spawnedEvents, function(spawnedEvent){ %>
 				<tr>
 					<td><%= spawnedEvent.name %></td>
 					<td><%= spawnedEvent.description %></td>
 					<td><%= spawnedEvent.spawnTime %></td>
+					<td><input type="button" onclick="applyResourcesFn(<%= spawnedEvent.id %>, '<%= spawnedEvent.name %>');" value="Apply Resources"/></td>
 				</tr>
 				<% }) %>
 			</table>
@@ -164,8 +167,86 @@ Tick: <%= tick %>
 
 </div>
 
+<div id="applyResourceDialog" title="Apply Resources to Event">
+	<table class="data-table">
+		<tr>
+			<th>Resource</th>
+			<th>Quantity</th>
+		</tr>
+		<% _.each(resourceStates, function(resourceState){ %>
+		<tr>
+			<td><%= resourceState.resource.name %></td>
+			<td><input type="text" id="resource-<%= resourceState.resource.id %>" /></td>
+		</tr>
+		<% }) %>
+	</table>
+</div>
+
+<input type="button" onclick="nextTickFn();" value="Next Tick" />
+
 <script>
 	$(function() {
 		$("#resourceTabs, #eventTabs").tabs();
+		
+		$("#applyResourceDialog").dialog({
+			autoOpen: false,
+			resizable: false,
+			modal: true,
+			buttons: {
+				Cancel: function(){
+					$(this).dialog('close');
+				},
+				"Apply": function() {
+					$(this).dialog('close');
+					var eventInstanceId = $(this).data("eventInstanceId");
+					
+					var resourceIds = [<% _.each(resourceStates, function(resourceState){%> <%= resourceState.resource.id %>,<% }) %>];
+					
+					var resourcesAppliedList = [];
+					resourceIds.forEach(function(resourceId){
+						var resourceQuantity = $("#resource-" + resourceId).val();
+						if (resourceQuantity != 0){
+							var tempResourcesApplied = {};
+							tempResourcesApplied.resource = resourceId;
+							tempResourcesApplied.eventInstance = eventInstanceId;
+							tempResourcesApplied.numberApplied = resourceQuantity;
+							tempResourcesApplied.timeApplied = <%= tick %>;
+							resourcesAppliedList.push(tempResourcesApplied);
+							console.log(tempResourcesApplied);
+						}
+					});
+					if(resourcesAppliedList.length > 0){
+						$.post('/applyResources', {
+							resourcesAppliedList: resourcesAppliedList,
+							simulationId: <%= simulationId %>,
+							tick: <%= tick %>
+						})
+						.done(function(data) {
+							//window.location = '/simulationSnapshot/' + data.simulationId + '/' + data.tick;
+						});
+					}
+				}
+			}
+		});
+		
+		
 	});
+	
+	var applyResourcesFn = function(eventInstanceId, eventName){
+		$("#applyResourceDialog")
+		.data('eventInstanceId', eventInstanceId)
+		.dialog('open');
+		
+		/*
+		 * want to display the name of the event as the title of the modal box with this but its not working
+		 * .prop('title', "Apply Resources to " + eventName)
+		 */
+	}
+	
+	var nextTickFn = function() {
+		var tick = <%= tick %>;
+		tick = tick + 1;
+		
+		window.location = '/simulationSnapshot/<%= simulationId %>/' + tick;
+	}
 </script>

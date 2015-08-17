@@ -25,6 +25,13 @@ module.exports = {
 		},
 		simulation: {
 			model: 'Simulation'
+		},
+		timeOfApplication: {
+			//time of application indicates the tick when this resource is ready to 
+			type: 'integer'
+		},
+		reusable: {
+			type: 'boolean'
 		}
 	}
 };

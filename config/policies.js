@@ -47,6 +47,10 @@ module.exports.policies = {
 	  '*': 'isAuthenticated' 
    },
    
+   'EngineController': {
+	   '*': 'isAuthenticated'
+   },
+   
    
   /***************************************************************************
   *                                                                          *

@@ -19,7 +19,7 @@ module.exports = {
 			type: 'integer'
 		},
 		effectOperation: {
-			//1 = add, -1 = subtract, 2 = multiply
+			//1 = add, -1 = subtract
 			type: 'integer'
 		},
 		effectAmount: {

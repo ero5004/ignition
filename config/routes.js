@@ -313,6 +313,11 @@ module.exports.routes = {
 		action: 'simulationSnapshot'
 	},
 	
+	'/applyResources': {
+		controller: 'EngineController',
+		action: 'applyResources'
+	},
+	
 	'/initializeSimulation': {
 		controller: 'EngineController',
 		action: 'initializeSimulation'
@@ -326,7 +331,12 @@ module.exports.routes = {
 	'/viewAccessRights/:simulationId/:roleId': {
 		controller: 'EngineController',
 		action: 'viewAccessRights'
-	}
+	},
+	
+	'/resetSimulationSnapshot/:simulationId': {
+		controller: 'EngineController',
+		action: 'resetSimulationSnapshot'
+	},
 	
 
   /***************************************************************************
