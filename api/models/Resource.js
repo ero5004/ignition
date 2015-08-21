@@ -1,8 +1,7 @@
 /**
 * Resource.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: One of the three basic parts of a Simulation. Resources can be applied to Events in order to handle them. The Resource Access Control List is used to determine who can see the available quantity and apply each resource.
 */
 
 module.exports = {

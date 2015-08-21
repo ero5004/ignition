@@ -1,8 +1,7 @@
 /**
 * Role.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: Roles are a part of a Team and are used to determine what a User can do in the simulation via the Access Control Lists.
 */
 
 module.exports = {

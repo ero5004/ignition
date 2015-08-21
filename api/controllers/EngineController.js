@@ -116,19 +116,38 @@ module.exports = {
 					.populate("metric")
 					.then(function(metricStates){
 						EventInstanceResourcesApplied.find({simulation: simulationId})
+						.populateAll()
 						.then(function(resourcesApplied){
-							return res.view('Engine/simulationSnapshot', {
-								simulationId: simulationId,
-								tick: tick,
-								upcomingEvents: upcomingEvents,
-								spawnedEvents: spawnedEvents,
-								handledEvents: handledEvents,
-								resourceStates: resourceStates,
-								metricStates: metricStates,
-								resourcesApplied: resourcesApplied,
-								page: 999,
-								title: "Simulation Snapshot"
-							});
+							
+							var pendingResources = _.where(resourcesApplied, {status: 1})
+							
+							async.each(pendingResources, function(pendingResource, cb) {
+								var eventInstance = pendingResource.eventInstance.id;
+								EngineService.checkEventInstanceHandled(simulationId, tick, eventInstance, function(err, status){
+									if (err) {
+										console.log(err);
+										return res.negotiate(err);
+									}
+								});
+								return cb(null, true);
+							}, function(err) {
+								if (err) {
+									console.log(err);
+									return res.negotiate(err);
+								}
+								return res.view('Engine/simulationSnapshot', {
+									simulationId: simulationId,
+									tick: tick,
+									upcomingEvents: upcomingEvents,
+									spawnedEvents: spawnedEvents,
+									handledEvents: handledEvents,
+									resourceStates: resourceStates,
+									metricStates: metricStates,
+									resourcesApplied: resourcesApplied,
+									page: 999,
+									title: "Simulation Snapshot"
+								});
+							});	
 						});
 					});
 				});
@@ -157,9 +176,14 @@ module.exports = {
 				temp.simulation = simulationId;
 				temp.appliedBy = user.id;
 				temp.reusable = resourcesSorted[temp.resource].reusable;
+				temp.status = 1; //status: 1 = pending
 				
 				if (resourcesSorted[temp.resource].reusable) {
-					temp.timeOfApplication = tick + resourcesSorted[temp.resource].applicationTime;
+					var applicationTime = 0;
+					applicationTime += parseInt(tick);
+					applicationTime += parseInt(resourcesSorted[temp.resource].applicationTime);
+					temp.timeOfApplication = applicationTime;
+					//temp.timeOfApplication = tick + resourcesSorted[temp.resource].applicationTime;
 				}
 				else {
 					temp.timeOfApplication = tick;
@@ -170,14 +194,13 @@ module.exports = {
 			
 			EventInstanceResourcesApplied.create(resourcesAppliedArray)
 			.exec(function(err, created){
-				var eventInstances = _.pluck(created, 'eventInstance');
-				
-				EngineService.checkEventInstancesHandled(simulationId, tick, eventInstance, function(err, status){
+				var eventInstance = created[0].eventInstance;
+
+				EngineService.checkEventInstanceHandled(simulationId, tick, eventInstance, function(err, status){
 					if (err) {
 						console.log(err);
 						return res.negotiate(err);
 					}
-					
 					return res.send({simulationId: simulationId, tick: tick});
 				});
 			});

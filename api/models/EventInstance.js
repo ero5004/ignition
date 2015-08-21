@@ -1,7 +1,7 @@
 /**
 * EventInstance.js
 *
-* @description :: 
+* @description :: An instance of an Event that will be spawned by the Simulation Engine.
 */
 
 module.exports = {

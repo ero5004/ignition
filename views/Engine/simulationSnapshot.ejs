@@ -53,17 +53,19 @@ Tick: <%= tick %>
 					<th>Time since dispatch</th>
 					<th>Recall</th>
 				</tr>
-				<% _.each(resourceStates, function(resourceState){ %>
+				<% _.each(resourcesApplied, function(resourceApplied){ %>
+				<% if(resourceApplied.status != 2){ %>
 				<tr>
-					<td><%= resourceState.resource.name %></td>
-					<td><%= resourceState.currentPendingQuantity %></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><%= resourceState.resource.reusable %></td>
-					<td></td>
-					<td></td>
+					<td><%= resourceApplied.resource.name %></td>
+					<td><%= resourceApplied.numberApplied %></td>
+					<td><%= resourceApplied.eventInstance.name %></td>
+					<td><%= resourceApplied.appliedBy.name %></td>
+					<td><%= resourceApplied.status %></td>
+					<td><%= resourceApplied.reusable ? "Yes" : "No" %></td>
+					<td><%= tick - resourceApplied.timeApplied + " ticks" %></td>
+					<td><input type="button" value="Recall" onclick="alert('ToDo: recall resources');" /></td>
 				</tr>
+				<% } %>
 				<% }) %>
 			</table>
 		</div>
@@ -73,15 +75,19 @@ Tick: <%= tick %>
 					<th>Resource</th>
 					<th>Quantity</th>
 					<th>Event</th>
+					<th>Applied By</th>
 					<th>Result</th>
 				</tr>
-				<% _.each(resourceStates, function(resourceState){ %>
+				<% _.each(resourcesApplied, function(resourceApplied){ %>
+				<% if(resourceApplied.status == 2){ %>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><%= resourceApplied.resource.name %></td>
+					<td><%= resourceApplied.numberApplied %></td>
+					<td><%= resourceApplied.eventInstance.name %></td>
+					<td><%= resourceApplied.appliedBy.name %></td>
+					<td><%= resourceApplied.status %></td>
 				</tr>
+				<% } %>
 				<% }) %>
 			</table>
 		</div>
@@ -222,7 +228,7 @@ Tick: <%= tick %>
 							tick: <%= tick %>
 						})
 						.done(function(data) {
-							//window.location = '/simulationSnapshot/' + data.simulationId + '/' + data.tick;
+							window.location = '/simulationSnapshot/' + data.simulationId + '/' + data.tick;
 						});
 					}
 				}

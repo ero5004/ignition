@@ -105,7 +105,7 @@ module.exports = {
 		});
 	},
 	
-	checkEventInstancesHandled: function(simulationId, tick, eventInstanceId, cb) {
+	checkEventInstanceHandled: function(simulationId, tick, eventInstanceId, cb) {
 		//todo: check EventInstanceResourcesApplied and EventResource tables to see if resources applied were enough to handle event.
 		EventInstance.findOne({id: eventInstanceId, simulation: simulationId})
 		.then(function(eventInstance){
@@ -113,18 +113,86 @@ module.exports = {
 			.populate("requiredResources")
 			.then(function(event){
 				var requiredResources = event.requiredResources;
-				EventInstanceResourcesApplied.find({eventInstance: eventInstanceId, simulation: simulationId})
+				EventInstanceResourcesApplied.find({eventInstance: eventInstanceId, simulation: simulationId, timeOfApplication: {'<=': tick}})
 				.then(function(resourcesApplied){
+					console.log("resources applied");
+					console.log(resourcesApplied);
+					console.log("________");
+					var eventHandled = true;
 					requiredResources.forEach(function(requiredResource){
-						var thisResourceApplied = _.where(resourcesApplied, {resource: requiredResource.resource});
-						//thisResourceApplied.forEach()
+						if(requiredResource.quantity > 0) {
+							console.log(requiredResource);
+							var thisResourceApplied = _.where(resourcesApplied, {resource: requiredResource.resource});
+							console.log(thisResourceApplied);
+							
+							//add up total number of this resource that have been applied to this event
+							var totalQuantityApplied = 0;
+							thisResourceApplied.forEach(function(aResourceApplied){
+								totalQuantityApplied += aResourceApplied.numberApplied;
+							});
+							console.log("resource: " + requiredResource.resource + ": " + totalQuantityApplied);
+							if (totalQuantityApplied == 0) {
+								//this resource has not been applied yet.
+								eventHandled = false;
+							} else if(totalQuantityApplied < requiredResource.quantity) {
+								//correct resource has been applied but not enough.
+								eventHandled = false;
+								//update status of those resources applications to incomplete
+								
+							} else if (totalQuantityApplied > requiredResource.quantity) {
+								//too many of a resource have been applied
+							}
+						}
+					});
+					var requiredResourceIds = _.pluck(_.reject(requiredResources,{quantity: 0}), 'resource');
+					//update all incorrect resources to status: incorrect 
+					EventInstanceResourcesApplied.update({simulation: simulationId, eventInstance: eventInstanceId, resource: {'!': requiredResourceIds}, timeOfApplication: {'<=': tick}}, {status: 3}) //status: 3 = incorrect
+					.exec(function(err, updated){
+						if (err) {
+							console.log("error updating resourcesApplied table");
+							console.log(err);
+							return cb(err, null);
+						}
+						if (eventHandled) {
+							console.log("event handled");
+							//update event instance status to handled/complete
+							EventInstance.update({simulation: simulationId, id: eventInstanceId}, {state: 2}) // state: 2 = handled/complete
+							.exec(function(err, updated) {
+								if (err) {
+									console.log("error updating eventInstance table");
+									return cb(err, null);
+								}
+								EventInstanceResourcesApplied.update({simulation: simulationId, eventInstance: eventInstanceId, resource: requiredResourceIds, timeOfApplication: {'<=': tick}}, {status: 2}) // status: 2 = complete
+								.exec(function(err, updated){
+									if (err) {
+										return cb(err, null);
+									}
+									return cb(null, true);
+								});
+							});
+						} else {
+							console.log("event not handled");
+							//update resources that were correct to status: incomplete and those that were incorrect to status: incorrect
+							console.log(simulationId);
+							console.log(eventInstanceId);
+							console.log(requiredResourceIds);
+							console.log(tick);
+							EventInstanceResourcesApplied.update({simulation: simulationId, eventInstance: eventInstanceId, resource: requiredResourceIds, timeOfApplication: {'<=': tick}}, {status: 4}) //status: 4 = incomplete
+							.exec(function(err, updated) {
+								if (err) {
+									console.log("error updating resourcesApplied for incomplete resources");
+									return cb(err, null);
+								}
+								return cb(null, true);
+							});
+						}
 					});
 					
-					console.log("required resources");
+					/*console.log("required resources");
 					console.log(requiredResources);
 					console.log();
 					console.log("resources applied");
-					console.log(resourcesApplied);
+					console.log(resourcesApplied);*/
 				});
 			});
 		});

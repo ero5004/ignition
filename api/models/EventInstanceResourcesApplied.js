@@ -1,8 +1,7 @@
 /**
 * EventInstanceResourcesApplied.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: Keeps track of Resources applied by Users to an Event Instance. There will be one row in this table for each time an individual resource is applied to an Instance. 
 */
 
 module.exports = {
@@ -27,11 +26,15 @@ module.exports = {
 			model: 'Simulation'
 		},
 		timeOfApplication: {
-			//time of application indicates the tick when this resource is ready to 
+			//time of application indicates the tick when this resource is ready to be recalled
 			type: 'integer'
 		},
 		reusable: {
 			type: 'boolean'
+		},
+		status: {
+			//1: pending, 2: complete(event handled), 3: incorrect, 4: incomplete, 5: returning
+			type: 'integer'
 		}
 	}
 };

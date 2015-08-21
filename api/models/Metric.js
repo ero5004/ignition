@@ -1,8 +1,7 @@
 /**
 * Metric.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: One of the three basic parts of a Simulation. Metrics can be used to measure performance during a Simualation. The Metric Access Control List determins which Users can see each Metric.
 */
 
 module.exports = {

@@ -1,8 +1,7 @@
 /**
 * ResourceState.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: Used by the Simulation Engine to keep track of the quantity of available and pending Resources. In a Simulation, there will be one row in this table for each Resource in the resource pool.
 */
 
 module.exports = {

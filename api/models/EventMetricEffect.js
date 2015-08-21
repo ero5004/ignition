@@ -1,8 +1,7 @@
 /**
 * EventMetricEffect.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: An effect caused by an Event Instance changing state. This includes spawning, staying untreated for a user-defined amount of ticks, and being handled. This effect will add, subtract, or multiply a user-defined number and a metric.
 */
 
 module.exports = {

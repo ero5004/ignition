@@ -1,8 +1,7 @@
 /**
 * ResourceEventEffect.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: An effect caused by the quantity of a certain resource going above or below a user-defined threshold. This effect will spawn an Event Instance.
 */
 
 module.exports = {

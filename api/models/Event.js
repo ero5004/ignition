@@ -1,8 +1,7 @@
 /**
 * Event.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
+* @description :: One of the three basic parts of a Simulation. A row in this table contains information about an Event that will not change during the Simulation. Event Instances are instances of these events which the Engine will spawn.
 */
 
 module.exports = {
